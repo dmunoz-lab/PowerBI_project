@@ -1,0 +1,20 @@
+# Dueños globales: cualquier cambio debe ser revisado por ellos
+* @org/admins @dmunoz-lab
+
+# Carpeta de configuración
+/.github/ @dmunoz-lab
+
+# Código frontend
+/frontend/ @dmunoz-lab
+
+# Código backend
+/backend/ @dmunoz-lab
+
+# Documentación
+/docs/ @dmunoz-lab
+
+# Scripts de automatización
+/scripts/ @dmunoz-lab
+
+# Archivos de seguridad
+/security/* @dmunoz-lab
