@@ -1,0 +1,152 @@
+table measures_live
+	lineageTag: bb5dcfa5-afff-45cc-98c7-072c0e4ca1d5
+
+	measure 'Total FTE''s (live)' = COALESCE(DISTINCTCOUNT(roster_and_nnb[employee]),0)
+		formatString: #,0
+		lineageTag: c8e4e800-fbfc-4588-9ac5-6b803ea8246e
+
+	measure 'Total HC (live)' = COALESCE(SUM('Turnover Live'[Total HC]),0)
+		formatString: 0
+		lineageTag: fab347d2-8531-4f1d-b322-64627916dff5
+
+	measure 'Current Turnover' = ```
+			
+			VAR _maxDate =
+			    CALCULATE(
+			        MAX('Turnover Unified'[MonthStart]),
+			        ALLSELECTED('Turnover Unified'[MonthStart])
+			    )
+			RETURN
+			CALCULATE(
+			    COALESCE(SUM('Turnover Unified'[Turnover]), 0),
+			    turnover_data[Final Date] = _maxDate
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 3960a068-a396-4ae3-905b-3d66133176ed
+
+	measure 'Variance (Turnover)' = ```
+			
+			    IF([Current Turnover]  = 0 && [Previous Month AVG] = 0,BLANK(),
+			        IF([Current Turnover]  = 0, -1,
+			            ([Current Turnover] - [Previous Month AVG]) 
+			                )
+			            )
+			```
+		formatString: 0
+		lineageTag: 82a23838-1d5e-4cb5-9e31-75f81eb0df0b
+
+	measure 'Previous Month % Turnover' = ```
+			
+			VAR PrevAtt = 
+			    CALCULATE(
+			    SUM('Turnover Unified'[Turnover]),
+			    PREVIOUSMONTH(Dim_Calendar_Ops[Date])
+			    )
+			VAR PrevHC =
+			    CALCULATE(
+			    SUM('Turnover Unified'[Total HC]),
+			    PREVIOUSMONTH(Dim_Calendar_Ops[Date])
+			    )
+			
+			RETURN
+			
+			 COALESCE(PrevAtt / PrevHC,0)
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: e11bea9c-984e-4d32-8bd8-eda1d50b3be5
+
+	measure 'Total % Turnover' =
+			
+			VAR _maxDate =
+			    CALCULATE(
+			        MAX('Turnover Unified'[MonthStart]),
+			        ALLSELECTED('Turnover Unified'[MonthStart])
+			    )
+			RETURN
+			DIVIDE(
+			    CALCULATE(SUM('Turnover Unified'[Turnover]), 'Turnover Unified'[MonthStart] = _maxDate),
+			    CALCULATE(SUM('Turnover Unified'[HC]), 'Turnover Unified'[MonthStart] = _maxDate)
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: de4dfae2-4ba6-42a8-aca1-47c044fc7ba0
+
+	measure 'Variance (% Turnover)' = ```
+			
+			    IF([% Turnover Per Month] = 0 && [Previous Month % Turnover] = 0,BLANK(),
+			        IF([% Turnover Per Month] = 0, -1,
+			            ([% Turnover Per Month]- [Previous Month % Turnover])
+			                )
+			            )
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 9e930286-2b41-4ee9-8a58-c859445fb75a
+
+	measure 'Previous Month Turnover 2' = ```
+			
+			    COALESCE(
+			        CALCULATE(
+			        [Total Turnover 2],
+			        PREVIOUSMONTH(Dim_Calendar_Ops[Date])
+			),0)
+			```
+		formatString: 0
+		lineageTag: d145c6a4-1e87-43f9-b8c7-964c6eb2e0b2
+
+	measure 'Total Turnover 2' = ```
+			
+			VAR _lastDate =
+			    CALCULATE(
+			        MAX('Dim_Calendar_Ops'[Date]),
+			        ALLSELECTED('Dim_Calendar_Ops')
+			    )
+			VAR _lastMonthStart = DATE(YEAR(_lastDate), MONTH(_lastDate), 1)
+			VAR _lastMonthEnd = EOMONTH(_lastMonthStart, 0)
+			RETURN
+			CALCULATE(
+			    COUNTROWS(turnover_data),
+			    FILTER(
+			        turnover_data,
+			        turnover_data[Final Date] >= _lastMonthStart &&
+			        turnover_data[Final Date] <= _lastMonthEnd
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 2901e1b5-de6e-4a17-bfca-49d9921decad
+
+	measure 'Variance 2 (Turnover)' = ```
+			
+			    IF([Total Turnover 2]  = 0 && [Previous Month Turnover 2] = 0,BLANK(),
+			        IF([Total Turnover 2]  = 0, -1,
+			            ([Total Turnover 2] - [Previous Month Turnover 2]) / [Total Turnover 2] 
+			                )
+			            )
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: ec7dbed7-d33b-4071-acc8-6be302f3dd1d
+
+	column Column1
+		dataType: string
+		lineageTag: 147e9b6c-458e-45bb-bb0b-6bfdd31ef4d8
+		summarizeBy: none
+		sourceColumn: Column1
+
+		annotation SummarizationSetBy = Automatic
+
+	partition measures_live = m
+		mode: import
+		queryGroup: Measures
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,161 @@
+table Post90_Attrition_Months
+	isHidden
+	lineageTag: 3444c7de-e0c5-4a4e-bc14-a6c21ed4c637
+
+	measure '% Attrition Ponderado' = ```
+			
+			VAR TotalAttrition = SUM(Post90_Attrition_Months[Attrition])
+			VAR TotalHC = SUM(Post90_Attrition_Months[HC])
+			RETURN 
+			IF(TotalHC = 0, 0, DIVIDE(TotalAttrition, TotalHC))
+			
+			```
+		formatString: 0%;-0%;0%
+		isHidden
+		lineageTag: 5dc91f00-7643-41cf-8171-4c13d7ec7c04
+
+	column HC =
+			
+			CALCULATE(
+			    MAX('SCR_finance'[Current Net Seats]),
+			    FILTER(
+			        'SCR_finance',
+			        'SCR_finance'[segmentation_ID] = 'Post90_Attrition_Months'[Segmentation_ID]
+			        && FORMAT('SCR_finance'[Date], "yyyy-MM") = 'Post90_Attrition_Months'[YearMonth]
+			    )
+			)
+		isHidden
+		formatString: 0
+		lineageTag: 2bae87e9-634b-4bd1-a878-b47fe51e1637
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Attrition = ```
+			
+			VAR Result =
+			    CALCULATE(
+			        MAX(Attrition[Attrition]),
+			        FILTER(
+			            Attrition,
+			            Attrition[Segmentation_ID] = 'Post90_Attrition_Months'[Segmentation_ID]
+			            && FORMAT(Attrition[Date], "yyyy-MM") = 'Post90_Attrition_Months'[YearMonth]
+			        )
+			    )
+			RETURN IF(ISBLANK(Result), 0, Result)
+			 
+			 
+			```
+		isHidden
+		formatString: 0
+		lineageTag: 5648156a-0ba7-488e-9272-02c252448151
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column '% attrition monthly' =
+			IF(Post90_Attrition_Months[Attrition]=0 && Post90_Attrition_Months[HC]=0, 0,
+			    DIVIDE(Post90_Attrition_Months[Attrition],(Post90_Attrition_Months[HC]+Post90_Attrition_Months[Attrition])))
+		isHidden
+		formatString: 0%;-0%;0%
+		lineageTag: 7fc43cba-06a9-4dbc-bd51-d8357ee72953
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Segmentation_ID
+		isHidden
+		formatString: 0
+		lineageTag: 76d0341c-535d-4d11-b7f7-2f6f629561c6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Segmentation_ID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Account Name'
+		isHidden
+		lineageTag: 7958af80-63cb-4984-a4f3-cc68b637e5ad
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Account Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Business Unit'
+		isHidden
+		lineageTag: 5618fac4-1259-4ea4-b2eb-d2da1118b769
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Business Unit]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		isHidden
+		lineageTag: 4b3692d3-d0a0-4a9e-8ff6-4cf7892ab6a7
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Country]
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonth
+		isHidden
+		lineageTag: 74d8d0d2-7d02-4fe4-85d9-95b6b75c7da8
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [YearMonth]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		isHidden
+		formatString: General Date
+		lineageTag: 73faf4a3-e369-488e-b946-6170352896c6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Post90_Attrition_Months = calculated
+		mode: import
+		source = ```
+				
+				VAR BaseAccounts =
+				    FILTER(
+				        Implementation_table,
+				        NOT ISBLANK([Transition Date])
+				    )
+				
+				VAR With90Days =
+				    ADDCOLUMNS(
+				        BaseAccounts,
+				        "TargetDate", [Transition Date] + 90
+				    )
+				
+				VAR AddMonthInfo =
+				    ADDCOLUMNS(
+				        With90Days,
+				        "Post90MonthStart", 
+				            DATE(YEAR([TargetDate]), MONTH([TargetDate]), 1),
+				       "YearMonth", 
+				            FORMAT([TargetDate], "yyyy-MM")
+				    )
+				
+				RETURN
+				    SELECTCOLUMNS(
+				        AddMonthInfo,
+				        "Segmentation_ID", [Segmentation_ID],
+				        "Account Name", [Main Account Name],
+				        "Business Unit", [Business Unit],
+				        "Country", [Country],
+				        "YearMonth", [YearMonth],
+				        "Date", [Post90MonthStart]
+				    )
+				
+				```
+
+	annotation PBI_Id = 6c35c29eac544b6bb0617f53fb19cb2f
+

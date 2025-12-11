@@ -1,0 +1,217 @@
+table Definitions
+	lineageTag: a8a923f4-63af-4f5e-b154-d065a3264d0e
+
+	measure 'Total Current Headcount' = ```
+			
+			CALCULATE(
+			    COUNTA('roster historical'[Employee Name]), 
+			    FILTER(
+			        'Dim_Calendar_Ops', 
+			        YEAR(Dim_Calendar_Ops[Date]) = YEAR(TODAY()) &&
+			        MONTH(Dim_Calendar_Ops[Date]) = MONTH(TODAY())
+			    )
+			)
+			```
+		formatString: 0
+		lineageTag: c56fbcae-d917-4760-8f31-f00355251da9
+
+	measure 'Def Turnover' = "Represents the count of employees terminations"
+		lineageTag: 6ca3d239-fdf4-4d61-917f-2c4417d4d9ab
+
+	measure 'Def Headcount' = "Number of employees in the account, this value comes from the Roster"
+		lineageTag: 331b78e7-1bf6-445d-b474-07e67fa9a01b
+
+	measure Def%Attrition = "Percetage of attrition per month. (Total Attrition /  Average Headcount)"
+		lineageTag: 7260729e-cacb-46d9-91ea-a5a55e56262e
+
+	measure 'Def Current Headcount' = "Show the value of the present month"
+		lineageTag: 48e85507-fa79-4ec6-8a2c-e9c752f59edd
+
+	measure Measure = ALLSELECTED(Dim_Calendar_Ops[Month])
+		lineageTag: c75e071e-bb2b-49af-8a5c-23f0ef4be198
+
+	measure Diferencia = ```
+			[Total Activations] - [Total Removals]
+			
+			```
+		formatString: 0
+		lineageTag: 7ae7a7d3-42eb-403d-bb18-8eeafb944688
+
+	measure 'Avg Target' = 0.035
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: d8e2b69e-a93d-40da-81be-5bdbf2271420
+
+	measure 'Avg HC per month' = ```
+			DIVIDE ( SUM('Turnover Unified'[HC]) + SUM('Turnover Unified'[Total HC]), 2 )
+			
+			
+			```
+		formatString: #,0
+		lineageTag: 3268c3f9-e777-4b4f-a4bc-64f07c780bd1
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'new % Turnover' =
+			
+			VAR total_turn = [Filtered Termination]
+			VAR avg_hc     = [Avg HC per month]
+			VAR raw_turn   = DIVIDE(total_turn, avg_hc, 0)
+			
+			RETURN
+			IF (raw_turn > 1, 1, raw_turn)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: ca7f54a3-2551-4e64-9fcb-69f1766ffac3
+
+	measure 'Def Initial HC' = "Number of employees on the 1st day of the month"
+		lineageTag: 097e966d-e9a4-42ef-8d6d-d589f2a204ff
+
+	measure 'Def Final HC' = "Number of employees on the last day of the month"
+		lineageTag: 9f12cc38-5302-4765-887d-ff779dc8ba8f
+
+	measure 'Def Avg HC' = " Calculate with Initial HC and Final HC. ((Initial HC+Final HC)/2)"
+		lineageTag: f8a04eb1-c92d-47b2-9c7d-965adc2a6cad
+
+	measure 'Def Delta' = "Variation between Current and Previous"
+		lineageTag: f4a653e5-4cc4-4af8-89f3-8559bc70f486
+
+	measure 'Def FTE´s' = "Full Time Employee (Active Employee)"
+		lineageTag: e5852dc9-49da-43fa-9fa7-7b7fdcb3743d
+
+	measure 'Fecha Entrada' = ```
+			
+			DATEVALUE (
+			    MIN ( 
+			        MIN('roster historical'[Temporal Entry Date]),
+			        MIN('roster historical'[Entry Date])
+			    )
+			)
+			
+			```
+		formatString: General Date
+		lineageTag: 17038e1d-62ac-4f5d-9dae-9863ae85855c
+
+	measure 'Avg Target fake' = 0.05
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 45efddef-34d3-4da7-a17b-c1eec7586ffe
+
+	measure 'Def Cumulative Attrition' =
+			
+			"It represents the total attrition for the year"
+		lineageTag: 04ce1186-6829-4237-bc04-5e7b75cd5d4f
+
+	measure 'Def YTD Attrition (Year-To-Date Attrition)' =
+			
+			"It is the attrition percentage calculated up to the current date.
+			YTD Attrition = (Total Attrition / Average Headcount)"
+		lineageTag: 211b2188-4d9b-4eaf-9afa-c5d3c39421fc
+
+	measure 'Def Annualized Attrition' =
+			
+			"It is the projected attrition percentage for the entire year based on the current trend.
+			Annualized Attrition = (% Attrition / # Months) * 12"
+		lineageTag: aec13481-a611-417b-9277-4b3306d714bc
+
+	measure 'Def Annual Attrition' = "It represents the total annual attrition rate for the year.Formula: Annual Attrition = (Total Attrition / Average Headcount)"
+		lineageTag: 1b494a1c-2f20-4b4e-83ca-f3b975ca1cd9
+
+	measure 'new % Turnover (voluntary)' =
+			
+			VAR total_Turn = SUM('Turnover Unified'[Voluntary Count])
+			VAR avg_hc     = [Avg Headcount Unified]
+			VAR raw_Turn   = DIVIDE(total_Turn, avg_hc, 0)
+			
+			RETURN
+			IF (raw_Turn > 1, 1, raw_Turn)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: c4385a70-6ca6-448c-8f31-b1d14b6c46f8
+
+	measure 'new % Turnover (involuntary)' =
+			
+			VAR total_Turn = SUM('Turnover Unified'[Involuntary Count])
+			VAR avg_hc     = [Avg Headcount Unified]
+			VAR raw_Turn   = DIVIDE(total_Turn, avg_hc, 0)
+			
+			RETURN
+			IF (raw_Turn > 1, 1, raw_Turn)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 6e4b649d-88e8-4cbd-a4a3-d5d346b426c2
+
+	measure 'Filtered Termination' = ```
+			
+			VAR SelectedType = SELECTEDVALUE('Termination Type'[Termination Type])
+			VAR Result =
+			    SWITCH(
+			        TRUE(),
+			        SelectedType = "Voluntary", SUM('Turnover Unified'[Voluntary Count]),
+			        SelectedType = "Involuntary", SUM('Turnover Unified'[Involuntary Count]),
+			        SUM('Turnover Unified'[Voluntary Count]) + SUM('Turnover Unified'[Involuntary Count])  -- Todos
+			    )
+			RETURN COALESCE(Result, 0)
+			
+			```
+		formatString: #,0
+		lineageTag: 46ca8bc7-7ee1-42cc-8762-5a07d6ac8eb9
+
+	measure 'Delta Turnover Formatted' = ```
+			VAR Diferencia = DIVIDE([Avg Turnover] - [Previous Month AVG], [Previous Month AVG], BLANK())
+			RETURN 
+			    IF( NOT ISBLANK(Diferencia), 
+			        IF(Diferencia > 0, 
+			            "▲ " & FORMAT(Diferencia, "0.0%") , 
+			            "▼ " & FORMAT(Diferencia, "0.0%")
+			        ),
+			        BLANK())
+			```
+		lineageTag: b8df616d-a969-4a22-b0f8-06eeeb2cbc34
+
+	measure 'Delta Turnover % Formatted' = ```
+			VAR Diferencia = [Variance (% Turnover)]
+			RETURN 
+			    IF( NOT ISBLANK(Diferencia), 
+			        IF(Diferencia > 0, 
+			            "▲ " & FORMAT(Diferencia, "0.0%") , 
+			            "▼ " & FORMAT(Diferencia, "0.0%")
+			        ),
+			        BLANK())
+			```
+		lineageTag: 582b909a-9915-4a13-ac12-df01891588f8
+
+	measure 'Delta substatus Formatted' = ```
+			VAR Diferencia = [Variance 2 (Turnover)]
+			RETURN 
+			    IF( NOT ISBLANK(Diferencia), 
+			        IF(Diferencia > 0, 
+			            "▲ " & FORMAT(Diferencia, "0.0%") , 
+			            "▼ " & FORMAT(Diferencia, "0.0%")
+			        ),
+			        BLANK())
+			```
+		lineageTag: 769e3f62-a45f-4aff-aafe-a184dd648a29
+
+	measure 'KPI Colour Resignation' = VAR _var = CALCULATE(DIVIDE([Filtered Termination]- [Previous Month Turnover 2], [Previous Month Turnover 2]), turnover_data[Substatus] = "Resignation") RETURN SWITCH( TRUE() ,_var > 0, "#821E1E" ,_var < 0, "#157924" ," Black")
+		lineageTag: 7c43dead-657c-491f-8a2b-3ae6dcc0eaf2
+
+	column Medidas
+		dataType: string
+		lineageTag: 33d91673-67c5-490a-9bdf-c9aa8bea15b8
+		summarizeBy: none
+		sourceColumn: Medidas
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Definitions = m
+		mode: import
+		queryGroup: Measures
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Medidas = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Medidas", type text}})
+				in
+				    #"Changed Type"
+
+	changedProperty = Name
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

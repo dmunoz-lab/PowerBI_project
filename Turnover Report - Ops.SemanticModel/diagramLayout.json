@@ -1,0 +1,510 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 869630
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 1737110.7769723535
+          },
+          "nodeIndex": "branch",
+          "nodeLineageTag": "e57233ea-d602-4ff2-b951-c5ad93613587",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 22
+        },
+        {
+          "location": {
+            "x": 761.52963972425209,
+            "y": 1737438.7499171207
+          },
+          "nodeIndex": "branch_country",
+          "nodeLineageTag": "f8e9ef52-7205-4432-b00f-03cf4ad2c1bf",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 23
+        },
+        {
+          "location": {
+            "x": 356.67195071119056,
+            "y": 1737102.5268187639
+          },
+          "nodeIndex": "business_unit",
+          "nodeLineageTag": "cf368a94-faff-4c31-a7cc-fd5b498b8952",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 33
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 1737236.3091411111
+          },
+          "nodeIndex": "country",
+          "nodeLineageTag": "535cae8c-736e-41d4-b205-237d92d2dd8b",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 20
+        },
+        {
+          "location": {
+            "x": 1029.6736997516086,
+            "y": 1737551.6433134484
+          },
+          "nodeIndex": "workplace",
+          "nodeLineageTag": "17a17b99-98d7-4eb5-a84c-3a77201f1cd5",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 21
+        },
+        {
+          "location": {
+            "x": 494.90473401183124,
+            "y": 1739081.3498058792
+          },
+          "nodeIndex": "Dim_Calendar_Ops",
+          "nodeLineageTag": "a122d76d-623e-4691-bd60-2b420b8e2ba4",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 24
+        },
+        {
+          "location": {
+            "x": 6.8286249798434824,
+            "y": 1737399.1468673307
+          },
+          "nodeIndex": "billing_cycle",
+          "nodeLineageTag": "93600180-8ed1-4cc7-a2ae-c97dfee3d565",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 27
+        },
+        {
+          "location": {
+            "x": 1604.3459159710726,
+            "y": 1737381.8181757205
+          },
+          "nodeIndex": "roster historical",
+          "nodeLineageTag": "d9c5e5d2-ba69-431a-903d-06492058cc68",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 25
+        },
+        {
+          "location": {
+            "x": 555.82044728564813,
+            "y": 1737292.6111460715
+          },
+          "nodeIndex": "industry",
+          "nodeLineageTag": "ad5c965a-ae0e-44d7-89da-fe4166a5b638",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 34
+        },
+        {
+          "location": {
+            "x": 1256.9264800968683,
+            "y": 1737666.5656860713
+          },
+          "nodeIndex": "service_line",
+          "nodeLineageTag": "310281cd-97f3-4b27-86a9-aef00e808b46",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 26
+        },
+        {
+          "location": {
+            "x": 1617.2025666980794,
+            "y": 1737737.8663941878
+          },
+          "nodeIndex": "removals",
+          "nodeLineageTag": "39f2e69c-8a1b-4550-abf2-bbde1384fd9d",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 35
+        },
+        {
+          "location": {
+            "x": 2225.2029415508359,
+            "y": 1737892.4784432412
+          },
+          "nodeIndex": "main_accounts",
+          "nodeLineageTag": "dd091bd2-69fa-4aef-a5b8-641791851798",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 28
+        },
+        {
+          "location": {
+            "x": 1607.7954261128921,
+            "y": 1738083.9189327694
+          },
+          "nodeIndex": "roster_and_nnb",
+          "nodeLineageTag": "d2919b95-38f9-4cc9-b5e0-cf72f54f7bf0",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 18
+        },
+        {
+          "location": {
+            "x": 3040.7241687709356,
+            "y": 1737002.1229752656
+          },
+          "nodeIndex": "measures_live",
+          "nodeLineageTag": "bb5dcfa5-afff-45cc-98c7-072c0e4ca1d5",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 32
+        },
+        {
+          "location": {
+            "x": 1614.5541605013038,
+            "y": 1738687.7639705678
+          },
+          "nodeIndex": "upsells",
+          "nodeLineageTag": "0aa5bbba-cf52-45ce-a09b-6a92b7dfab06",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 29
+        },
+        {
+          "location": {
+            "x": 2606.9999432741956,
+            "y": 1737436.1871481538
+          },
+          "nodeIndex": "customer_segmentation",
+          "nodeLineageTag": "ba0fc498-7f3a-4f0e-a11c-428446e9446d",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 31
+        },
+        {
+          "location": {
+            "x": 2206.8745834315182,
+            "y": 1738290.4480277356
+          },
+          "nodeIndex": "SCR_finance",
+          "nodeLineageTag": "f3d9930a-f987-4346-ade5-708e16f946cf",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 30
+        },
+        {
+          "location": {
+            "x": 2574.7065280204251,
+            "y": 1739016.1004858841
+          },
+          "nodeIndex": "Dim_Calendar_Finance",
+          "nodeLineageTag": "62dc0e48-3767-4a5e-9614-ba437c7534ee",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 17
+        },
+        {
+          "location": {
+            "x": 3446.625065337364,
+            "y": 1739054.241382245
+          },
+          "nodeIndex": "Implementation_table",
+          "nodeLineageTag": "9f278ed5-ed05-45a0-9628-61a96cab8d3a",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 16
+        },
+        {
+          "location": {
+            "x": 1366.9859608486931,
+            "y": 1710558.9586692154
+          },
+          "nodeIndex": "Attrition 2",
+          "nodeLineageTag": "ebff876b-b4a8-4d57-9d2f-c68d4a6a874e",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 11
+        },
+        {
+          "location": {
+            "x": 3438.3552928280355,
+            "y": 1738681.0390486335
+          },
+          "nodeIndex": "Activations_Employee_Impl",
+          "nodeLineageTag": "7845d5c5-2bcf-441e-b1fc-3c56263a4df2",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 12
+        },
+        {
+          "location": {
+            "x": 3436.8237936687869,
+            "y": 1738324.4846835309
+          },
+          "nodeIndex": "Attrit_Employee_Impl",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 13
+        },
+        {
+          "location": {
+            "x": 3454.40403102582,
+            "y": 1737727.8948356952
+          },
+          "nodeIndex": "Implementation_Months",
+          "nodeLineageTag": "11a0d0fe-427c-4167-9cd9-3656e64c178d",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 14
+        },
+        {
+          "location": {
+            "x": 3442.0503093879447,
+            "y": 1737957.8051530048
+          },
+          "nodeIndex": "Post90_Attrition_Months",
+          "nodeLineageTag": "3444c7de-e0c5-4a4e-bc14-a6c21ed4c637",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 15
+        },
+        {
+          "location": {
+            "x": 3129.0954861591144,
+            "y": 1738536.7633753242
+          },
+          "nodeIndex": "internal_external_impl",
+          "nodeLineageTag": "f964e8ad-5dd5-47cc-aa7c-fd5ce0153be3",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 4306.4040310258206,
+            "y": 861544.31314122956
+          },
+          "nodeIndex": "divisions",
+          "nodeLineageTag": "d48689e6-ff0c-435a-8003-0e42e9f3a568",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 2394.4790599999865,
+            "y": 1738685.0352559907
+          },
+          "nodeIndex": "Termination Type",
+          "nodeLineageTag": "99ba69c5-5d30-4f9b-828b-78609af284fb",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 2410.4040310258206,
+            "y": 15085
+          },
+          "nodeIndex": "turnover_data",
+          "nodeLineageTag": "8b1bc52d-01a9-492d-83df-9d3f5dff554f",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 36
+        },
+        {
+          "location": {
+            "x": 5722.8721637255248,
+            "y": 869598.43484651193
+          },
+          "nodeIndex": "service_line_historical",
+          "nodeLineageTag": "0e55b4a2-d669-460c-9f29-2a6ee2b9e4c2",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 6006.8721637255248,
+            "y": 0
+          },
+          "nodeIndex": "customer_accounts_segmentation",
+          "nodeLineageTag": "843dc0d3-cdcd-47f5-8703-0b68595c0355",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 6415.3882179796437,
+            "y": 14
+          },
+          "nodeIndex": "finance_accounts_name",
+          "nodeLineageTag": "4e25f085-fbc1-463f-bd3c-504d7cdba40b",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 6823.9042722337617,
+            "y": 50
+          },
+          "nodeIndex": "portal _accounts_name",
+          "nodeLineageTag": "35661b2a-3682-474c-bcb8-cb687460d9f1",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 1618.1670122525545,
+            "y": 1738426.0619498277
+          },
+          "nodeIndex": "Turnover Live",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 3738.40403102582,
+            "y": 1205211.9168325872
+          },
+          "nodeIndex": "Mesuares New Turnover",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 7107.9042722337617,
+            "y": 869634.43484651193
+          },
+          "nodeIndex": "Dax_Measures",
+          "nodeLineageTag": "2f7d2816-d605-4379-bd02-49c8e4eccf31",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1612.274822934131,
+            "y": 1739072.8696930239
+          },
+          "nodeIndex": "Turnover Unified",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 7391.9042722337617,
+            "y": 869586.43484651193
+          },
+          "nodeIndex": "Bench Terminations Summary",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3040.0000285281244,
+            "y": 1736856.4717306183
+          },
+          "nodeIndex": "Definitions",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 10,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

@@ -1,0 +1,136 @@
+table Dim_Calendar_Finance
+	isHidden
+	lineageTag: 62dc0e48-3767-4a5e-9614-ba437c7534ee
+
+	column Date
+		isHidden
+		formatString: General Date
+		lineageTag: e5a01d3a-51ab-4a14-a8f5-a6956af3a826
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: 0971f7a0-c14e-4ce1-9433-7beac9078a09
+			defaultHierarchy: LocalDateTable_5b8cfd87-3fe9-4b09-90af-91dc9fb09715.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column #Year
+		isHidden
+		formatString: 0
+		lineageTag: 47b29ecb-d26c-452b-bf82-7502bc319ab5
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [#Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column #Month
+		isHidden
+		formatString: 0
+		lineageTag: b6d5d947-44fe-4245-b028-03b3bc0256f7
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [#Month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column #Day
+		isHidden
+		formatString: 0
+		lineageTag: d0c8af97-731a-425e-bb96-74aa9369a5d7
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [#Day]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		isHidden
+		lineageTag: a7a2e0c6-4cad-4d87-aefa-2d75673dcc47
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month]
+		sortByColumn: #Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column ShortMonth
+		isHidden
+		lineageTag: 0d134c1b-0e4c-421e-92d7-d98047b96a67
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ShortMonth]
+		sortByColumn: #Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column #DayOfTheWeek
+		isHidden
+		formatString: 0
+		lineageTag: b98520ef-7e23-4464-b448-f2d464a87701
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [#DayOfTheWeek]
+
+		annotation SummarizationSetBy = Automatic
+
+	column #WeekOfThYear
+		isHidden
+		formatString: 0
+		lineageTag: eded708a-9334-46f1-8083-acbbd1d3566c
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [#WeekOfThYear]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day
+		isHidden
+		lineageTag: 7efdf7d2-041a-4b2b-898d-b7bfc502dc37
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Day]
+
+		annotation SummarizationSetBy = Automatic
+
+	column ShortDay
+		isHidden
+		lineageTag: 228e627f-0854-4fe9-89f6-1b5dd4432da6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ShortDay]
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonth
+		isHidden
+		lineageTag: e3a0569e-371d-465e-bb23-97e7ef218895
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [YearMonth]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Calendar_Finance = calculated
+		mode: import
+		source = ```
+				ADDCOLUMNS (
+				CALENDAR ( MIN (removals[Finance report]), MAX(removals[Finance report])),
+				"#Year", YEAR ( [Date] ),
+				"#Month", MONTH ( [Date] ),
+				"#Day", DAY ( [Date] ),
+				"Month", FORMAT ( [Date], "MMMM" ),
+				"ShortMonth", FORMAT ( [Date], "MMM" ),
+				"#DayOfTheWeek", WEEKDAY ( [Date],2 ),
+				"#WeekOfThYear", WEEKNUM ( [Date],2 ),
+				"Day", FORMAT ( [Date], "DDDD" ),
+				"ShortDay", FORMAT ( [Date], "DDD" ),
+				"YearMonth", FORMAT( [Date], "YYYY-MM"))
+				
+				```
+
+	annotation PBI_Id = 1640382e60524e8d868b30cee7aa145f
+

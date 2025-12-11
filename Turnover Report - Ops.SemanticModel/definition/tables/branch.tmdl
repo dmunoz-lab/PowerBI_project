@@ -1,0 +1,30 @@
+table branch
+	isHidden
+	lineageTag: e57233ea-d602-4ff2-b951-c5ad93613587
+
+	column branch
+		dataType: string
+		isHidden
+		lineageTag: 82c8fdb9-d2fb-490f-810b-a9824b37c46b
+		summarizeBy: none
+		sourceColumn: branch
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition branch = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("Xco7CsAgEIThq4h1TpEEUnmCYDHoIgublYhCjp+HVunm+5l9tzNKgZ6NRWD99IScch2zBRQc0NS9oFQk0iFuEdGsZLaGSgfk3x1dHPIXHUUSYe2A8nv2Nw==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [branch = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"branch", type text}})
+				in
+				    #"Changed Type"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

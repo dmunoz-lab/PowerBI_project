@@ -1,0 +1,224 @@
+table customer_accounts_segmentation
+	isHidden
+	lineageTag: 843dc0d3-cdcd-47f5-8703-0b68595c0355
+
+	column roster_vs_invoice_ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5838a4b8-5fc1-4947-9ace-9f24179d5599
+		summarizeBy: count
+		sourceColumn: roster_vs_invoice_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Account Name'
+		dataType: string
+		isHidden
+		lineageTag: fa387805-9277-4273-859e-fade7fb2e1d1
+		summarizeBy: none
+		sourceColumn: Account Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column headcount
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 1332cf6a-1bea-46fd-bdf2-746c35db4257
+		summarizeBy: sum
+		sourceColumn: headcount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column hubspot_ID
+		dataType: string
+		isHidden
+		lineageTag: 840ffc1c-9657-4743-855f-7f6a840707ce
+		summarizeBy: none
+		sourceColumn: hubspot_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cycle
+		dataType: string
+		isHidden
+		lineageTag: e8728489-0799-4026-a5bb-37119b71f474
+		summarizeBy: none
+		sourceColumn: Cycle
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Branch
+		dataType: string
+		isHidden
+		lineageTag: 6dce799e-4597-4ae9-bc97-f9a99f6d996f
+		summarizeBy: none
+		sourceColumn: Branch
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column segmentation_ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 455a46bd-b182-4654-b83f-2437041ee30f
+		summarizeBy: count
+		sourceColumn: segmentation_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_segmentation
+		dataType: string
+		isHidden
+		lineageTag: fdeb417f-f55b-40e7-b7d8-edb997962509
+		summarizeBy: none
+		sourceColumn: customer_segmentation
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Service Line'
+		dataType: string
+		isHidden
+		lineageTag: a329374b-5d3b-44d0-baba-5ef03fdceb02
+		summarizeBy: none
+		sourceColumn: Service Line
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Industry
+		dataType: string
+		isHidden
+		lineageTag: 17bc61be-b12f-4787-8596-97fd83d59766
+		summarizeBy: none
+		sourceColumn: Industry
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column aniversary_date
+		dataType: string
+		isHidden
+		lineageTag: b31bb0a1-3b7f-4d91-a102-2403d8f45b29
+		summarizeBy: none
+		sourceColumn: aniversary_date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Enterprise date'
+		dataType: string
+		isHidden
+		lineageTag: 8f90140f-8fc1-4346-bdc1-a2726f7e5f1e
+		summarizeBy: none
+		sourceColumn: Enterprise date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column churn_finance
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 1f413c20-678b-4c45-bed8-134272a64adf
+		summarizeBy: none
+		sourceColumn: churn_finance
+
+		variation Variation
+			isDefault
+			relationship: 81ab3c8c-853b-4d64-b1fb-1f6c71476e45
+			defaultHierarchy: LocalDateTable_52aca192-fab8-4ef9-949f-4311577c6251.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Transition_ops
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: bb6e9347-98dd-41b4-abe0-2047c94ee0e0
+		summarizeBy: none
+		sourceColumn: Transition_ops
+
+		variation Variation
+			isDefault
+			relationship: dac1e786-2604-4c58-8527-63f41d50b2bd
+			defaultHierarchy: LocalDateTable_dc3112cf-bcde-46cb-9c37-b320d7b3865a.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'deal closing date'
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 4af23f0a-d21f-4782-acb3-874849613fac
+		summarizeBy: none
+		sourceColumn: deal closing date
+
+		variation Variation
+			isDefault
+			relationship: 0070df87-65be-4d13-aa4b-103f702bde98
+			defaultHierarchy: LocalDateTable_c626dbfd-cece-4300-8256-197071813696.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Implementation
+		dataType: string
+		isHidden
+		lineageTag: 52408565-add4-422d-8d91-5eb2ad56a2b0
+		summarizeBy: none
+		sourceColumn: Implementation
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition customer_accounts_segmentation = m
+		mode: import
+		queryGroup: 'Accounts Info'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://perfilesysoluciones.sharepoint.com/sites/PerformanceManagement83/Shared%20Documents/Corporate%20BI/Accounts/Account%20Names%20and%20Finance%20Distribution.xlsx"), null, true),
+				    customer_segmentation_Table = Source{[Item="customer_segmentation",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(customer_segmentation_Table,{{"roster_vs_invoice_ID", Int64.Type}, {"Account Name", type text}, {"headcount", Int64.Type}, {"segmentation_ID", Int64.Type}, {"aniversary_date", type any}, {"churn_finance", type date}, {"Transition_ops", type date}, {"deal closing date", type date}})
+				in
+				    #"Changed Type"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

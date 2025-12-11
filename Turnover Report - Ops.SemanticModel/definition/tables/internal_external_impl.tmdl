@@ -1,0 +1,69 @@
+table internal_external_impl
+	isHidden
+	lineageTag: f964e8ad-5dd5-47cc-aa7c-fd5ce0153be3
+
+	column 'Main Account Name'
+		dataType: string
+		isHidden
+		lineageTag: cdbd847b-98ea-4431-907e-adbcd084a38f
+		summarizeBy: none
+		sourceColumn: Main Account Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employee Name'
+		dataType: string
+		isHidden
+		lineageTag: 3def1269-5d33-412b-b235-f500b6d464dd
+		summarizeBy: none
+		sourceColumn: Employee Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ID Number'
+		dataType: string
+		isHidden
+		lineageTag: 3f2e148b-7379-4926-b815-d68a99e4efe5
+		summarizeBy: none
+		sourceColumn: ID Number
+
+		changedProperty = DataType
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Type Requisitions'
+		dataType: string
+		isHidden
+		lineageTag: dce1aaac-1731-4140-91db-c8cf60d2555c
+		summarizeBy: none
+		sourceColumn: Type Requisitions
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition internal_external_impl = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://perfilesysoluciones.sharepoint.com/sites/CROSSFUNCTIONALREPORTINGTEAM/Shared%20Documents/Seat%20Count%20Report/COGs/Attrition%20Impl.xlsx"), null, true),
+				    turnover_Sheet = Source{[Item="Imp Attrition",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(turnover_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Main Account Name", type text}, {"Employee Name", type text}, {"ID Number", Int64.Type}, {"Substatus", type text}, {"Reason", type text}, {"Type Requisitions", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Substatus", "Reason"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Columns", each [Main Account Name] <> null and [Main Account Name] <> "")
+				in
+				    #"Filtered Rows"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

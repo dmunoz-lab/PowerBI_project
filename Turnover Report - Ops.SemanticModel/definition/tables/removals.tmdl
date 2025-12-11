@@ -1,0 +1,442 @@
+table removals
+	isHidden
+	lineageTag: 39f2e69c-8a1b-4550-abf2-bbde1384fd9d
+
+	measure 'Total Removals' = COUNTROWS(removals)
+		formatString: 0
+		isHidden
+		lineageTag: 4ec1a1e7-1a0b-44bd-b1c1-c695db80069d
+
+		changedProperty = IsHidden
+
+	column downsell_id
+		dataType: string
+		isHidden
+		lineageTag: 0f1b52f9-273b-404e-b1c1-35bbcd1397a0
+		summarizeBy: none
+		sourceColumn: downsell_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employee Name'
+		dataType: string
+		isHidden
+		lineageTag: ba79b4e4-d8dc-45a3-ba17-df16a76719e4
+		summarizeBy: none
+		sourceColumn: Employee Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ID Number'
+		dataType: string
+		isHidden
+		lineageTag: 31443788-2d95-49d1-8cdf-ea30d49bbbde
+		summarizeBy: none
+		sourceColumn: ID Number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Workplace
+		dataType: string
+		isHidden
+		lineageTag: b3497877-c5ac-4bd6-a630-f5e0d674065e
+		summarizeBy: none
+		sourceColumn: Workplace
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Branch
+		dataType: string
+		isHidden
+		lineageTag: 0b8c677b-756f-4f8e-8ce3-05850fe8c1ef
+		summarizeBy: none
+		sourceColumn: Branch
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Business Unit'
+		dataType: string
+		isHidden
+		lineageTag: 680892b6-73e5-44c5-aa0b-de5f6f73e7f4
+		summarizeBy: none
+		sourceColumn: Business Unit
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Industry
+		dataType: string
+		isHidden
+		lineageTag: dc5e2176-7799-4afd-96d2-be0297f63f1a
+		summarizeBy: none
+		sourceColumn: Industry
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Customer
+		dataType: string
+		isHidden
+		lineageTag: 6374ef2a-5a48-476d-bb56-34d884c171e2
+		summarizeBy: none
+		sourceColumn: Customer
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Previous Position'
+		dataType: string
+		isHidden
+		lineageTag: beccafb4-ca26-414b-b90c-bc0f1b5aced0
+		summarizeBy: none
+		sourceColumn: Previous Position
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Previous Status'
+		dataType: string
+		isHidden
+		lineageTag: 858b3ea0-30bf-4df1-a5f7-de032e2e24ed
+		summarizeBy: none
+		sourceColumn: Previous Status
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Next Status'
+		dataType: string
+		isHidden
+		lineageTag: a3e02d45-6cbe-4b7a-8913-464b3cc9ee64
+		summarizeBy: none
+		sourceColumn: Next Status
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Reason
+		dataType: string
+		isHidden
+		lineageTag: a49b0b3c-0067-4d09-bad1-e2cbb8b2e9aa
+		summarizeBy: none
+		sourceColumn: Reason
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Downsell
+		dataType: string
+		isHidden
+		lineageTag: e1884030-0ec0-4340-bf29-111325901c1d
+		summarizeBy: none
+		sourceColumn: Downsell
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Finance report'
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: a6fee373-03ee-4ac4-9d01-d8d69248f595
+		summarizeBy: none
+		sourceColumn: Finance report
+
+		variation Variation
+			isDefault
+			relationship: 4668bd01-10b2-4af3-89ca-41b846490f95
+			defaultHierarchy: LocalDateTable_5a634f81-7ae2-41a2-b8bb-f18678008085.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column roster_vs_invoice_ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f1e73779-f761-4fea-8605-e7e6b2dc39f7
+		summarizeBy: none
+		sourceColumn: roster_vs_invoice_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column roster_ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3823dfe5-fe60-4506-8dee-817c6b735b77
+		summarizeBy: count
+		sourceColumn: roster_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column portal_id = LOOKUPVALUE('portal _accounts_name'[portal_ID],'portal _accounts_name'[account_roster_name],removals[Customer])
+		isHidden
+		formatString: 0
+		lineageTag: 0f6d1501-554f-49c4-b769-7b33c5376a1e
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Effective Date'
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: 84473050-4738-4298-ace5-4b0d8c5b2516
+		summarizeBy: none
+		sourceColumn: Effective Date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Country
+		dataType: string
+		isHidden
+		lineageTag: 911d53a9-195f-4e43-aee0-c2df613cfb9f
+		summarizeBy: none
+		sourceColumn: Country
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column segmentation_ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9fc889b1-c49a-4fad-8431-fed73e21c44d
+		summarizeBy: none
+		sourceColumn: segmentation_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Main Account Name'
+		dataType: string
+		isHidden
+		lineageTag: 01bcc7ba-1a16-4658-bc59-c9fc780accd7
+		summarizeBy: none
+		sourceColumn: Main Account Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Service Line'
+		dataType: string
+		isHidden
+		lineageTag: 5e46580e-394e-47ef-8235-7ea91ac4d59e
+		summarizeBy: none
+		sourceColumn: Service Line
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Substatus
+		dataType: string
+		isHidden
+		lineageTag: 1692da7d-789a-4807-9fb1-2dfec761196f
+		summarizeBy: none
+		sourceColumn: Substatus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Active Date (Last)' = ```
+			
+			CALCULATE (
+			    MAX ( 'roster historical'[Active Date] ),
+			    FILTER (
+			        'roster historical',
+			        'roster historical'[ID Number] = removals[ID Number]
+			    )
+			)
+			
+			```
+		isHidden
+		formatString: Short Date
+		lineageTag: 0930da4c-4281-484c-9503-90d3b31d08d2
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: acd77c09-a4bc-47a1-ac38-1805822e46e6
+			defaultHierarchy: LocalDateTable_46f7c4a2-1f72-46da-ad27-9426bd2bc4ce.'Date Hierarchy'
+
+		changedProperty = DataType
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Fecha Entrada (Last)' = ```
+			
+			CALCULATE (
+			    MAX ( 'roster historical'[Fecha Entrada] ),
+			    FILTER (
+			        'roster historical',
+			        'roster historical'[ID Number] = removals[ID Number]
+			    )
+			)
+			
+			```
+		isHidden
+		formatString: Short Date
+		lineageTag: a88a21a3-4fca-4a04-bb38-2deffa60e629
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: bac508ee-74a8-4663-bdb8-59ca1952670e
+			defaultHierarchy: LocalDateTable_cb91d973-d454-49ee-b984-8fcb9e6508af.'Date Hierarchy'
+
+		changedProperty = DataType
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Días Entrada → Downsell' = ```
+			
+			VAR FechaEntrada = removals[Fecha Entrada (Last)]
+			VAR Downsell    = removals[Effective Date]
+			RETURN
+			IF(
+			    ISBLANK(FechaEntrada) || ISBLANK(Downsell),
+			    BLANK(),
+			    DATEDIFF( FechaEntrada, Downsell, DAY )   -- si la quieres positiva: ABS(…)
+			)
+			
+			```
+		isHidden
+		formatString: 0
+		lineageTag: 3d7be564-540d-40ad-87b4-78042c9bf14c
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Días Active → Downsell' = ```
+			
+			VAR FechaActive = removals[Active Date (Last)]
+			VAR Downsell    = removals[Effective Date]
+			RETURN
+			IF(
+			    ISBLANK(FechaActive) || ISBLANK(Downsell),
+			    BLANK(),
+			    ABS( DATEDIFF( FechaActive, Downsell, DAY ) )
+			)
+			
+			```
+		isHidden
+		formatString: 0
+		lineageTag: 13006b42-b851-4310-8a51-63f6c1055b8e
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column
+		type: calculated
+		isHidden
+		lineageTag: a3fbf21b-a7e2-41a8-b8c7-55deef353c3f
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Termination Type' = ```
+			
+			IF (
+			    CONTAINSSTRING ( removals[Reason], "Resignation" ),
+			    "Voluntary",
+			    "Involuntary"
+			)
+			
+			```
+		isHidden
+		lineageTag: 7f89c8c3-9aff-42ab-8cbb-fd1ba91cf7eb
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition removals = m
+		mode: import
+		queryGroup: Databases
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://perfilesysoluciones.sharepoint.com/sites/CROSSFUNCTIONALREPORTINGTEAM/Shared%20Documents/Seat%20Count%20Report/Activations%20vs%20Removals/Downsell%20vs%20Upsell%202024.xlsx"), null, true),
+				    downsells_Table = Source{[Item="downsells",Kind="Table"]}[Data],
+				    #"Appended Query" = Table.Combine({downsells_Table, removals2025}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Appended Query",{{"downsell_id", type text}, {"Created by", type any}, {"Employee Name", type text}, {"ID Number", type any}, {"Workplace", type text}, {"Branch", type text}, {"Previous Business Unit", type text}, {"Previous Service Line", type text}, {"Customer", type text}, {"Sub Account", type any}, {"Previous Department", type any}, {"Next Business Unit", type any}, {"Next Service Line", type any}, {"Next Customer", type any}, {"Next Sub Account", type any}, {"Next Department - Area", type any}, {"Previous Position", type text}, {"Next Position", type any}, {"Previous Status", type text}, {"Next Status", type text}, {"Active Condition", type any}, {"Date Created", type date}, {"Created Time", type any}, {"Approved", type text}, {"Reason", type text}, {"Approved Date", type any}, {"Approved Time", type any}, {"Effective Date", type date}, {"Effective Time", type any}, {"Internal/External", type any}, {"Downsell", type text}, {"Finance report", type any}, {"Replaced by ID", type any}, {"upsell_id", type text}, {"Final Status", type text}, {"Final Date", type date}, {"Aging", type number}, {"Billing Cycle", type text}, {"Pending", type text}, {"Notes", type text}, {"Type of termination", type any}, {"roster_vs_invoice_ID", Int64.Type}, {"roster_ID", Int64.Type}, {"Req_ID", type any}, {"segmentation_ID", Int64.Type}}),
+				    #"Capitalized Each Word" = Table.TransformColumns(#"Changed Type",{{"Employee Name", Text.Proper, type text}, {"Workplace", Text.Proper, type text}, {"Branch", Text.Proper, type text}, {"Customer", Text.Proper, type text}, {"Previous Position", Text.Proper, type text}, {"Previous Business Unit", Text.Proper, type text}, {"Previous Service Line", Text.Proper, type text}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Capitalized Each Word", each ([Downsell] <> "NA") and ([Finance report] <> "NA")),
+				    #"Replaced Value5" = Table.ReplaceValue(#"Filtered Rows","Replacement Implementation","Backfill",Replacer.ReplaceText,{"Downsell"}),
+				    #"Replaced Value8" = Table.ReplaceValue(#"Replaced Value5","Lost Positions Implementation","No Backfill",Replacer.ReplaceText,{"Downsell"}),
+				    #"Replaced Value4" = Table.ReplaceValue(#"Replaced Value8","Replacement","Backfill",Replacer.ReplaceText,{"Downsell"}),
+				    #"Replaced Value7" = Table.ReplaceValue(#"Replaced Value4","Lost Positions","No Backfill",Replacer.ReplaceText,{"Downsell"}),
+				    #"Replaced Value9" = Table.ReplaceValue(#"Replaced Value7","Seasonal","No Backfill",Replacer.ReplaceText,{"Downsell"}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Replaced Value9",null,"Pending",Replacer.ReplaceValue,{"Downsell"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Replaced Value",{{"Finance report", type date}, {"ID Number", type text}}),
+				    #"Replaced Value10" = Table.ReplaceValue(#"Changed Type1","Carrier Sales","Domestic",Replacer.ReplaceText,{"Previous Service Line"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Replaced Value10",{{"Previous Service Line", "Industry"}}),
+				    #"Inserted Year" = Table.AddColumn(#"Renamed Columns", "Year", each Date.Year([Effective Date]), Int64.Type),
+				    #"Filtered Rows1" = Table.SelectRows(#"Inserted Year", each ([Year] <> 2023)),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows1",{"Created by", "Sub Account", "Previous Department", "Next Business Unit", "Next Service Line", "Next Customer", "Next Sub Account", "Next Department - Area", "Next Position", "Active Condition", "Date Created", "Created Time", "Approved", "Approved Date", "Approved Time", "Effective Time", "Internal/External", "Replaced by ID", "upsell_id", "Final Status", "Final Date", "Aging", "Billing Cycle", "Pending", "Type of termination", "Req_ID", "Text Date", "Notes", "Finance Report Cleaned", "Month","Year"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Columns",{{"Previous Business Unit", "Business Unit"}, {"Service Line2", "Service Line"}}),
+				    #"Replaced Value11" = Table.ReplaceValue(#"Renamed Columns1","Lean Bpo","Lean Operations",Replacer.ReplaceText,{"Business Unit"}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Replaced Value11", "Country", each if [Branch] = "Bogota" then "Colombia" else if [Branch] = "Medellin" then "Colombia" else if [Branch] = "Bucaramanga" then "Colombia" else if [Branch] = "Cartagena" then "Colombia" else if [Branch] = "Barranquilla" then "Colombia" else if [Branch] = "Cali" then "Colombia" else if [Branch] = "Manila" then "Philippines" else if [Branch] = "Ciudad De Guatemala" then "Guatemala" else if [Branch] = "Ciudad De Mexico" then "Mexico" else null),
+				    #"Replaced Value12" = Table.ReplaceValue(#"Added Conditional Column","Seasonal","No Backfill",Replacer.ReplaceText,{"Downsell"}),
+				    #"Added Conditional Column1" = Table.AddColumn(#"Replaced Value12", "Substatus", each if [Reason] = "Resignation" then "Resignation" else "Termination"),
+				    #"Filtered Rows2" = Table.SelectRows(#"Added Conditional Column1", each true)
+				in
+				    #"Filtered Rows2"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

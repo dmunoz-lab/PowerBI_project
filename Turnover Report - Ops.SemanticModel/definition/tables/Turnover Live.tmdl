@@ -1,0 +1,249 @@
+table 'Turnover Live'
+	lineageTag: e64b2702-0fdd-4b55-9d03-a2094f2e186b
+
+	column Segmentation_ID
+		formatString: 0
+		lineageTag: 98747062-bf41-439a-9297-f54334701d8a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Segmentation_ID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Business Unit'
+		lineageTag: e86a8c3c-bd16-4a96-90ea-46ce46882313
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Business Unit]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Branch
+		lineageTag: 353f3a7c-4a45-48a0-93c9-471dc0f79ccf
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Branch]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		lineageTag: c76c3661-1ac1-45a7-9d8d-2571d9d4c9b2
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Country]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Service Line'
+		lineageTag: 97782a15-4933-4661-afed-b1ea077918cf
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Service Line]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Industry
+		lineageTag: d149c566-0e5c-497f-804f-f57ed5e0ed05
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Industry]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		formatString: General Date
+		lineageTag: adc8bfb0-28ba-4302-8c8d-8d8da0f17ea5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column HC
+		formatString: 0
+		lineageTag: fa54bb6b-55e1-4936-b220-11d72656f9b8
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [HC]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total HC'
+		formatString: 0
+		lineageTag: 437d3d98-2ede-4152-a31f-93c0af058483
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Total HC]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Account Name' = LOOKUPVALUE(main_accounts[Account Name],main_accounts[segmentation_ID],'Turnover Live'[Segmentation_ID])
+		lineageTag: d0bd984b-0406-4dad-83b8-026d70d5b2c9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Turnover
+		formatString: 0
+		lineageTag: 58a88b43-b13f-4daf-886d-0d7acdd5c615
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Turnover]
+
+		annotation SummarizationSetBy = Automatic
+
+	column '% Turnover'
+		lineageTag: fa2e3013-6918-4061-8bd7-a59927dec49a
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [% Turnover]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'Turnover Live' = calculated
+		mode: import
+		source = ```
+				
+				SUMMARIZE(
+				    UNION(
+				        SELECTCOLUMNS(
+				            roster_and_nnb, 
+				            "Segmentation_ID", 'roster_and_nnb'[Segmentation_ID],
+				            "Branch", 'roster_and_nnb'[Branch],
+				            "Country",'roster_and_nnb'[Country],
+				            "Service Line", 'roster_and_nnb'[Service Line],
+				            "Industry", 'roster_and_nnb'[Industry],
+				            "Business Unit", 'roster_and_nnb'[business_unit],
+				            "Date", DATE(YEAR(TODAY()), MONTH(TODAY()), 1), // Primer día de este mes
+				            "Type", "roster"
+				        ),
+				        SELECTCOLUMNS(
+				            turnover_data, 
+				            "Segmentation_ID", turnover_data[Segmentation_ID],
+				            "Branch", turnover_data[Branch],
+				            "Country", RELATED(branch_country[Country]),
+				            "Service Line", turnover_data[Service Line],
+				            "Industry", turnover_data[Industry],
+				            "Business Unit", turnover_data[Business Unit],
+				            "Date", EOMONTH(turnover_data[Final Date], -1) + 1, // Primer día del mes
+				            "Type", "Termination"
+				        )
+				    ),
+				    [Segmentation_ID],
+				    [Business Unit],
+				    [Branch],
+				    [Country],
+				    [Service Line],
+				    [Industry],
+				    [Date],
+				    "Turnover", 
+				        COALESCE(
+				            CALCULATE(
+				                COUNTROWS(removals),
+				                FILTER(
+				                    'turnover_data',
+				                    turnover_data[Business Unit] = EARLIER([Business Unit]) &&
+				                    turnover_data[Segmentation_ID] = EARLIER([Segmentation_ID]) &&
+				                    turnover_data[Branch] = EARLIER([Branch]) &&
+				                    RELATED('branch_country'[country]) = EARLIER([Country]) &&
+				                    turnover_data[Service Line] = EARLIER([Service Line]) &&
+				                    turnover_data[Industry] = EARLIER([Industry]) &&
+				                    EOMONTH(turnover_data[Final Date], -1) + 1 = EARLIER([Date]) // Filtro por mes
+				                    )
+				            ),
+				            0),
+				    "HC", 
+				        CALCULATE(
+				            COUNTROWS('roster_and_nnb'),
+				            FILTER(
+				                'roster_and_nnb',
+				                'roster_and_nnb'[business_unit] = EARLIER([Business Unit]) &&
+				                'roster_and_nnb'[Segmentation_ID] = EARLIER([Segmentation_ID]) &&
+				                'roster_and_nnb'[Country] = EARLIER([Country]) &&
+				                'roster_and_nnb'[Branch] = EARLIER([Branch]) &&
+				                'roster_and_nnb'[Service Line] = EARLIER([Service Line]) &&
+				                'roster_and_nnb'[Industry] = EARLIER([Industry]) &&
+				                DATE(YEAR(TODAY()), MONTH(TODAY()), 1) // Filtro por mes
+				            )
+				        ),
+				    "Total HC", 
+				        COALESCE(
+				            CALCULATE(
+				                COUNTROWS(removals),
+				                FILTER(
+				                    turnover_data,
+				                    turnover_data[Business Unit] = EARLIER([Business Unit]) &&
+				                    turnover_data[Segmentation_ID] = EARLIER([Segmentation_ID]) &&
+				                    turnover_data[Branch] = EARLIER([Branch]) &&
+				                    RELATED(branch_country [Country]) = EARLIER([Country]) &&
+				                    turnover_data[Service Line] = EARLIER([Service Line]) &&
+				                    turnover_data[Industry] = EARLIER([Industry]) &&
+				                    EOMONTH(turnover_data[Final Date], -1) + 1 = EARLIER([Date]) // Filtro por mes
+				                    )
+				            ),
+				            0) + 
+				        CALCULATE(
+				            COUNTROWS('roster_and_nnb'),
+				            FILTER(
+				                'roster_and_nnb',
+				                'roster_and_nnb'[business_unit] = EARLIER([Business Unit]) &&
+				                'roster_and_nnb'[Segmentation_ID] = EARLIER([Segmentation_ID]) &&
+				                'roster_and_nnb'[Country] = EARLIER([Country]) &&
+				                'roster_and_nnb'[Branch] = EARLIER([Branch]) &&
+				                'roster_and_nnb'[Service Line] = EARLIER([Service Line]) &&
+				                'roster_and_nnb'[Industry] = EARLIER([Industry]) &&
+				                DATE(YEAR(TODAY()), MONTH(TODAY()), 1) // Filtro por mes
+				            )
+				        ),
+				    "% Turnover", 
+				        DIVIDE(
+				            COALESCE(
+				                CALCULATE(
+				                    COUNTROWS(removals),
+				                    FILTER(
+				                        turnover_data,
+				                        turnover_data[Business Unit] = EARLIER([Business Unit]) &&
+				                        turnover_data[Segmentation_ID] = EARLIER([Segmentation_ID]) &&
+				                        turnover_data[Branch] = EARLIER([Branch]) &&
+				                        RELATED(branch_country [Country]) = EARLIER([Country]) &&
+				                        turnover_data[Service Line] = EARLIER([Service Line]) &&
+				                        turnover_data[Industry] = EARLIER([Industry]) &&
+				                        EOMONTH(turnover_data[Final Date], -1) + 1 = EARLIER([Date]) // Filtro por mes
+				                        )
+				                ),
+				                0),
+				            CALCULATE(
+				                COUNTROWS(removals),
+				                FILTER(
+				                    turnover_data,
+				                    turnover_data[Business Unit] = EARLIER([Business Unit]) &&
+				                    turnover_data[Segmentation_ID] = EARLIER([Segmentation_ID]) &&
+				                    RELATED(branch_country [Country]) = EARLIER([Country]) &&
+				                    turnover_data[Branch] = EARLIER([Branch]) &&
+				                    turnover_data[Service Line] = EARLIER([Service Line]) &&
+				                    turnover_data[Industry] = EARLIER([Industry]) &&
+				                    EOMONTH(turnover_data[Final Date], -1) + 1 = EARLIER([Date]) // Filtro por mes
+				                )
+				            ) + 
+				            CALCULATE(
+				                COUNTROWS('roster_and_nnb'),
+				            FILTER(
+				                'roster_and_nnb',
+				                'roster_and_nnb'[business_unit] = EARLIER([Business Unit]) &&
+				                'roster_and_nnb'[Segmentation_ID] = EARLIER([Segmentation_ID]) &&
+				                'roster_and_nnb'[Country] = EARLIER([Country]) &&
+				                'roster_and_nnb'[Branch] = EARLIER([Branch]) &&
+				                'roster_and_nnb'[Service Line] = EARLIER([Service Line]) &&
+				                'roster_and_nnb'[Industry] = EARLIER([Industry]) &&
+				                DATE(YEAR(TODAY()), MONTH(TODAY()), 1) // Filtro por mes
+				                )
+				            ),
+				            0
+				        )
+				    )
+				```
+
+	annotation PBI_Id = 1af01bc1566541d69c9f9fb9004c7556
+

@@ -1,0 +1,180 @@
+table Implementation_Months
+	isHidden
+	lineageTag: 11a0d0fe-427c-4167-9cd9-3656e64c178d
+
+	measure '% Attrition Impl' = ```
+			
+			DIVIDE(
+			    SUM(Implementation_Months[Attrition]),
+			    SUM(Implementation_Months[HC])
+			)
+			
+			```
+		formatString: 0%;-0%;0%
+		isHidden
+		lineageTag: f52aec1b-efbe-4a5b-9d1c-8b0571680822
+
+	measure '% Attrition Ponderado (Impl)' = ```
+			
+			VAR TotalAttrition = SUM(Implementation_Months[Attrition])
+			VAR TotalHC = SUM(Implementation_Months[HC])
+			RETURN 
+			IF(TotalHC = 0, 0, DIVIDE(TotalAttrition, TotalHC))
+			
+			```
+		formatString: 0%;-0%;0%
+		isHidden
+		lineageTag: 0736f17e-aa7e-4706-8193-d7f7b0006cb9
+
+	column Segmentation_ID
+		isHidden
+		formatString: 0
+		lineageTag: 31f5f1f2-d9a9-4e5d-9487-6a359fa7212f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Segmentation_ID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Account Name'
+		isHidden
+		lineageTag: bdbd2e5d-0f7f-4cdf-938d-0472683d114b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Account Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Business Unit'
+		isHidden
+		lineageTag: efe3b082-8de4-4d93-8ea1-8c69885e4e18
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Business Unit]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		isHidden
+		lineageTag: c26df06a-eea6-4f85-b656-5553007d4d96
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Country]
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonth
+		dataType: string
+		isHidden
+		lineageTag: b0012f25-cb9c-4180-b3cd-0d06ab6d2122
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [YearMonth]
+
+		annotation SummarizationSetBy = Automatic
+
+	column HC =
+			
+			CALCULATE(
+			    MAX('SCR_finance'[Current Net Seats]),
+			    FILTER(
+			        'SCR_finance',
+			        'SCR_finance'[segmentation_ID] = 'Implementation_Months'[Segmentation_ID]
+			        && FORMAT('SCR_finance'[Date], "yyyy-MM") = 'Implementation_Months'[YearMonth]
+			    )
+			)
+		isHidden
+		formatString: 0
+		lineageTag: 2646ce7f-1c58-4340-9a06-956c59a3c46b
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Attrition = ```
+			
+			VAR Result = 
+			    CALCULATE(
+			        MAX(Attrition[Attrition]),
+			        FILTER(
+			            Attrition,
+			            Attrition[Segmentation_ID] = 'Implementation_Months'[Segmentation_ID]
+			            && FORMAT(Attrition[Date], "yyyy-MM") = 'Implementation_Months'[YearMonth]
+			        )
+			    )
+			RETURN IF(ISBLANK(Result), 0, Result)
+			
+			```
+		isHidden
+		formatString: 0
+		lineageTag: 4fc57c4a-33a9-4c8b-a125-7b53770e85ab
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column '% attrition monthly' =
+			IF(Implementation_Months[Attrition]=0 && Implementation_Months[HC]=0, 0,
+			    DIVIDE(Implementation_Months[Attrition],(Implementation_Months[HC]+Implementation_Months[Attrition])))
+		isHidden
+		formatString: 0%;-0%;0%
+		lineageTag: fbf51510-ef3f-4e77-bc08-fe2015986530
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		isHidden
+		formatString: m/d/yyyy
+		lineageTag: bf8627ee-cff0-403a-91f5-55bcd2a8c5ff
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	partition Implementation_Months = calculated
+		mode: import
+		source = ```
+				
+				VAR BaseAccounts =
+				    FILTER(
+				        Implementation_table,
+				        NOT ISBLANK([Deal Closing]) && NOT ISBLANK([Transition Date])
+				    )
+				VAR ExpandedWithMonths =
+				    GENERATE(
+				        BaseAccounts,
+				        ADDCOLUMNS(
+				            FILTER(
+				                SUMMARIZE(
+				                    Dim_Calendar_Finance,
+				                    Dim_Calendar_Finance[YearMonth],
+				                    Dim_Calendar_Finance[Date]
+				                ),
+				                YEAR(Dim_Calendar_Finance[Date]) * 100 + MONTH(Dim_Calendar_Finance[Date]) >= 
+				                    YEAR([Deal Closing]) * 100 + MONTH([Deal Closing]) &&
+				                YEAR(Dim_Calendar_Finance[Date]) * 100 + MONTH(Dim_Calendar_Finance[Date]) <= 
+				                    YEAR([Transition Date]) * 100 + MONTH([Transition Date]) &&
+				                DAY(Dim_Calendar_Finance[Date]) = 1 
+				            ),
+				            "MonthStartDate", Dim_Calendar_Finance[Date]
+				        )
+				    )
+				RETURN
+				    SELECTCOLUMNS(
+				        ExpandedWithMonths,
+				        "Segmentation_ID", [Segmentation_ID],
+				        "Account Name", [Main Account Name],
+				        "Business Unit", [Business Unit],
+				        "Country", [Country],
+				        "YearMonth", [YearMonth],
+				        "Date", [MonthStartDate] 
+				    )
+				
+				```
+
+	annotation PBI_Id = 28a0260e4a2a4e03bb57acc5f6dc337a
+

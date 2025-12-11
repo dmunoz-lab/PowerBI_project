@@ -1,0 +1,24 @@
+table country
+	lineageTag: 535cae8c-736e-41d4-b205-237d92d2dd8b
+
+	column country
+		dataType: string
+		lineageTag: a563725a-2792-45f0-888b-1773a0c1985b
+		summarizeBy: none
+		sourceColumn: country
+
+		annotation SummarizationSetBy = Automatic
+
+	partition country = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45Wcs7Pyc9NykxUitWJVnIvTSxJzU3MgfB8Uysyk/PBzICMzJzMgoLMvNRipdhYAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [country = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"country", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

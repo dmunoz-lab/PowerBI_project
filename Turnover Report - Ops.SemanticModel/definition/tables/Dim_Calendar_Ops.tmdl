@@ -1,0 +1,151 @@
+table Dim_Calendar_Ops
+	lineageTag: a122d76d-623e-4691-bd60-2b420b8e2ba4
+
+	column Date
+		formatString: mm/dd/yyyy
+		lineageTag: 9c0e18ce-7c59-4da5-a4e6-bfd18b7146f7
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: b4069552-2af8-4947-9a29-a411730de2c2
+			defaultHierarchy: LocalDateTable_81738fc8-8a5c-45e7-8afd-d0cf32e940c6.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column #Year
+		formatString: 0
+		lineageTag: c7de9c0f-68ad-408b-b4e4-98b73a1c3b44
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [#Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column #Month
+		formatString: 0
+		lineageTag: e72c1af5-90d3-417a-bcb2-54c718c382b0
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [#Month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column #Day
+		formatString: 0
+		lineageTag: c7c93e9d-970d-459d-b9fb-5d4309c2615a
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [#Day]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		lineageTag: 0709ef8c-0362-44e6-8fca-a8534cf494f0
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month]
+		sortByColumn: #Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column ShortMonth
+		dataType: string
+		lineageTag: c4a28d45-a35a-459d-8cb4-cf1111d114ab
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ShortMonth]
+		sortByColumn: #Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column #DayOfTheWeek
+		formatString: 0
+		lineageTag: 34695caf-7a24-4d13-81ac-c43775268727
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [#DayOfTheWeek]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day
+		lineageTag: 18e96324-6184-4c9b-97bb-903babd4061c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Day]
+		sortByColumn: #DayOfTheWeek
+
+		annotation SummarizationSetBy = Automatic
+
+	column ShortDay
+		lineageTag: 8d29740b-8296-42f2-aa4a-efda813f7833
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ShortDay]
+		sortByColumn: #DayOfTheWeek
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonth
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 34c60ef4-7dcf-4f77-9ee0-2eb481ea011c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [YearMonth]
+
+		variation Variation
+			isDefault
+			relationship: 22faaf18-c4fc-4c53-a272-1d59f7c65469
+			defaultHierarchy: LocalDateTable_a8334cf5-5807-4a34-acc8-2fc2e625892a.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column #WeekOfTheYear
+		formatString: 0
+		lineageTag: 70279d97-593b-4708-8689-298a9d533151
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [#WeekOfTheYear]
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonthIndex = ```
+			
+			YEAR ( [Date] ) * 100 + MONTH ( [Date] )
+			
+			```
+		formatString: 0
+		lineageTag: c5feb082-f1e4-4e89-b4ee-7b5b1bd86206
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Calendar_Ops = calculated
+		mode: import
+		source = ```
+				
+				ADDCOLUMNS (
+				    CALENDAR ( MIN ( removals[Effective Date] ), TODAY() ),
+				    "#Year", YEAR ( [Date] ),
+				    "#Month", MONTH ( [Date] ),
+				    "#Day", DAY ( [Date] ),
+				    "Month", FORMAT ( [Date], "MMMM" ),
+				    "ShortMonth", FORMAT ( [Date], "MMM" ),
+				    "#DayOfTheWeek", WEEKDAY ( [Date], 2 ),
+				    "#WeekOfTheYear", WEEKNUM ( [Date], 2 ),
+				    "Day", FORMAT ( [Date], "DDDD" ),
+				    "ShortDay", FORMAT ( [Date], "DDD" ),
+				    "YearMonth", FORMAT ( [Date], "YYYY-MM" )
+				)
+				
+				```
+
+	annotation PBI_Id = 957a04c846ba41a7b611e34214e9b0be
+

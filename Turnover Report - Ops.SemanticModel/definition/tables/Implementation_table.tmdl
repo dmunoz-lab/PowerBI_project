@@ -1,0 +1,353 @@
+table Implementation_table
+	isHidden
+	lineageTag: 9f278ed5-ed05-45a0-9628-61a96cab8d3a
+
+	measure 'AVG of % Attrition within impl' = AVERAGE(Implementation_table[% Attrition within impl])
+		formatString: 0%;-0%;0%
+		isHidden
+		lineageTag: 67299421-1464-4d89-ae63-ab6039935f92
+
+	measure 'AVG Attrition impl' = ```
+			AVERAGE(Implementation_table[Attrition within impl])
+			
+			```
+		isHidden
+		lineageTag: 3822db56-32e9-4498-b01b-7217db85e294
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'AVG 90 Days PT %' = ```
+			AVERAGE(Implementation_table[90 days post-transition])
+			
+			```
+		isHidden
+		lineageTag: 9bd46ac7-e548-4f91-8d6d-687ecaee55ec
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'AVG % 90 Days PT' = AVERAGE(Implementation_table[% 90 Day Attrition])
+		isHidden
+		lineageTag: 2d6f33b7-ba60-434b-a260-ae14c9170164
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Deal Closing'
+		isHidden
+		formatString: mmmm d\, yyyy
+		lineageTag: 3279f05c-f854-40d1-908b-c3e2c0171e39
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Deal Closing]
+
+		variation Variation
+			isDefault
+			relationship: a8822631-f328-466c-926f-9534839b18ff
+			defaultHierarchy: LocalDateTable_7f5f42ec-85dc-4281-b49f-13b86ee3bfdf.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Transition Date'
+		isHidden
+		formatString: mmmm d\, yyyy
+		lineageTag: 2428b733-6bb0-4dd4-984a-dfd40632c156
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Transition Date]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Days to Transition' = DATEDIFF(Implementation_table[Deal Closing],Implementation_table[Transition Date],DAY)
+		isHidden
+		formatString: 0
+		lineageTag: 7f7d1b95-4659-4154-85d3-b57c8feb1843
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	column 'Attrition within impl' =
+			
+			COALESCE(CALCULATE(
+			    COUNTROWS(removals),
+			    FILTER(
+			        removals,
+			            removals[Segmentation_ID] = Implementation_table[Segmentation_ID]
+			            && removals[Business Unit] = Implementation_table[Business Unit]
+			            && removals[Branch] = Implementation_table[Branch]
+			            && removals[Country] = Implementation_table[Country]
+			            && removals[Industry] = Implementation_table[Industry]
+			            && removals[roster_vs_invoice_ID] = Implementation_table[roster_vs_invoice_ID]
+			            && (YEAR(removals[Finance Report]) * 100 + MONTH(removals[Finance Report]))
+			            >= (YEAR(Implementation_table[Deal Closing]) * 100 + MONTH(Implementation_table[Deal Closing]))
+			             && (YEAR(removals[Finance Report]) * 100 + MONTH(removals[Finance Report]))
+			            <= (YEAR(Implementation_table[Transition Date]) * 100 + MONTH(Implementation_table[Transition Date]))
+			    )
+			),0)
+		isHidden
+		formatString: 0
+		lineageTag: 9a4c2898-6449-4e62-aa42-752c564bbd4c
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Activations within impl' =
+			
+			COALESCE(CALCULATE(
+			    COUNTROWS(upsells),
+			    FILTER(
+			        upsells,
+			            upsells[Segmentation_ID] = Implementation_table[Segmentation_ID]
+			            && upsells[Business Unit] = Implementation_table[Business Unit]
+			            && upsells[Branch] = Implementation_table[Branch]
+			            && upsells[Country] = Implementation_table[Country]
+			            && upsells[Industry] = Implementation_table[Industry]
+			            && upsells[roster_vs_invoice_ID] = Implementation_table[roster_vs_invoice_ID]
+			            && (YEAR(upsells[Finance Report]) * 100 + MONTH(upsells[Finance Report]))
+			            >= (YEAR(Implementation_table[Deal Closing]) * 100 + MONTH(Implementation_table[Deal Closing]))
+			             && (YEAR(upsells[Finance Report]) * 100 + MONTH(upsells[Finance Report]))
+			            <= (YEAR(Implementation_table[Transition Date]) * 100 + MONTH(Implementation_table[Transition Date]))
+			    )
+			),0)
+		isHidden
+		formatString: 0
+		lineageTag: 88ec1fee-67e9-4b60-9ac0-81f15eb0f642
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column '90 days post-transition' = ```
+			
+			COALESCE(CALCULATE(
+			    COUNTROWS(removals),
+			    FILTER(
+			        removals,
+			            removals[Segmentation_ID] = Implementation_table[Segmentation_ID]
+			            && removals[Business Unit] = Implementation_table[Business Unit]
+			            && removals[Branch] = Implementation_table[Branch]
+			            && removals[Country] = Implementation_table[Country]
+			            && removals[Industry] = Implementation_table[Industry]
+			            && removals[roster_vs_invoice_ID] = Implementation_table[roster_vs_invoice_ID]
+			            && removals[Finance report].[Date] >= Implementation_table[Transition Date]
+			            && removals[Finance report].[Date] <= VALUE(Implementation_table[Transition Date]) + 90
+			    )
+			),0)
+			
+			```
+		isHidden
+		formatString: 0
+		lineageTag: 0ebed276-c7e5-493b-934d-d343bae1ab3e
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column '% 90 Day Attrition' = DIVIDE(Implementation_table[90 days post-transition],[Transition HC],0)
+		isHidden
+		formatString: 0%;-0%;0%
+		lineageTag: 2153170d-80cc-4522-bc28-d0156fa51bcc
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Main Account Name'
+		isHidden
+		lineageTag: 248a4096-058f-495d-b1eb-a76619c3c724
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Main Account Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Transition HC' =
+			
+			VAR MaxDate =
+			    CALCULATE(
+			        MAX(SCR_finance[Date]),
+			        FILTER(
+			            SCR_finance,
+			            SCR_finance[Segmentation_ID] = Implementation_table[Segmentation_ID]
+			                && SCR_finance[Business Unit] = Implementation_table[Business Unit]
+			                && SCR_finance[Country] = Implementation_table[Country]
+			                && SCR_finance[Industry] = Implementation_table[Industry]
+			                && SCR_finance[roster_vs_invoice_ID] = Implementation_table[roster_vs_invoice_ID]
+			                && SCR_finance[Date] < Implementation_table[Transition Date]
+			        )
+			    )
+			
+			RETURN
+			    COALESCE(CALCULATE(
+			        MAX(SCR_finance[Current Net Seats]),
+			        FILTER(
+			            SCR_finance,
+			            SCR_finance[Segmentation_ID] = Implementation_table[Segmentation_ID]
+			                && SCR_finance[Business Unit] = Implementation_table[Business Unit]
+			                && SCR_finance[Country] = Implementation_table[Country]
+			                && SCR_finance[Industry] = Implementation_table[Industry]
+			                && SCR_finance[roster_vs_invoice_ID] = Implementation_table[roster_vs_invoice_ID]
+			                && SCR_finance[Date] = MaxDate
+			        )
+			    ),0
+			)
+		isHidden
+		formatString: 0
+		lineageTag: 9f129ea3-0e1c-41a8-8c67-89c9af569aa8
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Current Month HC' = ```
+			
+			VAR MaxFecha =
+			    CALCULATE(
+			        MAX(SCR_finance[Date]),
+			        FILTER(
+			            SCR_finance,
+			            SCR_finance[Segmentation_ID] = Implementation_table[Segmentation_ID]
+			                && SCR_finance[Business Unit] = Implementation_table[Business Unit]
+			                && SCR_finance[Country] = Implementation_table[Country]
+			                && SCR_finance[Industry] = Implementation_table[Industry]
+			                && SCR_finance[roster_vs_invoice_ID] = Implementation_table[roster_vs_invoice_ID]
+			        )
+			    )
+			RETURN
+			COALESCE(
+			    CALCULATE(
+			        MAX(SCR_finance[Current Net Seats]),
+			        FILTER(
+			            SCR_finance,
+			            SCR_finance[Segmentation_ID] = Implementation_table[Segmentation_ID]
+			                && SCR_finance[Business Unit] = Implementation_table[Business Unit]
+			                && SCR_finance[Country] = Implementation_table[Country]
+			                && SCR_finance[Industry] = Implementation_table[Industry]
+			                && SCR_finance[roster_vs_invoice_ID] = Implementation_table[roster_vs_invoice_ID]
+			                && SCR_finance[Date] = MaxFecha
+			        )
+			    ),
+			0)
+			
+			```
+		isHidden
+		formatString: 0
+		lineageTag: 1d5f08ce-5b2e-4134-bcc3-b532882af217
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column segmentation_ID
+		isHidden
+		formatString: 0
+		lineageTag: 274830fc-6b2e-41d8-affd-f1bb2445bb38
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[segmentation_ID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Business Unit'
+		isHidden
+		lineageTag: ef4f8a98-1dde-454a-b9b3-bdf5da8f8784
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[Business Unit]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Branch
+		isHidden
+		lineageTag: 25e60d27-f104-42fa-abba-214081256a59
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[Branch]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		isHidden
+		lineageTag: ffd8813f-6898-455b-bd5b-64045cd4d033
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[Country]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Industry
+		isHidden
+		lineageTag: d52dafb9-86f0-41d3-afbf-1f6468c1d84d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[Industry]
+
+		annotation SummarizationSetBy = Automatic
+
+	column roster_vs_invoice_ID
+		isHidden
+		formatString: 0
+		lineageTag: 44ca40f2-bbe3-4c47-8553-1cb86d23ce96
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: upsells[roster_vs_invoice_ID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column '% Attrition within impl' = IF(Implementation_table[Attrition within impl]=0 && Implementation_table[Activations within impl]=0,0, Implementation_table[Attrition within impl]/Implementation_table[Activations within impl])
+		isHidden
+		formatString: 0%;-0%;0%
+		lineageTag: 58cd8d9e-218b-48a9-bec3-8c0e5a0c5fd2
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Implementation_table = calculated
+		mode: import
+		source = ```
+				
+				SUMMARIZE(
+				    FILTER(
+				        upsells,
+				        NOT ISBLANK(
+				            CALCULATE(
+				                MAX(customer_segmentation[deal closing date]),
+				                FILTER(
+				                    customer_segmentation,
+				                    customer_segmentation[segmentation_ID] = upsells[Segmentation_ID]
+				                )
+				            )
+				        )
+				    ),
+				    upsells[Segmentation_ID],
+				    upsells[Business Unit],
+				    upsells[Branch],
+				    upsells[Country],
+				    upsells[Industry],
+				    upsells[roster_vs_invoice_ID],
+				
+				    // Columnas adicionales con agregación
+				    "Deal Closing", CALCULATE(
+				        MAX(customer_segmentation[deal closing date]),
+				        FILTER(
+				            customer_segmentation,
+				            customer_segmentation[segmentation_ID] = upsells[Segmentation_ID]
+				        )
+				    ),
+				    "Transition Date", CALCULATE(
+				        MAX(customer_segmentation[Transition_ops]),
+				        FILTER(
+				            customer_segmentation,
+				            customer_segmentation[segmentation_ID] = upsells[Segmentation_ID]
+				        )
+				    ),
+				    "Main Account Name", CALCULATE(
+				        MAX(customer_segmentation[Account Name]),
+				        FILTER(
+				            customer_segmentation,
+				            customer_segmentation[segmentation_ID] = upsells[Segmentation_ID]
+				        )
+				    )
+				)
+				
+				```
+
+	annotation PBI_Id = d4a3ffca3d6a478384362a12b2ca546e
+

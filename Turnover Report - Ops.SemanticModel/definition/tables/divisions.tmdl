@@ -1,0 +1,26 @@
+table divisions
+	lineageTag: d48689e6-ff0c-435a-8003-0e42e9f3a568
+
+	column Divisions
+		dataType: string
+		lineageTag: a9b9a415-bb04-4687-a787-5ef6e059bf53
+		summarizeBy: none
+		sourceColumn: Divisions
+
+		annotation SummarizationSetBy = Automatic
+
+	partition divisions = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WcirIV4rViVZyyc9NLS7JTAZzXPNKUosKijKLU8Fc9zQw5ZtYlJ1akpmXDuYF+zqB6ZDU5Awwwyk1D8SKBQA=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Divisions = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Divisions", type text}}),
+				    #"Removed Bottom Rows" = Table.RemoveLastN(#"Changed Type",1),
+				    #"Replaced Value" = Table.ReplaceValue(#"Removed Bottom Rows","Domestic","Core Account",Replacer.ReplaceText,{"Divisions"})
+				in
+				    #"Replaced Value"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,270 @@
+expression removals2025 =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://perfilesysoluciones.sharepoint.com/sites/CROSSFUNCTIONALREPORTINGTEAM/Shared%20Documents/Seat%20Count%20Report/Activations%20vs%20Removals/Downsell%20vs%20Upsell%202025.xlsx"), null, true),
+		    removals_Table = Source{[Item="removals",Kind="Table"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(removals_Table,{{"downsell_id", type text}, {"Created by", type text}, {"Employee Name", type text}, {"ID Number", type any}, {"Workplace", type text}, {"Branch", type text}, {"Previous Business Unit", type text}, {"Previous Service Line", type text}, {"Customer", type text}, {"Sub Account", type text}, {"Previous Department", type any}, {"Next Business Unit", type text}, {"Next Service Line", type text}, {"Next Customer", type text}, {"Next Sub Account", type text}, {"Next Department - Area", type any}, {"Previous Position", type text}, {"Next Position", type text}, {"Previous Status", type text}, {"Next Status", type text}, {"Active Condition", type any}, {"Date Created", type date}, {"Created Time", type datetime}, {"Approved", type text}, {"Reason", type text}, {"Approved Date", type date}, {"Approved Time", type datetime}, {"Effective Date", type date}, {"Effective Time", type datetime}, {"Internal/External", type text}, {"Downsell", type text}, {"Finance report", type any}, {"Replaced by ID", type any}, {"upsell_id", type text}, {"Final Status", type text}, {"Final Date", type any}, {"Aging", Int64.Type}, {"Billing Cycle", type text}, {"Pending", type text}, {"Notes", type text}, {"roster_vs_invoice_ID", Int64.Type}, {"roster_ID", Int64.Type}, {"Req_ID", type any}})
+		in
+		    #"Changed Type"
+	lineageTag: 1686e24e-3afe-4647-b575-fae1c1c2d894
+	queryGroup: Databases
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression roster_historical2025 =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://perfilesysoluciones.sharepoint.com/sites/CROSSFUNCTIONALREPORTINGTEAM/Shared%20Documents/Seat%20Count%20Report/COGs/Roster%20Historical%202025.xlsx"), null, true),
+		    roster_historical_Table = Source{[Item="roster_historical",Kind="Table"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(roster_historical_Table,{{"Roster date", type date}, {"Branch", type text}, {"Office", type text}, {"Residence", type text}, {"Service Line", type text}, {"Business Unit", type text}, {"company_id", Int64.Type}, {"Account", type text}, {"company_legal_name", type text}, {"Sub Account", type text}, {"Cost Center", type text}, {"Employee Name", type text}, {"ID Number", type any}, {"ID Type", type text}, {"Status", type text}, {"Substatus", type text}, {"Reason of removal", type text}, {"Last Status Date", type number}, {"Active Date", type number}, {"Availability", type text}, {"Senior managers", type text}, {"OPS managers", type text}, {"Account Position", type text}, {"Internal Position", type any}, {"Department", type text}, {"Area", type text}, {"assigned_date", type number}, {"Last Status Date2", Int64.Type}, {"Direct", type text}, {"Birthday", Int64.Type}, {"Temporal Entry Date", Int64.Type}, {"Entry Date", Int64.Type}, {"Requisition", type any}, {"Building", type text}, {"Floor", type any}, {"Office2", type any}, {"Seat", type text}, {"Hierarchy Level", type any}, {"Report To", type any}, {"Work Modality", type any}, {"Billrate", type any}, {"Salary Cost", type any}, {"roster_vs_invoice_ID", Int64.Type}, {"service_line", type text}, {"Industry", type text}})
+		in
+		    #"Changed Type"
+	lineageTag: 774083c3-b3a5-4ca3-b7b5-b252db91e9c3
+	queryGroup: Databases
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression view_nnb =
+		let
+		    Source = Odbc.DataSource("dsn=NNB", [HierarchicalNavigation=true]),
+		    temp_production_01_abr_2023_v3_Database = Source{[Name="temp_production_01_abr_2023_v3",Kind="Database"]}[Data],
+		    public_Schema = temp_production_01_abr_2023_v3_Database{[Name="public",Kind="Schema"]}[Data],
+		    view_nnb_View = public_Schema{[Name="view_nnb",Kind="View"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(view_nnb_View,{{"profiling_date", type date}, {"asigned_date", type date}, {"effective_date", type date}, {"effective_date_subquery", type date}}),
+		    #"Removed Duplicates" = Table.Distinct(#"Changed Type", {"identification"}),
+		    #"Renamed Columns2" = Table.RenameColumns(#"Removed Duplicates",{{"status", "status1"}}),
+		    #"Added Conditional Column" = Table.AddColumn(#"Renamed Columns2", "status", each if [sub_status] = null then [status1] else [sub_status]),
+		    #"Removed Columns" = Table.RemoveColumns(#"Added Conditional Column",{"status1", "sub_status"}),
+		    #"Extracted Text Before Delimiter" = Table.TransformColumns(#"Removed Columns", {{"aging", each Text.BeforeDelimiter(_, " "), type text}}),
+		    #"Replaced Value" = Table.ReplaceValue(#"Extracted Text Before Delimiter","00:00:00","0",Replacer.ReplaceText,{"aging"}),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Replaced Value",{{"is_implementation", Int64.Type}, {"aging", Int64.Type}}),
+		    #"Capitalized Each Word" = Table.TransformColumns(#"Changed Type1",{{"status", Text.Proper, type text}, {"branch", Text.Proper, type text}, {"service_line", Text.Proper, type text}, {"business_units", Text.Proper, type text}}),
+		    #"Renamed Columns" = Table.RenameColumns(#"Capitalized Each Word",{{"profiling_to_account", "company"}, {"business_units", "business_unit"}}),
+		    #"Removed Columns1" = Table.RemoveColumns(#"Renamed Columns",{"vailability", "reason", "commen", "visa", "next_status", "tentative_date", "profiling_business_unit", "profiling_service_line", "profiling_branch", "company", "profiling_to_sub_account", "profiling_position", "profiling_date", "asigned_date", "effective_date", "effective_date_subquery"}),
+		    #"Changed Type2" = Table.TransformColumnTypes(#"Removed Columns1",{{"is_implementation", type text}}),
+		    #"Replaced Value1" = Table.ReplaceValue(#"Changed Type2","0","No",Replacer.ReplaceText,{"is_implementation"}),
+		    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","1","Yes",Replacer.ReplaceText,{"is_implementation"}),
+		    #"Renamed Columns1" = Table.RenameColumns(#"Replaced Value2",{{"name", "schedule_availability"}}),
+		    #"Replaced Value3" = Table.ReplaceValue(#"Renamed Columns1","Lean Bpo","Lean Operations",Replacer.ReplaceText,{"business_unit"}),
+		    #"Added Conditional Column1" = Table.AddColumn(#"Replaced Value3", "company", each if [current_account] = null then [current_profiling_account] else [current_account]),
+		    #"Capitalized Each Word1" = Table.TransformColumns(#"Added Conditional Column1",{{"company", Text.Proper, type text}}),
+		    #"Removed Columns2" = Table.RemoveColumns(#"Capitalized Each Word1",{"current_account", "current_profiling_account"}),
+		    #"Duplicated Column" = Table.DuplicateColumn(#"Removed Columns2", "date_status", "date_status - Copy"),
+		    #"Removed Columns3" = Table.RemoveColumns(#"Duplicated Column",{"is_implementation", "schedule_availability", "comments", "date_status", "profiling_count", "date_status - Copy"}),
+		    #"Merged Queries" = Table.NestedJoin(#"Removed Columns3", {"company"}, #"portal _accounts_name", {"account_roster_name"}, "roster_account_name", JoinKind.LeftOuter),
+		    #"Expanded roster_account_name1" = Table.ExpandTableColumn(#"Merged Queries", "roster_account_name", {"portal_ID"}, {"roster_account_name.portal_ID"}),
+		    #"Renamed Columns3" = Table.RenameColumns(#"Expanded roster_account_name1",{{"roster_account_name.portal_ID", "customer_id"}})
+		in
+		    #"Renamed Columns3"
+	lineageTag: eab42808-549e-4b5c-a0a8-324e94c96b62
+	queryGroup: Roster_live
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression live_roster_view =
+		let
+		    Source = Odbc.DataSource("dsn=ROSTER", [HierarchicalNavigation=true]),
+		    temp_production_01_abr_2023_v3_Database = Source{[Name="temp_production_01_abr_2023_v3",Kind="Database"]}[Data],
+		    public_Schema = temp_production_01_abr_2023_v3_Database{[Name="public",Kind="Schema"]}[Data],
+		    live_roster_view_View = public_Schema{[Name="live_roster_view",Kind="View"]}[Data],
+		    #"Filtered Rows" = Table.SelectRows(live_roster_view_View, each true),
+		    #"Capitalized Each Word" = Table.TransformColumns(#"Filtered Rows",{{"branch_city", Text.Proper, type text}, {"status", Text.Proper, type text}, {"service_line_name", Text.Proper, type text}, {"position", Text.Proper, type text}}),
+		    #"Renamed Columns" = Table.RenameColumns(#"Capitalized Each Word",{{"branch_city", "branch"}, {"service_line_name", "service_line"}}),
+		    #"Filtered Rows1" = Table.SelectRows(#"Renamed Columns", each ([status] = "Active" or [status] = "Offboarding")),
+		    #"Added Conditional Column" = Table.AddColumn(#"Filtered Rows1", "business_unit", each if [service_line] = "marketing" then "Lean Marketing" else "Lean Operations"),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Added Conditional Column",{{"business_unit", type text}})
+		in
+		    #"Changed Type"
+	lineageTag: 5b90c128-f412-4691-9652-c008baf92bed
+	queryGroup: Roster_live
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression activations2025 =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://perfilesysoluciones.sharepoint.com/sites/CROSSFUNCTIONALREPORTINGTEAM/Shared%20Documents/Seat%20Count%20Report/Activations%20vs%20Removals/Downsell%20vs%20Upsell%202025.xlsx"), null, true),
+		    activations_Table = Source{[Item="activations",Kind="Table"]}[Data]
+		in
+		    activations_Table
+	lineageTag: 7e8a9391-0631-4ad8-b410-59220cbcca09
+	queryGroup: Databases
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression PHL_invoice =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://perfilesysoluciones.sharepoint.com/sites/DocumentosLeanSolutionsGroup/Strategic%20Development%20Area/Strategic%20Development/MNR/MBR/LSG%20INVOICE%20LIST/SCR/SCR%20-%20Conciliated.xlsx"), null, true),
+		    PHL_invoice_Table = Source{[Item="PHL_invoice",Kind="Table"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(PHL_invoice_Table,{{"roster_vs_invoice_ID", Int64.Type}, {"Account", type text}}),
+		    #"Added Custom" = Table.AddColumn(#"Changed Type", "Country", each "Philippines")
+		in
+		    #"Added Custom"
+	lineageTag: a9175f1f-bfe8-4410-be67-cac59b7f656a
+	queryGroup: SCR
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression COL_invoice =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://perfilesysoluciones.sharepoint.com/sites/DocumentosLeanSolutionsGroup/Strategic%20Development%20Area/Strategic%20Development/MNR/MBR/LSG%20INVOICE%20LIST/SCR/SCR%20-%20Conciliated.xlsx"), null, true),
+		    COL_invoice_Table = Source{[Item="COL_invoice",Kind="Table"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(COL_invoice_Table,{{"roster_vs_invoice_ID", Int64.Type}, {"Account", type text}}),
+		    #"Added Custom" = Table.AddColumn(#"Changed Type", "Country", each "Colombia")
+		in
+		    #"Added Custom"
+	lineageTag: 3175d6b3-b0aa-4d3e-89b5-bf068b7b3309
+	queryGroup: SCR
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression GUA_invoice =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://perfilesysoluciones.sharepoint.com/sites/DocumentosLeanSolutionsGroup/Strategic%20Development%20Area/Strategic%20Development/MNR/MBR/LSG%20INVOICE%20LIST/SCR/SCR%20-%20Conciliated.xlsx"), null, true),
+		    GUA_invoice_Table = Source{[Item="GUA_invoice",Kind="Table"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(GUA_invoice_Table,{{"roster_vs_invoice_ID", Int64.Type}, {"Account", type text}}),
+		    #"Added Custom" = Table.AddColumn(#"Changed Type", "Country", each "Guatemala")
+		in
+		    #"Added Custom"
+	lineageTag: 27faa891-70ae-4a26-bbfd-7050fc07939a
+	queryGroup: SCR
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression MEX_invoice =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://perfilesysoluciones.sharepoint.com/sites/DocumentosLeanSolutionsGroup/Strategic%20Development%20Area/Strategic%20Development/MNR/MBR/LSG%20INVOICE%20LIST/SCR/SCR%20-%20Conciliated.xlsx"), null, true),
+		    MEX_invoice_Table = Source{[Item="MEX_invoice",Kind="Table"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(MEX_invoice_Table,{{"roster_vs_invoice_ID", Int64.Type}, {"Account", type text}}),
+		    #"Added Custom" = Table.AddColumn(#"Changed Type", "Country", each "Mexico")
+		in
+		    #"Added Custom"
+	lineageTag: cf1cb3dd-164d-4c81-8b84-27a9b28e66b8
+	queryGroup: SCR
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression PHL_invoice2025 =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://perfilesysoluciones.sharepoint.com/sites/DocumentosLeanSolutionsGroup/Strategic%20Development%20Area/Strategic%20Development/MNR/MBR/LSG%20INVOICE%20LIST/SCR/SCR%20-%20Conciliated%202025.xlsx"), null, true),
+		    PHL_invoice2025_Table = Source{[Item="PHL_invoice2025",Kind="Table"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(PHL_invoice2025_Table,{{"roster_vs_invoice_ID", Int64.Type}, {"Account", type text}}),
+		    #"Added Custom" = Table.AddColumn(#"Changed Type", "Country", each "Philippines")
+		in
+		    #"Added Custom"
+	lineageTag: 5834c23e-a3c6-4c10-a406-0425fc92ee09
+	queryGroup: SCR
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression MEX_invoice2025 =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://perfilesysoluciones.sharepoint.com/sites/DocumentosLeanSolutionsGroup/Strategic%20Development%20Area/Strategic%20Development/MNR/MBR/LSG%20INVOICE%20LIST/SCR/SCR%20-%20Conciliated%202025.xlsx"), null, true),
+		    MEX_invoice2025_Table = Source{[Item="MEX_invoice2025",Kind="Table"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(MEX_invoice2025_Table,{{"roster_vs_invoice_ID", Int64.Type}, {"Account", type text}, {"Business Unit", type text}}),
+		    #"Added Custom" = Table.AddColumn(#"Changed Type", "Country", each "Mexico")
+		in
+		    #"Added Custom"
+	lineageTag: 70a154b0-d644-4d02-a5b8-3cca8c4e1dc2
+	queryGroup: SCR
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression GUA_invoice2025 =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://perfilesysoluciones.sharepoint.com/sites/DocumentosLeanSolutionsGroup/Strategic%20Development%20Area/Strategic%20Development/MNR/MBR/LSG%20INVOICE%20LIST/SCR/SCR%20-%20Conciliated%202025.xlsx"), null, true),
+		    GUA_invoice2025_Table = Source{[Item="GUA_invoice2025",Kind="Table"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(GUA_invoice2025_Table,{{"roster_vs_invoice_ID", Int64.Type}, {"Account", type text}, {"Business Unit", type text}}),
+		    #"Added Custom" = Table.AddColumn(#"Changed Type", "Country", each "Guatemala")
+		in
+		    #"Added Custom"
+	lineageTag: 6d5a7e0f-35e7-4619-8508-c88ca7142ce6
+	queryGroup: SCR
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression COL_invoice2025 =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://perfilesysoluciones.sharepoint.com/sites/DocumentosLeanSolutionsGroup/Strategic%20Development%20Area/Strategic%20Development/MNR/MBR/LSG%20INVOICE%20LIST/SCR/SCR%20-%20Conciliated%202025.xlsx"), null, true),
+		    COL_invoice2025_Table = Source{[Item="COL_invoice2025",Kind="Table"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(COL_invoice2025_Table,{{"roster_vs_invoice_ID", Int64.Type}, {"Account", type text}, {"Business Unit", type text}}),
+		    #"Added Custom" = Table.AddColumn(#"Changed Type", "Country", each "Colombia")
+		in
+		    #"Added Custom"
+	lineageTag: ae757e44-cb1a-49da-98d7-ec187ed0272e
+	queryGroup: SCR
+
+	annotation PBI_ResultType = Table
+
+expression 'Errors in turnover_data2025' =
+		let
+		Source = turnover_data2025,
+		  #"Detected Type Mismatches" = let
+		    tableWithOnlyPrimitiveTypes = Table.SelectColumns(Source, Table.ColumnsOfType(Source, {type nullable number, type nullable text, type nullable logical, type nullable date, type nullable datetime, type nullable datetimezone, type nullable time, type nullable duration})),
+		    recordTypeFields = Type.RecordFields(Type.TableRow(Value.Type(tableWithOnlyPrimitiveTypes))),
+		    fieldNames = Record.FieldNames(recordTypeFields),
+		    fieldTypes = List.Transform(Record.ToList(recordTypeFields), each [Type]),
+		    pairs = List.Transform(List.Positions(fieldNames), (i) => {fieldNames{i}, (v) => if v = null or Value.Is(v, fieldTypes{i}) then v else error [Message = "The type of the value does not match the type of the column.", Detail = v], fieldTypes{i}})
+		in
+		    Table.TransformColumns(Source, pairs),
+		  #"Added Index" = Table.AddIndexColumn(#"Detected Type Mismatches", "Row Number" ,1),
+		  #"Kept Errors" = Table.SelectRowsWithErrors(#"Added Index", {"Branch", "Office", "Residence", "Industry", "Business Unit", "company_id", "Account", "company_legal_name", "Sub Account", "Cost Center", "Employee Name", "ID Number", "ID Type", "Status", "Substatus", "Last Status Date", "Active Date", "Availability", "Senior managers", "OPS managers", "Account Position", "Internal Position", "Department", "Area", "assigned_date", "Final Date", "Text date", "Direct", "Birthday", "Temporal Entry Date", "Entry Date", "Requisition", "downsell_id", "Downsell", "Reason", "Customer", "Last Position", "Age in the bench", "revisar last status", "roster_vs_invoice_ID", "roster_ID", "Service Line", "Service Line2", "segmentation_ID", "Main Account Name", "Type of termination", "Main reason for withdrawal", "Date", "Billrate", "Salary Cost", "Bench", "Bench Processing?"}),
+		  #"Reordered Columns" = Table.ReorderColumns(#"Kept Errors", {"Row Number", "Branch", "Office", "Residence", "Industry", "Business Unit", "company_id", "Account", "company_legal_name", "Sub Account", "Cost Center", "Employee Name", "ID Number", "ID Type", "Status", "Substatus", "Last Status Date", "Active Date", "Availability", "Senior managers", "OPS managers", "Account Position", "Internal Position", "Department", "Area", "assigned_date", "Final Date", "Text date", "Direct", "Birthday", "Temporal Entry Date", "Entry Date", "Requisition", "downsell_id", "Downsell", "Reason", "Customer", "Last Position", "Age in the bench", "revisar last status", "roster_vs_invoice_ID", "roster_ID", "Service Line", "Service Line2", "segmentation_ID", "Main Account Name", "Type of termination", "Main reason for withdrawal", "Date", "Billrate", "Salary Cost", "Bench", "Bench Processing?"})
+		in
+		  #"Reordered Columns"
+	lineageTag: 667356fc-bc22-44cc-a761-59255a54c680
+	queryGroup: 'Query Errors - 11/11/2025 10:55:12 AM'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression turnover_data2024 =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://perfilesysoluciones.sharepoint.com/sites/CROSSFUNCTIONALREPORTINGTEAM/Shared%20Documents/Seat%20Count%20Report/Activations%20vs%20Removals/Downsell%20vs%20Upsell%202024.xlsx"), null, true),
+		    attrition_data_Table = Source{[Item="turnover_data",Kind="Table"]}[Data],
+		    #"Changed Type1" = Table.TransformColumnTypes(attrition_data_Table,{{"Branch", type text}, {"Office", type text}, {"Residence", type text}, {"Service Line", type text}, {"Business Unit", type text}, {"company_id", type any}, {"Account", type any}, {"company_legal_name", type any}, {"Sub Account", type any}, {"Cost Center", type text}, {"Employee Name", type text}, {"ID Number", type any}, {"ID Type", type text}, {"Status", type text}, {"Substatus", type text}, {"Last Status Date", type datetime}, {"Active Date", type any}, {"Availability", type text}, {"Senior managers", type any}, {"OPS managers", type any}, {"Account Position", type text}, {"Internal Position", type any}, {"Department", type text}, {"Area", type text}, {"assigned_date", type any}, {"Final Date", type date}, {"Direct", type text}, {"Birthday", type date}, {"Temporal Entry Date", type date}, {"Entry Date", type date}, {"Requisition", type text}, {"downsell_id", type any}, {"Downsell", type any}, {"Reason", type any}, {"Customer", type any}, {"roster_vs_invoice_ID", type any}, {"roster_ID", type any} ,{"segmentation_ID", type any}, {"Type of termination", type text}, {"Main reason for withdrawal", type any}})
+		in
+		    #"Changed Type1"
+	lineageTag: 6979cedf-a836-483b-acf7-d8a1a6cbead5
+	queryGroup: Turnover
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression turnover_data2025 =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://perfilesysoluciones.sharepoint.com/sites/CROSSFUNCTIONALREPORTINGTEAM/Shared%20Documents/Seat%20Count%20Report/Activations%20vs%20Removals/Downsell%20vs%20Upsell%202025.xlsx"), null, true),
+		    attrition_data_Table = Source{[Item="turnover_data",Kind="Table"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(attrition_data_Table,{{"Branch", type text}, {"Office", type text}, {"Residence", type text}, {"Service Line", type text}, {"Business Unit", type text}, {"company_id", type any}, {"Account", type any}, {"company_legal_name", type any}, {"Sub Account", type any}, {"Cost Center", type text}, {"Employee Name", type text}, {"ID Number", type any}, {"ID Type", type text}, {"Status", type text}, {"Substatus", type text}, {"Last Status Date", type datetime}, {"Active Date", type any}, {"Availability", type text}, {"Senior managers", type any}, {"OPS managers", type any}, {"Account Position", type text}, {"Internal Position", type text}, {"Department", type text}, {"Area", type text}, {"assigned_date", type text}, {"Final Date", type date}, {"Direct", type text}, {"Birthday", type date}, {"Temporal Entry Date", type date}, {"Entry Date", type date}, {"Requisition", type any}, {"downsell_id", type text}, {"Downsell", type text}, {"Reason", type text}, {"Customer", type text}, {"roster_vs_invoice_ID", Int64.Type}, {"roster_ID", Int64.Type},{"segmentation_ID", Int64.Type}, {"Type of termination", type text}, {"Main reason for withdrawal", type any}})
+		in
+		    #"Changed Type"
+	lineageTag: ffcecb0a-4c34-426f-b4e5-6185a2ba5087
+	queryGroup: Turnover
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

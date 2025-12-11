@@ -1,0 +1,616 @@
+table 'Turnover Unified'
+	lineageTag: daf4d558-3429-4a53-929c-5fe466f502fa
+
+	measure 'Filtered Turnover Unified' = ```
+			
+			VAR SelectedType = SELECTEDVALUE('Termination Type'[Termination Type])
+			VAR Result =
+			    SWITCH(
+			        TRUE(),
+			        SelectedType = "Voluntary", SUM('Turnover Unified'[Voluntary Count]),
+			        SelectedType = "Involuntary", SUM('Turnover Unified'[Involuntary Count]),
+			        SUM('Turnover Unified'[Voluntary Count]) + SUM('Turnover Unified'[Involuntary Count])  -- Todos
+			    )
+			RETURN COALESCE(Result, 0)
+			
+			```
+		formatString: 0
+		lineageTag: 9ae67c99-2b41-44aa-bdc1-ee1151760add
+
+	measure 'HC AvgTotal' = ```
+			
+			VAR SumHC =
+			    SUM ( 'Turnover Unified'[HC] )
+			
+			VAR DistinctMonths =
+			    COUNTROWS ( VALUES ( 'Turnover Unified'[MonthStart] ) )
+			    -- cuántos meses hay en el contexto actual
+			
+			RETURN
+			IF (
+			    ISINSCOPE ( 'Turnover Unified'[MonthStart] ), 
+			        -- Estamos a nivel de mes (por ejemplo en la barra de Jan, Feb, etc.)
+			        SumHC,
+			        -- Estamos en el total (o en una card sin MonthStart en el eje)
+			        DIVIDE ( SumHC, DistinctMonths )
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: 8a607387-a073-4784-a0e9-ce9f3f0c72eb
+
+	measure 'Total HC AvgTotal' = ```
+			
+			VAR SumHC =
+			    SUM ( 'Turnover Unified'[Total HC] )
+			
+			VAR DistinctMonths =
+			    COUNTROWS ( VALUES ( 'Turnover Unified'[MonthStart] ) )
+			    -- cuántos meses hay en el contexto actual
+			
+			RETURN
+			IF (
+			    ISINSCOPE ( 'Turnover Unified'[MonthStart] ), 
+			        -- Estamos a nivel de mes (por ejemplo en la barra de Jan, Feb, etc.)
+			        SumHC,
+			        -- Estamos en el total (o en una card sin MonthStart en el eje)
+			        DIVIDE ( SumHC, DistinctMonths )
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: 8293c2d1-6611-4e83-9518-63cf5d241545
+
+	column Segmentation_ID
+		formatString: 0
+		lineageTag: e84d98e2-b88c-47e0-a49d-39ac3b8cefa4
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Segmentation_ID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Business Unit'
+		lineageTag: a676466f-2aa9-412e-b3d1-34f8ac6b46d6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Business Unit]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Branch
+		lineageTag: 73f3d907-5da4-414f-8027-519d629439e8
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Branch]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		lineageTag: d2d8b4ed-6e1c-4bcc-804b-3df8aa0a9759
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Country]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Service Line'
+		lineageTag: f8c238c2-a81e-4cfd-abbf-2ddbba582949
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Service Line]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Industry
+		lineageTag: b86b67c8-8e38-4754-a73b-23dd9b0a9d84
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Industry]
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthStart
+		formatString: General Date
+		lineageTag: c19747df-8f99-40de-8725-eeb2af82c840
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [MonthStart]
+
+		annotation SummarizationSetBy = Automatic
+
+	column HC
+		formatString: 0
+		lineageTag: 1b1b3ead-7de5-44d8-9b0e-dfa3813eeef9
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [HC]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total HC'
+		formatString: 0
+		lineageTag: b3c0b016-66f4-4171-b4c2-5d0e50a905cb
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Total HC]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Account Name'
+		lineageTag: 3fbb2389-2a9f-4b4c-b6b7-326dbaaa61a8
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Account Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Involuntary Count' =
+			
+			VAR _businessUnit = 'Turnover Unified'[Business Unit]
+			VAR _segmentation = 'Turnover Unified'[Segmentation_ID]
+			VAR _branch       = 'Turnover Unified'[Branch]
+			VAR _country      = 'Turnover Unified'[Country]
+			VAR _serviceline  = 'Turnover Unified'[Service Line]
+			VAR _industry     = 'Turnover Unified'[Industry]
+			VAR _date         = 'Turnover Unified'[MonthStart]
+			VAR _attrition    = 'Turnover Unified'[Turnover]
+			
+			RETURN
+			IF (
+			    _attrition = 0,   -- Si Attrition es cero, no calcular nada
+			    0,
+			    CALCULATE (
+			    COUNTROWS ( turnover_data ),
+			    FILTER (
+			        turnover_data,
+			        turnover_data[Business Unit]    = _businessUnit &&
+			        turnover_data[Segmentation_ID]  = _segmentation &&
+			        turnover_data[Branch]           = _branch &&
+			        RELATED ( branch_country[country] ) = _country &&
+			        turnover_data[Service Line]     = _serviceline &&
+			        turnover_data[Industry]         = _industry &&
+			        NOT CONTAINSSTRING ( turnover_data[Reason], "Resignation" ) &&
+			        EOMONTH ( turnover_data[Final Date], -1 ) + 1 = _date
+			    )
+			)
+			)
+		formatString: 0
+		lineageTag: 942b1288-c752-4676-96e6-7cbef9e88f8f
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Voluntary Count' = ```
+			
+			VAR _businessUnit = 'Turnover Unified'[Business Unit]
+			VAR _segmentation = 'Turnover Unified'[Segmentation_ID]
+			VAR _branch       = 'Turnover Unified'[Branch]
+			VAR _country      = 'Turnover Unified'[Country]
+			VAR _serviceline  = 'Turnover Unified'[Service Line]
+			VAR _industry     = 'Turnover Unified'[Industry]
+			VAR _date         = 'Turnover Unified'[MonthStart]
+			VAR _attrition    = 'Turnover Unified'[Turnover]
+			
+			RETURN
+			IF (
+			    _attrition = 0,   -- Si Attrition es cero, no calcular nada
+			    0,
+			    CALCULATE (
+			    COUNTROWS ( turnover_data ),
+			    FILTER (
+			        turnover_data,
+			        turnover_data[Business Unit]    = _businessUnit &&
+			        turnover_data[Segmentation_ID]  = _segmentation &&
+			        turnover_data[Branch]           = _branch &&
+			        RELATED ( branch_country[country] ) = _country &&
+			        turnover_data[Service Line]     = _serviceline &&
+			        turnover_data[Industry]         = _industry &&
+			        CONTAINSSTRING ( turnover_data[Reason], "Resignation" ) &&
+			        EOMONTH ( turnover_data[Final Date], -1 ) + 1 = _date
+			    )
+			)
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 09bd4b3e-416b-418d-ab6e-5d298bcbf13c
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Turnover
+		formatString: 0
+		lineageTag: eaa7db7a-a21e-489d-b680-18b418b87c0b
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Turnover]
+
+		annotation SummarizationSetBy = Automatic
+
+	column '% Turnover'
+		lineageTag: 974e91f2-7100-4d59-96d0-c6c5e9e008b7
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [% Turnover]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Backfill Count' =
+			
+			VAR _businessUnit = 'Turnover Unified'[Business Unit]
+			VAR _segmentation = 'Turnover Unified'[Segmentation_ID]
+			VAR _branch = 'Turnover Unified'[Branch]
+			VAR _country = 'Turnover Unified'[Country]
+			VAR _serviceLine = 'Turnover Unified'[Service Line]
+			VAR _industry = 'Turnover Unified'[Industry]
+			VAR _date = 'Turnover Unified'[MonthStart]
+			
+			VAR _turnoverTotal =
+			    CALCULATE(
+			        COUNTROWS(turnover_data),
+			        FILTER(
+			            turnover_data,
+			            turnover_data[Business Unit] = _businessUnit &&
+			            turnover_data[Segmentation_ID] = _segmentation &&
+			            turnover_data[Branch] = _branch &&
+			            RELATED(branch_country[country]) = _country &&
+			            turnover_data[Service Line] = _serviceLine &&
+			            turnover_data[Industry] = _industry &&
+			            EOMONTH(turnover_data[Final Date], -1) + 1 = _date
+			        )
+			    )
+			
+			RETURN
+			IF(
+			    _turnoverTotal = 0,
+			    0,
+			    CALCULATE(
+			        COUNTROWS(turnover_data),
+			        FILTER(
+			            turnover_data,
+			            turnover_data[Business Unit] = _businessUnit &&
+			            turnover_data[Segmentation_ID] = _segmentation &&
+			            turnover_data[Branch] = _branch &&
+			            RELATED(branch_country[country]) = _country &&
+			            turnover_data[Service Line] = _serviceLine &&
+			            turnover_data[Industry] = _industry &&
+			            EOMONTH(turnover_data[Final Date], -1) + 1 = _date &&
+			            UPPER(TRIM(turnover_data[Backfill or no Backfill])) = "Backfill"
+			        )
+			    )
+			)
+		formatString: 0
+		lineageTag: 7b8fbd2b-bb44-410d-b7bc-96d30ae8e735
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Pending Backfill Count' =
+			VAR _businessUnit = 'Turnover Unified'[Business Unit]
+			VAR _segmentation = 'Turnover Unified'[Segmentation_ID]
+			VAR _branch = 'Turnover Unified'[Branch]
+			VAR _country = 'Turnover Unified'[Country]
+			VAR _serviceLine = 'Turnover Unified'[Service Line]
+			VAR _industry = 'Turnover Unified'[Industry]
+			VAR _date = 'Turnover Unified'[MonthStart]
+			
+			VAR _turnoverTotal =
+			    CALCULATE(
+			        COUNTROWS(turnover_data),
+			        FILTER(
+			            turnover_data,
+			            turnover_data[Business Unit] = _businessUnit &&
+			            turnover_data[Segmentation_ID] = _segmentation &&
+			            turnover_data[Branch] = _branch &&
+			            RELATED(branch_country[country]) = _country &&
+			            turnover_data[Service Line] = _serviceLine &&
+			            turnover_data[Industry] = _industry &&
+			            EOMONTH(turnover_data[Final Date], -1) + 1 = _date
+			        )
+			    )
+			
+			RETURN
+			IF(
+			    _turnoverTotal = 0,
+			    0,
+			    CALCULATE(
+			        COUNTROWS(turnover_data),
+			        FILTER(
+			            turnover_data,
+			            turnover_data[Business Unit] = _businessUnit &&
+			            turnover_data[Segmentation_ID] = _segmentation &&
+			            turnover_data[Branch] = _branch &&
+			            RELATED(branch_country[country]) = _country &&
+			            turnover_data[Service Line] = _serviceLine &&
+			            turnover_data[Industry] = _industry &&
+			            EOMONTH(turnover_data[Final Date], -1) + 1 = _date &&
+			            UPPER(TRIM(turnover_data[Backfill or no Backfill])) = "Pending"
+			        )
+			    )
+			)
+		lineageTag: ade64433-f431-4a40-86fa-0635dfff4f4f
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'No Backfill Count' =
+			VAR _businessUnit = 'Turnover Unified'[Business Unit]
+			VAR _segmentation = 'Turnover Unified'[Segmentation_ID]
+			VAR _branch = 'Turnover Unified'[Branch]
+			VAR _country = 'Turnover Unified'[Country]
+			VAR _serviceLine = 'Turnover Unified'[Service Line]
+			VAR _industry = 'Turnover Unified'[Industry]
+			VAR _date = 'Turnover Unified'[MonthStart]
+			
+			VAR _turnoverTotal =
+			    CALCULATE(
+			        COUNTROWS(turnover_data),
+			        FILTER(
+			            turnover_data,
+			            turnover_data[Business Unit] = _businessUnit &&
+			            turnover_data[Segmentation_ID] = _segmentation &&
+			            turnover_data[Branch] = _branch &&
+			            RELATED(branch_country[country]) = _country &&
+			            turnover_data[Service Line] = _serviceLine &&
+			            turnover_data[Industry] = _industry &&
+			            EOMONTH(turnover_data[Final Date], -1) + 1 = _date
+			        )
+			    )
+			
+			RETURN
+			IF(
+			    _turnoverTotal = 0,
+			    0,
+			    CALCULATE(
+			        COUNTROWS(turnover_data),
+			        FILTER(
+			            turnover_data,
+			            turnover_data[Business Unit] = _businessUnit &&
+			            turnover_data[Segmentation_ID] = _segmentation &&
+			            turnover_data[Branch] = _branch &&
+			            RELATED(branch_country[country]) = _country &&
+			            turnover_data[Service Line] = _serviceLine &&
+			            turnover_data[Industry] = _industry &&
+			            EOMONTH(turnover_data[Final Date], -1) + 1 = _date &&
+			            UPPER(TRIM(turnover_data[Backfill or no Backfill])) = "No Backfill"
+			        )
+			    )
+			)
+		lineageTag: 4f09f701-d3e7-4fd2-be30-9b3c5336a3aa
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bench Count' = ```
+			
+			VAR seg = 'Turnover Unified'[Segmentation_ID]
+			VAR acc = 'Turnover Unified'[Account Name]
+			VAR bu  = 'Turnover Unified'[Business Unit]
+			VAR br  = 'Turnover Unified'[Branch]
+			VAR ctry = 'Turnover Unified'[Country]
+			VAR sl = 'Turnover Unified'[Service Line]
+			VAR ind = 'Turnover Unified'[Industry]
+			VAR div = 'Turnover Unified'[Divisions]
+			VAR monthstart = 'Turnover Unified'[MonthStart]
+			
+			VAR benchRows =
+			    FILTER(
+			        turnover_data,
+			            turnover_data[Bench] = "Yes" &&
+			            turnover_data[Segmentation_ID] = seg &&
+			            turnover_data[Account] = acc &&
+			            turnover_data[Business Unit] = bu &&
+			            turnover_data[Branch] = br &&
+			            RELATED(branch_country[country]) = ctry &&
+			            turnover_data[Service Line] = sl &&
+			            turnover_data[Industry] = ind &&
+			            turnover_data[Division] = div &&
+			            EOMONTH(turnover_data[Final Date], -1) + 1 = monthstart
+			    )
+			
+			RETURN
+			COUNTROWS(
+			    SUMMARIZE(
+			        benchRows,
+			        turnover_data[ID Number]
+			    )
+			)
+			
+			
+			```
+		formatString: 0
+		lineageTag: bc40bed9-2fba-4a08-9cb8-325351ce7651
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Divisions
+		lineageTag: c33b8ca3-e118-499c-a758-2aacd068a2a0
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Divisions]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Turnover Unified' = calculated
+		mode: import
+		source = ```
+				
+				VAR RosterPrevMonth =
+				    SELECTCOLUMNS(
+				        'roster historical',
+				        "Segmentation_ID", 'roster historical'[Segmentation_ID],
+				        "Account Name",    'roster historical'[Main Account Name],
+				        "Branch",          'roster historical'[Branch],
+				        "Country",         'roster historical'[Country],
+				        "Service Line",    'roster historical'[Service Line],
+				        "Industry",        'roster historical'[Industry],
+				        "Business Unit",   'roster historical'[Business Unit],
+				        "Divisions",       'roster historical'[Division],
+				        "MonthStart",      EDATE(EOMONTH('roster historical'[Roster Date], -1) + 1, 1),
+				        "Type",            "prev_roster"
+				    )
+				 
+				VAR RosterCurrentMonth =
+				    SELECTCOLUMNS(
+				        'roster historical',
+				        "Segmentation_ID", 'roster historical'[Segmentation_ID],
+				        "Account Name",    'roster historical'[Main Account Name],
+				        "Branch",          'roster historical'[Branch],
+				        "Country",         'roster historical'[Country],
+				        "Service Line",    'roster historical'[Service Line],
+				        "Industry",        'roster historical'[Industry],
+				        "Business Unit",   'roster historical'[Business Unit],
+				        "Divisions",       'roster historical'[Division],
+				        "MonthStart",      EOMONTH('roster historical'[Roster Date], -1) + 1,
+				        "Type",            "current_roster"
+				    )
+				 
+				VAR RosterLive_ =
+				    SELECTCOLUMNS(
+				        'roster_and_nnb',
+				        "Segmentation_ID", 'roster_and_nnb'[Segmentation_ID],
+				        "Account Name",    'roster_and_nnb'[company],
+				        "Branch",          'roster_and_nnb'[Branch],
+				        "Country",         'roster_and_nnb'[Country],
+				        "Service Line",    'roster_and_nnb'[Service Line],
+				        "Industry",        'roster_and_nnb'[Industry],
+				        "Business Unit",   'roster_and_nnb'[business_unit],
+				        "Divisions",       'roster_and_nnb'[Division],
+				        "MonthStart",      DATE(YEAR(TODAY()), MONTH(TODAY()), 1),
+				        "Type",            "current_roster"
+				    )
+				 
+				VAR Turnover_ =
+				    SELECTCOLUMNS(
+				        turnover_data,
+				        "Segmentation_ID", turnover_data[Segmentation_ID],
+				        "Account Name",    turnover_data[Account],
+				        "Branch",          turnover_data[Branch],
+				        "Country",         RELATED(branch_country[country]),
+				        "Service Line",    turnover_data[Service Line],
+				        "Industry",        turnover_data[Industry],
+				        "Business Unit",   turnover_data[Business Unit],
+				        "Divisions",       turnover_data[Division],
+				        "MonthStart",      EOMONTH(turnover_data[Final Date], -1) + 1,
+				        "Type",            "turnover"
+				    )
+				 
+				/* Unificamos todas las fuentes */
+				VAR BaseRows =
+				    UNION( UNION(RosterPrevMonth, UNION(RosterCurrentMonth, RosterLive_)), Turnover_ )
+				 
+				/* Definimos claves */
+				VAR Keys =
+				    SUMMARIZE(
+				        BaseRows,
+				        [Segmentation_ID],
+				        [Account Name],
+				        [Business Unit],
+				        [Branch],
+				        [Country],
+				        [Service Line],
+				        [Industry],
+				        [Divisions],
+				        [MonthStart]
+				    )
+				 
+				/* Conteo por tipo */
+				VAR CountsByType =
+				    GROUPBY(
+				        BaseRows,
+				        [Segmentation_ID],
+				        [Account Name],
+				        [Business Unit],
+				        [Branch],
+				        [Country],
+				        [Service Line],
+				        [Industry],
+				        [Divisions],
+				        [MonthStart],
+				        [Type],
+				        "Cnt", COUNTX(CURRENTGROUP(), 1)
+				    )
+				 
+				/* HC Inicial (mes anterior) */
+				VAR HCprev =
+				    SELECTCOLUMNS(
+				        FILTER(CountsByType, [Type] = "prev_roster"),
+				        "Segmentation_ID", [Segmentation_ID],
+				        "Account Name",    [Account Name],
+				        "Business Unit",   [Business Unit],
+				        "Branch",          [Branch],
+				        "Country",         [Country],
+				        "Service Line",    [Service Line],
+				        "Industry",        [Industry],
+				        "Divisions",       [Divisions],
+				        "MonthStart",      [MonthStart],
+				        "HC",              [Cnt]
+				    )
+				 
+				/* HC del mes evaluado */
+				VAR HCcurrent =
+				    SELECTCOLUMNS(
+				        FILTER(CountsByType, [Type] = "current_roster"),
+				        "Segmentation_ID", [Segmentation_ID],
+				        "Account Name",    [Account Name],
+				        "Business Unit",   [Business Unit],
+				        "Branch",          [Branch],
+				        "Country",         [Country],
+				        "Service Line",    [Service Line],
+				        "Industry",        [Industry],
+				        "Divisions",       [Divisions],
+				        "MonthStart",      [MonthStart],
+				        "Total HC",        [Cnt]
+				    )
+				 
+				/* Turnover del mes evaluado */
+				VAR TurnoverAgg =
+				    SELECTCOLUMNS(
+				        FILTER(CountsByType, [Type] = "turnover"),
+				        "Segmentation_ID", [Segmentation_ID],
+				        "Account Name",    [Account Name],
+				        "Business Unit",   [Business Unit],
+				        "Branch",          [Branch],
+				        "Country",         [Country],
+				        "Service Line",    [Service Line],
+				        "Industry",        [Industry],
+				        "Divisions",       [Divisions],
+				        "MonthStart",      [MonthStart],
+				        "Turnover",        [Cnt]
+				    )
+				 
+				/* Unimos todo */
+				VAR Join1 = NATURALLEFTOUTERJOIN(Keys, HCprev)
+				VAR Join2 = NATURALLEFTOUTERJOIN(Join1, HCcurrent)
+				VAR Join3 = NATURALLEFTOUTERJOIN(Join2, TurnoverAgg)
+				 
+				/* Resultado final */
+				RETURN
+				SELECTCOLUMNS(
+				    Join3,
+				    "Segmentation_ID", [Segmentation_ID],
+				    "Account Name",    [Account Name],
+				    "Business Unit",   [Business Unit],
+				    "Branch",          [Branch],
+				    "Country",         [Country],
+				    "Service Line",    [Service Line],
+				    "Industry",        [Industry],
+				    "Divisions",       [Divisions],
+				    "MonthStart",      [MonthStart],
+				    "HC",              COALESCE([HC], 0),
+				    "Turnover",        COALESCE([Turnover], 0),
+				    "Total HC",        COALESCE([Total HC], 0),
+				    "% Turnover",
+				        VAR hc_ = COALESCE([HC], 0)
+				        VAR thc_ = COALESCE([Total HC], 0)
+				        VAR denom = DIVIDE(hc_ + thc_, 2, 0)
+				        RETURN DIVIDE(COALESCE([Turnover], 0), denom, 0)
+				)
+				```
+
+	annotation PBI_Id = 3cbac0a995ed4391b485a4012be2b078
+

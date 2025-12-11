@@ -1,0 +1,61 @@
+table 'portal _accounts_name'
+	lineageTag: 35661b2a-3682-474c-bcb8-cb687460d9f1
+
+	column roster_vs_invoice_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: c23868b5-44bf-402b-89dc-3d05115fec7c
+		summarizeBy: count
+		sourceColumn: roster_vs_invoice_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column roster_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 7b1b028f-16f9-4325-aaa7-6421b89e4b0c
+		summarizeBy: count
+		sourceColumn: roster_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column portal_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 4fbdae50-158c-4756-be99-e69341d5a499
+		summarizeBy: count
+		sourceColumn: portal_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bill Cycle'
+		dataType: string
+		lineageTag: 79493420-0187-40da-97e4-1038fca41e35
+		summarizeBy: none
+		sourceColumn: Bill Cycle
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_roster_name
+		dataType: string
+		lineageTag: c77fb2d0-fdf8-4216-a7f9-f419ec9a7687
+		summarizeBy: none
+		sourceColumn: account_roster_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'portal _accounts_name' = m
+		mode: import
+		queryGroup: 'Accounts Info'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://perfilesysoluciones.sharepoint.com/sites/PerformanceManagement83/Shared%20Documents/Corporate%20BI/Accounts/Account%20Names%20and%20Finance%20Distribution.xlsx"), null, true),
+				    roster_account_name_Table = Source{[Item="roster_account_name",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(roster_account_name_Table,{{"roster_vs_invoice_ID", Int64.Type}, {"roster_ID", Int64.Type}, {"portal_ID", Int64.Type}, {"Bill Cycle", type text}, {"account_roster_name", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

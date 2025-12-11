@@ -1,0 +1,112 @@
+table finance_accounts_name
+	isHidden
+	lineageTag: 4e25f085-fbc1-463f-bd3c-504d7cdba40b
+
+	column roster_vs_invoice_ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 265c1b1d-b667-4ac9-a52e-6102c28b8ba7
+		summarizeBy: count
+		sourceColumn: roster_vs_invoice_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bill Cycle'
+		dataType: string
+		isHidden
+		lineageTag: d3ba734d-357f-4969-bef0-73fed197bad6
+		summarizeBy: none
+		sourceColumn: Bill Cycle
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start Date'
+		dataType: string
+		isHidden
+		lineageTag: 021c3b4b-ac4c-4f9b-ad03-1e61b3f093ac
+		summarizeBy: none
+		sourceColumn: Start Date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Rep
+		dataType: string
+		isHidden
+		lineageTag: 012e6c8d-4d5c-4be0-a854-4b95a21b644a
+		summarizeBy: none
+		sourceColumn: Rep
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Team
+		dataType: string
+		isHidden
+		lineageTag: c252bed9-a846-441a-89fb-1a27b9ab0d59
+		summarizeBy: none
+		sourceColumn: Team
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column hubspot_ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 396d4a10-b843-4726-b76c-c54440f0273d
+		summarizeBy: count
+		sourceColumn: hubspot_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column business_unit
+		dataType: string
+		isHidden
+		lineageTag: 28de5ec5-ac45-4d1d-a40c-de22a7c80f8f
+		summarizeBy: none
+		sourceColumn: business_unit
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_name
+		dataType: string
+		isHidden
+		lineageTag: b9e1e36b-9d05-477b-8440-d359a2982f55
+		summarizeBy: none
+		sourceColumn: account_name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition finance_accounts_name = m
+		mode: import
+		queryGroup: 'Accounts Info'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://perfilesysoluciones.sharepoint.com/sites/PerformanceManagement83/Shared%20Documents/Corporate%20BI/Accounts/Account%20Names%20and%20Finance%20Distribution.xlsx"), null, true),
+				    roster_vs_invoice_accounts_Table = Source{[Item="roster_vs_invoice_accounts",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(roster_vs_invoice_accounts_Table,{{"roster_vs_invoice_ID", Int64.Type}, {"Bill Cycle", type text}, {"hubspot_ID", Int64.Type}, {"business_unit", type text}, {"account_name", type text}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Changed Type", each ([business_unit] = "lean operations"))
+				in
+				    #"Filtered Rows"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,181 @@
+table 'Mesuares New Turnover'
+	lineageTag: 18850ea3-f8be-44f8-846a-cf143fcedbea
+
+	measure 'Avg Headcount Unified' = (DIVIDE(SUM('Turnover Unified'[HC])+SUM('Turnover Unified'[Total HC]),2))
+		formatString: #,0
+		lineageTag: 41a270d6-f91e-4d26-b111-cb9ebded9f19
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Total Turnover Unified' = SUM('Turnover Unified'[Turnover])
+		formatString: #,0
+		lineageTag: 64b57b58-dd25-4522-8d72-6f0b3c30bbbd
+
+	measure 'Avg Turnover Unified' = ```
+			[% Turnover Per Month] / [# Months]
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: ebc6505b-0ce7-402c-a626-d64350a0423a
+
+	measure '% Turnover Per Month' = ```
+			
+			VAR total_turnover = [Total Turnover Unified]
+			VAR avg_hc     = [Avg Headcount Per Month]
+			VAR raw_turnover   = DIVIDE(total_turnover, avg_hc, 0)
+			 
+			RETURN
+			IF (raw_turnover > 1, 1, raw_turnover)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 15e47ea9-52a0-44d9-8d39-0cd58e4d215b
+
+	measure 'Total Headcount Unified' = SUM('Turnover Unified'[Total HC])
+		formatString: 0
+		lineageTag: 5adbcc26-0668-47f8-8605-88dc97af2ac6
+
+	measure '# Days' = ```
+			MAX(Dim_Calendar_Ops[#Day])
+			
+			```
+		formatString: 0
+		lineageTag: 33c7a059-dd17-4622-a73e-f303fe5919ba
+
+	measure 'Turnover Per day' = DIVIDE([Total Turnover Unified], [# Days], 0)
+		formatString: 0.0
+		lineageTag: 8ef3b037-b881-4eb5-98c9-5adb09f8d3d3
+
+	measure 'Avg Turnover Unified (Total)' = ```
+			
+			DIVIDE ( [Total Turnover Unified], DISTINCTCOUNT( Dim_Calendar_Ops[YearMonth] ), 0 )
+			
+			```
+		formatString: 0.00
+		lineageTag: 53c8d306-aa5b-40f8-9823-5430544b6d1b
+
+	measure '# Months' = MAX(Dim_Calendar_Ops[#Month])
+		formatString: 0
+		lineageTag: aa745a27-035b-47eb-ad00-fe083ea6e510
+
+	measure 'Annualized Turnover' = (DIVIDE( [% Turnover Per Month],[# Months]))*12
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: b28d54f0-2639-4aaf-9c55-82d4c65aac2b
+
+	measure 'R2 Turnover' = ```
+			
+			VAR Data =
+			    FILTER (
+			        ADDCOLUMNS (
+			            // usa todos los meses visibles por slicers, no el de la fila
+			            SUMMARIZE ( ALLSELECTED ( Dim_Calendar_Ops ), Dim_Calendar_Ops[YearMonthIndex] ),
+			            "X", Dim_Calendar_Ops[YearMonthIndex],
+			            "Y", CALCULATE ( [% Turnover Per Month] )   // ← transición de contexto
+			        ),
+			        NOT ISBLANK ( [Y] )
+			    )
+			VAR N = COUNTROWS ( Data )
+			RETURN
+			IF (
+			    N < 2, BLANK(),
+			    VAR AvgX = AVERAGEX ( Data, [X] )
+			    VAR AvgY = AVERAGEX ( Data, [Y] )
+			    VAR Num  = SUMX ( Data, ( [X] - AvgX ) * ( [Y] - AvgY ) )
+			    VAR DenX = SUMX ( Data, ( [X] - AvgX ) ^ 2 )
+			    VAR DenY = SUMX ( Data, ( [Y] - AvgY ) ^ 2 )
+			    VAR r = DIVIDE ( Num, SQRT ( DenX * DenY ) )
+			    RETURN r ^ 2
+			)
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 672dbfa2-34a3-4299-a275-beef71ca2335
+
+	measure 'Def R2' = ```
+			
+			"R² muestra qué tan bien una línea recta refleja el comportamiento del attrition.
+			Un valor cercano a 100% significa que la tendencia lineal explica muy bien los cambios,
+			y un valor cercano a 0% significa que casi no los explica."
+			
+			```
+		lineageTag: f5fc00bf-4508-4290-b38b-1157663885dd
+
+	measure 'Avg Headcount Per Month' = DIVIDE([Avg Headcount Unified], [# Months])
+		formatString: #,0
+		lineageTag: 2dc3ffac-ee08-4bd6-81ed-1d220bf3ab8a
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'YTD Turnover' = ([Total Turnover Unified] / 'Mesuares New Turnover'[Avg Headcount Per Month])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 88db2a38-fcc8-44c2-85bb-e06bf05c78c6
+
+	measure '% Turnover Unified' = ```
+			
+			VAR total_Turnover = [Total Turnover Unified]
+			VAR avg_hc     = [Avg Headcount Unified]
+			VAR raw_turnover  = DIVIDE(total_Turnover, avg_hc, 0)
+			 
+			RETURN
+			IF (raw_turnover > 1, 1, raw_turnover)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 7e1f297e-3b93-4dd5-a967-bce3ec835877
+
+	measure Dynamic_HC = ```
+			
+			VAR CurrentMonth = SELECTEDVALUE('Dim_Calendar_Ops'[#Month])
+			VAR MaxMonth = CALCULATE(
+			    MAX(Dim_Calendar_Ops[#Month]),
+			    ALLSELECTED('Dim_Calendar_Ops')
+			)
+			RETURN
+			IF(
+			    CurrentMonth = MaxMonth,
+			    [Avg Headcount Unified],     -- si es el mes más reciente
+			    [Avg Headcount Per Month]    -- si es otro mes
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: 0f2b3910-ba62-4137-b9ef-3a3f7b177f29
+
+	measure 'Avg HC to ShowTable' = ```
+			
+			VAR TotalAttrition =
+			   [Avg Headcount Unified]
+			VAR DistinctMonths =
+			    COUNTROWS ( VALUES ( 'Turnover Unified'[MonthStart] ) )
+			RETURN
+			IF (
+			    ISINSCOPE ( 'Turnover Unified'[MonthStart] ),
+			        TotalAttrition,                     -- nivel de detalle → muestra la suma real
+			        DIVIDE ( TotalAttrition, DistinctMonths )   -- total → promedio mensual
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: 028bb428-0cac-4217-81b2-4c2ee9d55c0c
+
+	measure 'Turnover hc' = SUM('Turnover Unified'[HC])
+		formatString: 0
+		lineageTag: b8a4a2f2-7906-4269-952b-6179a94dcfbd
+
+	measure 'Turnover total hc' = SUM('Turnover Unified'[Total HC])
+		formatString: 0
+		lineageTag: 88f1ab51-0cb5-4934-94e5-ffff0ffc3919
+
+	column Column
+		formatString: 0
+		lineageTag: f1f69f36-9ea6-44b5-88d3-7d53720e5255
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Mesuares New Turnover' = calculated
+		mode: import
+		source = Row("Column", BLANK( ))
+
+	annotation PBI_Id = 12995139fbd94d8da987fa29e1bc9955
+

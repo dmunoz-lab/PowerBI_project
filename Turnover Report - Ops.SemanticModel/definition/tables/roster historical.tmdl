@@ -1,0 +1,761 @@
+table 'roster historical'
+	isHidden
+	lineageTag: d9c5e5d2-ba69-431a-903d-06492058cc68
+
+	measure 'Total HC' = COUNTROWS('roster historical')
+		formatString: 0
+		isHidden
+		lineageTag: fec86163-08ba-46bd-bd30-3e40b559d3ef
+
+		changedProperty = IsHidden
+
+	column 'Roster date'
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: 7f62c2a0-22e3-4406-b99f-b3b1e55fe5b3
+		summarizeBy: none
+		sourceColumn: Roster date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Branch
+		dataType: string
+		isHidden
+		lineageTag: 101b30c0-a236-44b9-b8fa-53618c8d0730
+		summarizeBy: none
+		sourceColumn: Branch
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Office
+		dataType: string
+		isHidden
+		lineageTag: 65275ef9-c8e6-4912-b907-b90040e6fda3
+		summarizeBy: none
+		sourceColumn: Office
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Residence
+		dataType: string
+		isHidden
+		lineageTag: fb43e6a2-74c3-457d-a27e-9df72202a9ff
+		summarizeBy: none
+		sourceColumn: Residence
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Business Unit'
+		dataType: string
+		isHidden
+		lineageTag: 4033fdb9-579c-4d17-9086-eebdb004e128
+		summarizeBy: none
+		sourceColumn: Business Unit
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column company_id
+		dataType: string
+		isHidden
+		lineageTag: 8d5840ee-8ca1-4fbb-9961-b7940a3e6a39
+		summarizeBy: none
+		sourceColumn: company_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Account
+		dataType: string
+		isHidden
+		lineageTag: 0f0f68a6-16a5-4c30-a270-9a7763a472c9
+		summarizeBy: none
+		sourceColumn: Account
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column company_legal_name
+		dataType: string
+		isHidden
+		lineageTag: 5c8172e0-1fa3-43f3-83ce-1838c16ec2cf
+		summarizeBy: none
+		sourceColumn: company_legal_name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sub Account'
+		dataType: string
+		isHidden
+		lineageTag: 26691f5b-894a-4fa0-bd7a-8141eadd1066
+		summarizeBy: none
+		sourceColumn: Sub Account
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Cost Center'
+		dataType: string
+		isHidden
+		lineageTag: bdf7fac5-2919-4778-8c3e-4e2d9f17be40
+		summarizeBy: none
+		sourceColumn: Cost Center
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employee Name'
+		dataType: string
+		isHidden
+		lineageTag: 75bc36b0-51a4-4d6d-b0b0-cc8e0b2a64f8
+		summarizeBy: none
+		sourceColumn: Employee Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ID Number'
+		dataType: string
+		isHidden
+		lineageTag: 0e738bee-a4c5-4116-8a02-ade22ab63dfc
+		summarizeBy: none
+		sourceColumn: ID Number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ID Type'
+		dataType: string
+		isHidden
+		lineageTag: 2eca9dfd-6cf9-4912-9886-58e6b596f7cb
+		summarizeBy: none
+		sourceColumn: ID Type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		isHidden
+		lineageTag: 9eb5f39b-f42f-4578-8915-1fa1281c221c
+		summarizeBy: none
+		sourceColumn: Status
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Substatus
+		dataType: string
+		isHidden
+		lineageTag: 8696901b-dc30-4a0f-ad1b-e2a242470a63
+		summarizeBy: none
+		sourceColumn: Substatus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Last Status Date'
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: ea898b38-a524-414f-8eb6-11d381c4b82b
+		summarizeBy: none
+		sourceColumn: Last Status Date
+
+		variation Variation
+			isDefault
+			relationship: 7989ab7d-5221-4c00-8e45-1d7674cb6bbf
+			defaultHierarchy: LocalDateTable_94646429-c63b-42fb-883a-9ea6ddf0dd7e.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Active Date'
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 2b549db1-32cb-4441-a569-f7ff0ffac2e0
+		summarizeBy: none
+		sourceColumn: Active Date
+
+		variation Variation
+			isDefault
+			relationship: e6a651d0-b79a-4bcf-a762-028bd8851579
+			defaultHierarchy: LocalDateTable_45d7f522-0827-406a-8f23-3ef00bbe6ad0.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Availability
+		dataType: string
+		isHidden
+		lineageTag: b59c0940-c1f3-4c58-87ce-475eacc7ab15
+		summarizeBy: none
+		sourceColumn: Availability
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Senior managers'
+		dataType: string
+		isHidden
+		lineageTag: d304ef1a-dfd4-4c93-b476-7f5799f0bb5e
+		summarizeBy: none
+		sourceColumn: Senior managers
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OPS managers'
+		dataType: string
+		isHidden
+		lineageTag: 0b9b6eea-1b91-4327-b918-1b069aec1b8f
+		summarizeBy: none
+		sourceColumn: OPS managers
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Account Position'
+		dataType: string
+		isHidden
+		lineageTag: c08dd15f-cb4f-4500-9df0-33e50ededb1a
+		summarizeBy: none
+		sourceColumn: Account Position
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Internal Position'
+		dataType: string
+		isHidden
+		lineageTag: 21bf6596-d43e-45c4-970a-9b8a5b9bc655
+		summarizeBy: none
+		sourceColumn: Internal Position
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Department
+		dataType: string
+		isHidden
+		lineageTag: 57e794c3-4e67-4f7f-a686-2ba64761119e
+		summarizeBy: none
+		sourceColumn: Department
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Area
+		dataType: string
+		isHidden
+		lineageTag: 8cce96b7-0912-48be-9b8a-703481ce41ad
+		summarizeBy: none
+		sourceColumn: Area
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column assigned_date
+		dataType: string
+		isHidden
+		lineageTag: cf8a4991-b5f0-47ea-b545-e6268a843ead
+		summarizeBy: none
+		sourceColumn: assigned_date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Last Status Date2'
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 860d4e81-d961-4aca-b8ad-a9500a1835b5
+		summarizeBy: none
+		sourceColumn: Last Status Date2
+
+		variation Variation
+			isDefault
+			relationship: 66be468a-9def-4636-851e-c6e25722b82d
+			defaultHierarchy: LocalDateTable_4c906aed-f4a4-469e-8698-ef5521aa7e18.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Direct
+		dataType: string
+		isHidden
+		lineageTag: 0016f74e-2c9b-44d0-b8b2-27c40d701ac1
+		summarizeBy: none
+		sourceColumn: Direct
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Birthday
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 50a1ad32-f1c5-4352-aec6-ff2fdc1d7d0d
+		summarizeBy: none
+		sourceColumn: Birthday
+
+		variation Variation
+			isDefault
+			relationship: e6eb51c1-1182-4de2-ad87-753350daab36
+			defaultHierarchy: LocalDateTable_51d0921a-656e-4565-a163-6aa487a3efce.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Temporal Entry Date'
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 3792b3ca-1508-4653-a281-c16ec711c3be
+		summarizeBy: none
+		sourceColumn: Temporal Entry Date
+
+		variation Variation
+			isDefault
+			relationship: 87c369b6-3d5f-4985-bb5f-3b0da43db511
+			defaultHierarchy: LocalDateTable_d50f28ec-42d7-4c14-b1c7-112fd5c329a8.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Entry Date'
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 7536a6b9-f796-4895-a1ac-5fa866123010
+		summarizeBy: none
+		sourceColumn: Entry Date
+
+		variation Variation
+			isDefault
+			relationship: e943a649-cf33-434d-b71a-449f54dc9411
+			defaultHierarchy: LocalDateTable_3277e0ef-26c3-4e03-8632-a82f1173300a.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Requisition
+		dataType: string
+		isHidden
+		lineageTag: 65b8e7fc-8618-45a0-8f71-c981c6895d2d
+		summarizeBy: none
+		sourceColumn: Requisition
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Building
+		dataType: string
+		isHidden
+		lineageTag: cd997cbb-5c8c-4a4c-930b-94059f019da7
+		summarizeBy: none
+		sourceColumn: Building
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Floor
+		dataType: string
+		isHidden
+		lineageTag: 5c552074-c5b8-4d06-b38a-ba1100ab2e9e
+		summarizeBy: none
+		sourceColumn: Floor
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Seat
+		dataType: string
+		isHidden
+		lineageTag: a9081735-e535-4525-81e7-c4cd5b9fbc2b
+		summarizeBy: none
+		sourceColumn: Seat
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: bbdf6fa5-2874-4e30-97f4-a5b6d0ae3de3
+		summarizeBy: sum
+		sourceColumn: Year
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column roster_ID = LOOKUPVALUE('portal _accounts_name'[roster_ID],'portal _accounts_name'[account_roster_name],'roster historical'[Account])
+		isHidden
+		formatString: 0
+		lineageTag: 26005164-9848-4af9-a7ce-6bdef3087ee2
+		summarizeBy: count
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column portal_id = LOOKUPVALUE('portal _accounts_name'[portal_ID],'portal _accounts_name'[account_roster_name],'roster historical'[Account])
+		isHidden
+		formatString: 0
+		lineageTag: 7fed5f17-3048-460a-976b-747e520b48eb
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Billrate
+		dataType: decimal
+		isHidden
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: ba993dc7-05b8-4fc5-ad83-7a35c5ddfc08
+		summarizeBy: sum
+		sourceColumn: Billrate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column 'Salary Cost'
+		dataType: decimal
+		isHidden
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 985a2c87-d53b-43bc-a3bb-094be4c4372f
+		summarizeBy: sum
+		sourceColumn: Salary Cost
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Day
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c468c5c4-f2ea-4f66-9784-b5a7c30e095b
+		summarizeBy: sum
+		sourceColumn: Day
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column roster_vs_invoice_ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f6753558-4dcd-4262-8fa3-3ef50b7fec4f
+		summarizeBy: count
+		sourceColumn: roster_vs_invoice_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Service Line'
+		dataType: string
+		isHidden
+		lineageTag: 5906313a-59d9-4bdd-9e86-326998d5dbce
+		summarizeBy: none
+		sourceColumn: Service Line
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Industry
+		dataType: string
+		isHidden
+		lineageTag: 63d4b50c-61c6-4a08-b905-0175452808ae
+		summarizeBy: none
+		sourceColumn: Industry
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Reason of removal'
+		dataType: string
+		isHidden
+		lineageTag: dd57c2a9-2102-4f12-80d3-9941a7714054
+		summarizeBy: none
+		sourceColumn: Reason of removal
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Office2
+		dataType: string
+		isHidden
+		lineageTag: 05fe03cd-2dd7-4378-bda2-da6fb98099c2
+		summarizeBy: none
+		sourceColumn: Office2
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hierarchy Level'
+		dataType: string
+		isHidden
+		lineageTag: 5792a50a-b478-4abc-bb2a-52d492b5189b
+		summarizeBy: none
+		sourceColumn: Hierarchy Level
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Report To'
+		dataType: string
+		isHidden
+		lineageTag: 94705a6a-945c-40b3-8b2b-f22fb6bade79
+		summarizeBy: none
+		sourceColumn: Report To
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Work Modality'
+		dataType: string
+		isHidden
+		lineageTag: e3dd0776-fd28-42bb-bbf2-dda4bb7ec3c5
+		summarizeBy: none
+		sourceColumn: Work Modality
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		isHidden
+		lineageTag: 3ba4ea33-f418-4454-bac2-133529bab0aa
+		summarizeBy: none
+		sourceColumn: Country
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Segmentation_ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c12d897e-238e-4f4d-9f5a-4cbccff3ab7f
+		summarizeBy: none
+		sourceColumn: Segmentation_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Main Account Name'
+		dataType: string
+		isHidden
+		lineageTag: 7a2bdc2a-72a0-4a6d-94f9-8b6bf4d5208a
+		summarizeBy: none
+		sourceColumn: Main Account Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Aging
+		dataType: string
+		isHidden
+		lineageTag: 09e2c9e8-1f9c-42b0-a785-9596f3a36fb6
+		summarizeBy: none
+		sourceColumn: Aging
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NA Reason'
+		dataType: string
+		isHidden
+		lineageTag: 5aa8332e-8348-44fb-8e4c-de66abca4d48
+		summarizeBy: none
+		sourceColumn: NA Reason
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fecha Entrada' = ```
+			
+			IF (
+			    ISBLANK ( 'roster historical'[Temporal Entry Date] ),
+			    'roster historical'[Entry Date],
+			    IF (
+			        ISBLANK ( 'roster historical'[Entry Date] ),
+			        'roster historical'[Temporal Entry Date],
+			        IF (
+			            'roster historical'[Temporal Entry Date] <= 'roster historical'[Entry Date],
+			            'roster historical'[Temporal Entry Date],
+			            'roster historical'[Entry Date]
+			        )
+			    )
+			)
+			
+			```
+		isHidden
+		formatString: Short Date
+		lineageTag: 0a69a87d-78b1-4bbd-992e-c611f3f95de0
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: 369d2fad-602a-4197-9b41-e3e3f7bef277
+			defaultHierarchy: LocalDateTable_229aadaf-2abd-464f-8b6f-99b0cc511e7e.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Division = ```
+			
+			    IF('roster historical'[Service Line]= "Enterprise","Enterprise",
+			    IF('roster historical'[Service Line] = "SMB","SMB",
+			    IF('roster historical'[Service Line] = "Marketing","Marketing",
+			    IF('roster historical'[Service Line] = "Tech","Tech",
+			    IF('roster historical'[Industry] = "Gf","Gf",
+			    IF('roster historical'[Industry] = "Bpo","Bpo",
+			    IF('roster historical'[Industry] = "Domestic","Core Account",
+			    "NA"
+			    )))))))
+			```
+		isHidden
+		lineageTag: 4116ea45-506c-4385-838d-a2841564d261
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'roster historical' = m
+		mode: import
+		queryGroup: Databases
+		source = ```
+				let
+				    Source = Excel.Workbook(Web.Contents("https://perfilesysoluciones.sharepoint.com/sites/CROSSFUNCTIONALREPORTINGTEAM/Shared%20Documents/Seat%20Count%20Report/COGs/Roster%20Historical%202024.xlsx"), null, true),
+				    roster_historical_Sheet = Source{[Item="roster_historical",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(roster_historical_Sheet, [PromoteAllScalars=true]),
+				    #"Appended Query" = Table.Combine({#"Promoted Headers", roster_historical2025}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Appended Query",{
+				        {"Roster date", type date}, {"Branch", type text}, {"Office", type text}, {"Residence", type text}, {"Service Line", type text},
+				        {"Business Unit", type text}, {"company_id", type any}, {"Account", type text}, {"company_legal_name", type any}, {"Sub Account", type any},
+				        {"Cost Center", type text}, {"Employee Name", type text}, {"ID Number", type any}, {"ID Type", type any}, {"Status", type text},
+				        {"Substatus", type text}, {"Last Status Date", type any}, {"Active Date", type any}, {"Availability", type any}, {"Senior managers", type any},
+				        {"OPS managers", type any}, {"Account Position", type text}, {"Internal Position", type any}, {"Department", type any}, {"Area", type any},
+				        {"assigned_date", type any}, {"Last Status Date2", type any}, {"Direct", type any}, {"Birthday", type any}, {"Temporal Entry Date", type any},
+				        {"Entry Date", type any}, {"Requisition", type any}, {"Building", type any}, {"Floor", type any}, {"Seat", type any}, {"Salary Cost", Currency.Type},
+				        {"Billrate", Currency.Type}, {"roster_vs_invoice_ID", Int64.Type}, {"Segmentation_ID", Int64.Type}
+				    }),
+				    #"Inserted Year" = Table.AddColumn(#"Changed Type", "Year", each Date.Year([Roster date]), Int64.Type),
+				    #"Inserted Day" = Table.AddColumn(#"Inserted Year", "Day", each Date.Day([Roster date]), Int64.Type),
+				    #"Capitalized Each Word" = Table.TransformColumns(#"Inserted Day",{{"Account", Text.Proper, type text}, {"Employee Name", Text.Proper, type text}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Capitalized Each Word",{
+				        {"Last Status Date", type date}, {"Active Date", type date}, {"Last Status Date2", type date},
+				        {"Birthday", type date}, {"Temporal Entry Date", type date}, {"Entry Date", type date}
+				    }),
+				    // 🔎 Aquí ya no excluimos Marketing, solo quitamos los nulos
+				    #"Filtered Rows" = Table.SelectRows(#"Changed Type1",
+				        each ([Day] <> 15)
+				            and ([Industry] <> null)
+				            and ([Status] = "Active" or [Status] = "active")
+				    ),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"Service Line"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"service_line", "Service Line"}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Renamed Columns","Lean Bpo","Lean Operations",Replacer.ReplaceText,{"Business Unit"}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Replaced Value", "Country", each 
+				        if [Branch] = "Bogota" then "Colombia"
+				        else if [Branch] = "Medellin" then "Colombia"
+				        else if [Branch] = "Bucaramanga" then "Colombia"
+				        else if [Branch] = "Cartagena" then "Colombia"
+				        else if [Branch] = "Barranquilla" then "Colombia"
+				        else if [Branch] = "Cali" then "Colombia"
+				        else if [Branch] = "Manila" then "Philippines"
+				        else if [Branch] = "Ciudad De Guatemala" then "Guatemala"
+				        else if [Branch] = "Ciudad De Mexico" then "Mexico"
+				        else null),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Added Conditional Column","active","Active",Replacer.ReplaceText,{"Status"})
+				in
+				    #"Replaced Value1"
+				```
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

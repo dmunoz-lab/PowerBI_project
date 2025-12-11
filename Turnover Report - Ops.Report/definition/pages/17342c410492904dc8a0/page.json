@@ -1,0 +1,314 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "name": "17342c410492904dc8a0",
+  "displayName": "Branch Details",
+  "displayOption": "ActualSize",
+  "height": 1600,
+  "width": 1313,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "9d55cd23de35e05cbb57",
+        "ordinal": 0,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Dim_Calendar_Ops"
+              }
+            },
+            "Property": "Date"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User",
+        "objects": {
+          "general": [
+            {
+              "properties": {}
+            }
+          ]
+        }
+      },
+      {
+        "name": "0958b44dcd2aa0690b30",
+        "ordinal": 1,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Dim_Calendar_Ops"
+              }
+            },
+            "Property": "Month"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "d",
+              "Entity": "Dim_Calendar_Ops",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Not": {
+                  "Expression": {
+                    "In": {
+                      "Expressions": [
+                        {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "d"
+                              }
+                            },
+                            "Property": "Month"
+                          }
+                        }
+                      ],
+                      "Values": [
+                        [
+                          {
+                            "Literal": {
+                              "Value": "null"
+                            }
+                          }
+                        ],
+                        [
+                          {
+                            "Literal": {
+                              "Value": "'December'"
+                            }
+                          }
+                        ]
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User",
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "true"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "5e4a5b7189044a6bc436",
+        "ordinal": 2,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Turnover Unified"
+              }
+            },
+            "Property": "Total HC"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      }
+    ],
+    "filterSortOrder": "Custom"
+  },
+  "objects": {
+    "outspace": [
+      {
+        "properties": {
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "''"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "Literal": {
+                    "Value": "''"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "displayArea": [
+      {
+        "properties": {
+          "verticalAlignment": {
+            "expr": {
+              "Literal": {
+                "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "background": [
+      {
+        "properties": {
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Frame 2 (4).png'"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "ResourcePackageItem": {
+                    "PackageName": "RegisteredResources",
+                    "PackageType": 1,
+                    "ItemName": "Frame_2_(4)46420590878364043.png"
+                  }
+                }
+              },
+              "scaling": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Normal'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          },
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F5F5F7'"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "width": {
+            "expr": {
+              "Literal": {
+                "Value": "219L"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visibility": "HiddenInViewMode",
+  "visualInteractions": [
+    {
+      "source": "cbe2ac0d2e93e680d4e9",
+      "target": "8fe5de515c7c19d66b90",
+      "type": "DataFilter"
+    },
+    {
+      "source": "0073257ea90a508977c9",
+      "target": "97042274ca0a2abe58e3",
+      "type": "DataFilter"
+    },
+    {
+      "source": "0073257ea90a508977c9",
+      "target": "8fe5de515c7c19d66b90",
+      "type": "DataFilter"
+    },
+    {
+      "source": "97042274ca0a2abe58e3",
+      "target": "8fe5de515c7c19d66b90",
+      "type": "HighlightFilter"
+    },
+    {
+      "source": "fad50c25307515511ee6",
+      "target": "97042274ca0a2abe58e3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "b0a5cfef07e0ab4b7b10",
+      "target": "71d2e188320e631a6b01",
+      "type": "DataFilter"
+    },
+    {
+      "source": "fad50c25307515511ee6",
+      "target": "71d2e188320e631a6b01",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cbe2ac0d2e93e680d4e9",
+      "target": "f412c26086ae70920433",
+      "type": "NoFilter"
+    },
+    {
+      "source": "2ee418cfa9adb3000e06",
+      "target": "f412c26086ae70920433",
+      "type": "NoFilter"
+    },
+    {
+      "source": "fdb068496078d9a0b4b4",
+      "target": "f412c26086ae70920433",
+      "type": "DataFilter"
+    },
+    {
+      "source": "c326f05406ce1dbd8ac0",
+      "target": "abb582e1008cc0a02088",
+      "type": "NoFilter"
+    },
+    {
+      "source": "c326f05406ce1dbd8ac0",
+      "target": "b2329c702232565b2776",
+      "type": "NoFilter"
+    },
+    {
+      "source": "c326f05406ce1dbd8ac0",
+      "target": "97042274ca0a2abe58e3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "c326f05406ce1dbd8ac0",
+      "target": "0073257ea90a508977c9",
+      "type": "DataFilter"
+    },
+    {
+      "source": "b0a5cfef07e0ab4b7b10",
+      "target": "1cb793604861600b06e5",
+      "type": "DataFilter"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Turnover Report - Ops"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "da5a1dd1-6f9b-468a-bbfd-4a013ad0ce04"
+  }
+}

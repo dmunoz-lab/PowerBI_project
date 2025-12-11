@@ -1,0 +1,111 @@
+table SCR_finance
+	lineageTag: f3d9930a-f987-4346-ade5-708e16f946cf
+
+	column roster_vs_invoice_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 36f5e79b-ba02-4e2f-917a-82035491cecf
+		summarizeBy: none
+		sourceColumn: roster_vs_invoice_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Account
+		dataType: string
+		lineageTag: c75c67f4-1f4b-490a-bc66-40bbfd6021a6
+		summarizeBy: none
+		sourceColumn: Account
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Business Unit'
+		dataType: string
+		lineageTag: dfce6d44-3e23-46d9-80fc-d43e7b1a5fe3
+		summarizeBy: none
+		sourceColumn: Business Unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column Industry
+		dataType: string
+		lineageTag: 747838ff-ac98-4b15-a330-ac406f7d33be
+		summarizeBy: none
+		sourceColumn: Industry
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 6fef519a-0c63-4f8b-bf54-f7cdf897072f
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 68a8f55c-7622-4c5e-883f-1b2ec4905b28
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Current Net Seats'
+		dataType: int64
+		formatString: 0
+		lineageTag: c8e87a8d-c707-4dee-87e3-d6e900ee7632
+		summarizeBy: sum
+		sourceColumn: Current Net Seats
+
+		annotation SummarizationSetBy = Automatic
+
+	column segmentation_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 07982cfe-78ca-4950-9f3a-f347d46bfa17
+		summarizeBy: none
+		sourceColumn: segmentation_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Previous Net Seats' =
+			
+			var _t1 = SCR_finance[Account]
+			var _t2 = SCR_finance[Country]
+			var _t3 = SCR_finance[Business Unit]
+			var _t4 = SCR_finance[Industry]
+			var _date = SCR_finance[Date]
+			RETURN MAXX(
+			    FILTER(SCR_finance, SCR_finance[Account] = _t1 && SCR_finance[Country] = _t2 && SCR_finance[Business Unit] = _t3 && SCR_finance[Industry] = _t4 && SCR_finance[Date] = EDATE(_date,-1)),SCR_finance[Current Net Seats])
+		formatString: 0
+		lineageTag: 10274981-5c26-405b-9fe8-c3c8dc988b03
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition SCR_finance = m
+		mode: import
+		queryGroup: SCR
+		source =
+				let
+				    Source = Table.Combine({PHL_invoice, COL_invoice, GUA_invoice, MEX_invoice, PHL_invoice2025, MEX_invoice2025, GUA_invoice2025, COL_invoice2025}),
+				    #"Unpivoted Columns" = Table.UnpivotOtherColumns(Source, {"roster_vs_invoice_ID", "Account", "Country","Industry", "Business Unit"}, "Attribute", "Value"),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Unpivoted Columns",{{"Value", Int64.Type}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Changed Type1", each true),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Filtered Rows",{{"Attribute", type date}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"Attribute", "Date"}, {"Value", "Current Net Seats"}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Renamed Columns", {"roster_vs_invoice_ID"}, customer_segmentation, {"roster_vs_invoice_ID"}, "customer_segmentation", JoinKind.LeftOuter),
+				    #"Expanded customer_segmentation" = Table.ExpandTableColumn(#"Merged Queries", "customer_segmentation", {"segmentation_ID"}, {"customer_segmentation.segmentation_ID"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Expanded customer_segmentation",{{"customer_segmentation.segmentation_ID", "segmentation_ID"}}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Renamed Columns1", each ([Business Unit] <> "lean tech")),
+				    #"Capitalized Each Word" = Table.TransformColumns(#"Filtered Rows1",{{"Business Unit", Text.Proper, type text}})
+				in
+				    #"Capitalized Each Word"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,159 @@
+table 'Attrition 2'
+	isHidden
+	lineageTag: ebff876b-b4a8-4d57-9d2f-c68d4a6a874e
+
+	column 'Deal Closing'
+		isHidden
+		formatString: General Date
+		lineageTag: edcb482c-1088-4eab-98dc-4bcccb5360f5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Deal Closing]
+
+		variation Variation
+			isDefault
+			relationship: 241a1be0-1c19-47dc-ac9d-cd54a3cf11d5
+			defaultHierarchy: LocalDateTable_45454bd4-078a-44d5-9c92-fef6429636fa.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Transition Date'
+		isHidden
+		formatString: General Date
+		lineageTag: 4880dbe9-8f47-421f-98c2-410a6174ed6e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Transition Date]
+
+		variation Variation
+			isDefault
+			relationship: cdfca09e-f2f3-46ae-9441-16ea0c7c3341
+			defaultHierarchy: LocalDateTable_3eb1aff9-676e-4bf2-87fe-89207c82f257.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column segmentation_ID
+		isHidden
+		formatString: 0
+		lineageTag: e8f29f12-255c-4d79-927a-c67a89f5ab07
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: removals[segmentation_ID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Business Unit'
+		isHidden
+		lineageTag: b0a2bbb9-12df-4031-9004-5181c5672c68
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Business Unit]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Branch
+		isHidden
+		lineageTag: 21eb45b1-eef0-4a88-8ee1-27c499d96a06
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Branch]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		isHidden
+		lineageTag: 360ffb68-a494-42e5-a2d0-a426f2a1c38c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Country]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Service Line'
+		isHidden
+		lineageTag: d6ec6120-379b-4c26-a0e7-a361d01bd870
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Service Line]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Industry
+		isHidden
+		lineageTag: 7827c586-4da1-4662-84ea-3ea6d9b543a5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Industry]
+
+		annotation SummarizationSetBy = Automatic
+
+	column roster_vs_invoice_ID
+		isHidden
+		formatString: 0
+		lineageTag: 4568798c-f57f-4d93-a950-e290460d2532
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: removals[roster_vs_invoice_ID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Main Account Name'
+		isHidden
+		lineageTag: d8f7d1b1-521d-4f72-91c6-0ab4a3182cc1
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Main Account Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Attrition 2' = calculated
+		mode: import
+		source =
+				
+				SUMMARIZE(
+				    FILTER(
+				        removals,
+				        NOT ISBLANK(
+				            CALCULATE(
+				                MAX(customer_segmentation[deal closing date]),
+				                FILTER(
+				                    customer_segmentation,
+				                    customer_segmentation[segmentation_ID] = removals[Segmentation_ID]
+				                )
+				            )
+				        )
+				    ),
+				    removals[Segmentation_ID],
+				    removals[Business Unit],
+				    removals[Branch],
+				    removals[Country],
+				    removals[Service Line],
+				    removals[Industry],
+				    removals[roster_vs_invoice_ID],
+				
+				    // Columnas adicionales con agregación
+				    "Deal Closing", CALCULATE(
+				        MAX(customer_segmentation[deal closing date]),
+				        FILTER(
+				            customer_segmentation,
+				            customer_segmentation[segmentation_ID] = removals[Segmentation_ID]
+				        )
+				    ),
+				    "Transition Date", CALCULATE(
+				        MAX(customer_segmentation[Transition_ops]),
+				        FILTER(
+				            customer_segmentation,
+				            customer_segmentation[segmentation_ID] = removals[Segmentation_ID]
+				        )
+				    ),
+				    "Main Account Name", CALCULATE(
+				        MAX(customer_segmentation[Account Name]),
+				        FILTER(
+				            customer_segmentation,
+				            customer_segmentation[segmentation_ID] = removals[Segmentation_ID]
+				        )
+				    )
+				)
+
+	annotation PBI_Id = c00934993c7a4505874f8416ed2c12cb
+

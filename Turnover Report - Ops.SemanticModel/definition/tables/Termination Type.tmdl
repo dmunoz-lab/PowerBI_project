@@ -1,0 +1,19 @@
+table 'Termination Type'
+	lineageTag: 99ba69c5-5d30-4f9b-828b-78609af284fb
+
+	column 'Termination Type'
+		lineageTag: 4351ca77-cd5d-426b-8ee7-2dc689000ed3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: turnover_data[Termination Type]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Termination Type' = calculated
+		mode: import
+		source =
+				VALUES(turnover_data[Termination Type]
+				)
+
+	annotation PBI_Id = 2d708aa3d8cc4ba6aa6e749e3407d1b2
+

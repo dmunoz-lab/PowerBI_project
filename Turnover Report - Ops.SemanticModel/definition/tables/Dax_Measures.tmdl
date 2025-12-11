@@ -1,0 +1,507 @@
+table Dax_Measures
+	lineageTag: 2f7d2816-d605-4379-bd02-49c8e4eccf31
+
+	measure 'HC Prev' = ```
+			
+			CALCULATE(
+			    DISTINCTCOUNT('roster historical'[Segmentation_ID]),
+			    KEEPFILTERS(
+			        'roster historical'[Roster Date]
+			            = EOMONTH(MAX(Dim_Calendar_Ops[Date]), -1)
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 7557b9f1-d240-471f-8fde-7b2937f0eeff
+
+	measure 'HC Actual' = ```
+			
+			VAR MesActual = EOMONTH( MAX( Dim_Calendar_Ops[Date] ), -1 ) + 1
+			VAR RosterHist =
+			    CALCULATE(
+			        DISTINCTCOUNT( 'roster historical'[Segmentation_ID] ),
+			        FILTER(
+			            'roster historical',
+			            EOMONTH( 'roster historical'[Roster Date], -1 ) + 1 = MesActual
+			        )
+			    )
+			VAR RosterLive =
+			    CALCULATE(
+			        DISTINCTCOUNT( 'roster_and_nnb'[Segmentation_ID] ),
+			        /* Si 'roster_and_nnb' tiene una columna de fecha, compara con MesActual.
+			           Si no tiene date y siempre representa "mes actual", usa MesActual = DATE(YEAR(TODAY()),MONTH(TODAY()),1) en su lugar */
+			        TRUE()
+			    )
+			RETURN
+			RosterHist + RosterLive
+			
+			
+			```
+		lineageTag: 5cb1f4c1-62df-4a86-88cf-6a969c25806b
+
+	measure 'Turnover Total' = ```
+			
+			CALCULATE(
+			    COUNTROWS(turnover_data),
+			    KEEPFILTERS(
+			        EOMONTH(turnover_data[Final Date], -1) + 1
+			            = MAX('Turnover Unified'[MonthStart])
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: b8dae3d0-4226-447b-a186-4a2a39d9d4b3
+
+	measure 'HC previous' = ```
+			
+			VAR Base_RosterPrevMonth =
+			    SELECTCOLUMNS(
+			        'roster historical',
+			        "Segmentation_ID", 'roster historical'[Segmentation_ID],
+			        "Account Name",    'roster historical'[Main Account Name],
+			        "Branch",          'roster historical'[Branch],
+			        "Country",         'roster historical'[Country],
+			        "Service Line",    'roster historical'[Service Line],
+			        "Industry",        'roster historical'[Industry],
+			        "Business Unit",   'roster historical'[Business Unit],
+			        "MonthStart",      EDATE(EOMONTH('roster historical'[Roster Date], -1) + 1, 1),
+			        "Type",            "prev_roster"
+			    )
+			
+			VAR Base_RosterCurrentMonth =
+			    SELECTCOLUMNS(
+			        'roster historical',
+			        "Segmentation_ID", 'roster historical'[Segmentation_ID],
+			        "Account Name",    'roster historical'[Main Account Name],
+			        "Branch",          'roster historical'[Branch],
+			        "Country",         'roster historical'[Country],
+			        "Service Line",    'roster historical'[Service Line],
+			        "Industry",        'roster historical'[Industry],
+			        "Business Unit",   'roster historical'[Business Unit],
+			        "MonthStart",      EOMONTH('roster historical'[Roster Date], -1) + 1,
+			        "Type",            "current_roster"
+			    )
+			
+			VAR Base_RosterLive =
+			    SELECTCOLUMNS(
+			        'roster_and_nnb',
+			        "Segmentation_ID", 'roster_and_nnb'[Segmentation_ID],
+			        "Account Name",    'roster_and_nnb'[company],
+			        "Branch",          'roster_and_nnb'[Branch],
+			        "Country",         'roster_and_nnb'[Country],
+			        "Service Line",    'roster_and_nnb'[Service Line],
+			        "Industry",        'roster_and_nnb'[Industry],
+			        "Business Unit",   'roster_and_nnb'[business_unit],
+			        "MonthStart",      DATE(YEAR(TODAY()), MONTH(TODAY()), 1),
+			        "Type",            "current_roster"
+			    )
+			
+			VAR Base_Turnover =
+			    SELECTCOLUMNS(
+			        'turnover_data',
+			        "Segmentation_ID", 'turnover_data'[Segmentation_ID],
+			        "Account Name",    'turnover_data'[Account],
+			        "Branch",          'turnover_data'[Branch],
+			        "Country",         RELATED('branch_country'[country]),
+			        "Service Line",    'turnover_data'[Service Line],
+			        "Industry",        'turnover_data'[Industry],
+			        "Business Unit",   'turnover_data'[Business Unit],
+			        "MonthStart",      EOMONTH('turnover_data'[Final Date], -1) + 1,
+			        "Type",            "turnover"
+			    )
+			
+			/* Equivalente a BaseRows */
+			VAR BaseRows =
+			    UNION(
+			        UNION(
+			            Base_RosterPrevMonth,
+			            UNION(Base_RosterCurrentMonth, Base_RosterLive)
+			        ),
+			        Base_Turnover
+			    )
+			
+			/* Agrupación por Type para contar */
+			VAR CountsByType =
+			    GROUPBY(
+			        BaseRows,
+			        [Segmentation_ID],
+			        [Account Name],
+			        [Business Unit],
+			        [Branch],
+			        [Country],
+			        [Service Line],
+			        [Industry],
+			        [MonthStart],
+			        [Type],
+			        "Cnt", COUNTX(CURRENTGROUP(), 1)
+			    )
+			
+			/* Filtrar exclusivamente los prev_roster */
+			VAR HCprev =
+			    FILTER(CountsByType, [Type] = "prev_roster")
+			
+			/* Devolver la suma de HC */
+			RETURN
+			SUMX(HCprev, [Cnt])
+			
+			```
+		formatString: 0
+		lineageTag: fb50a953-a533-4875-85ba-0ca2cdcb86e7
+
+	measure '% Turnover Unified (Bench)' = ```
+			
+			VAR total_TurnoverBench = SUM('Turnover Unified'[Bench Count])
+			VAR avg_hc     = [Avg Headcount Unified]
+			VAR raw_turnover  = DIVIDE(total_TurnoverBench, avg_hc, 0)
+			 
+			RETURN
+			IF (raw_turnover > 1, 1, raw_turnover)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: ffbfb7f6-c62c-4d7b-98d1-2f2f908890bf
+
+	measure 'Bench Voluntary Terminations (Dynamic)' = ```
+			
+			VAR MonthStartTable =
+			    VALUES('Turnover Unified'[MonthStart])   -- admite 1 o varios meses
+			
+			VAR DateFilter =
+			    CALCULATETABLE(
+			        ADDCOLUMNS(
+			            MonthStartTable,
+			            "StartDate", [MonthStart],
+			            "EndDate", EDATE([MonthStart], 1)
+			        )
+			    )
+			
+			RETURN
+			CALCULATE(
+			    DISTINCTCOUNT(turnover_data[ID Number]),
+			    turnover_data[Bench] = "Yes",
+			    turnover_data[Type of termination] IN {"Resignation (Voluntary)", "Resignation during training", "Resignation during the probation period","End of contract"},
+			
+			    -- rango dinámico de fechas
+			    FILTER(
+			        ALL(turnover_data[Final Date]),
+			        turnover_data[Final Date] >= MINX(DateFilter, [StartDate]) &&
+			        turnover_data[Final Date] <  MAXX(DateFilter, [EndDate])
+			    ),
+			
+			    -- filtros por equivalencia
+			    TREATAS(VALUES('Turnover Unified'[Segmentation_ID]), turnover_data[Segmentation_ID]),
+			    TREATAS(VALUES('Turnover Unified'[Account Name]),    turnover_data[Account]),
+			    TREATAS(VALUES('Turnover Unified'[Business Unit]),   turnover_data[Business Unit]),
+			    TREATAS(VALUES('Turnover Unified'[Branch]),          turnover_data[Branch]),
+			    TREATAS(VALUES('Turnover Unified'[Service Line]),    turnover_data[Service Line]),
+			    TREATAS(VALUES('Turnover Unified'[Industry]),        turnover_data[Industry]),
+			    TREATAS(VALUES('Turnover Unified'[Divisions]),       turnover_data[Division])
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 6e01c93a-a2be-4725-8db6-488497a9ad20
+
+	measure 'Bench Involuntary Terminations (Dynamic)' =
+			
+			VAR MonthStartTable =
+			    VALUES('Turnover Unified'[MonthStart])   -- admite 1 o varios meses
+			
+			VAR DateFilter =
+			    CALCULATETABLE(
+			        ADDCOLUMNS(
+			            MonthStartTable,
+			            "StartDate", [MonthStart],
+			            "EndDate", EDATE([MonthStart], 1)
+			        )
+			    )
+			
+			RETURN
+			CALCULATE(
+			    DISTINCTCOUNT(turnover_data[ID Number]),
+			    turnover_data[Bench] = "Yes",
+			    turnover_data[Type of termination] IN {"Termination", "Termination during the probation period", "Termination during training"},
+			
+			    -- rango dinámico de fechas
+			    FILTER(
+			        ALL(turnover_data[Final Date]),
+			        turnover_data[Final Date] >= MINX(DateFilter, [StartDate]) &&
+			        turnover_data[Final Date] <  MAXX(DateFilter, [EndDate])
+			    ),
+			
+			    -- filtros por equivalencia
+			    TREATAS(VALUES('Turnover Unified'[Segmentation_ID]), turnover_data[Segmentation_ID]),
+			    TREATAS(VALUES('Turnover Unified'[Account Name]),    turnover_data[Account]),
+			    TREATAS(VALUES('Turnover Unified'[Business Unit]),   turnover_data[Business Unit]),
+			    TREATAS(VALUES('Turnover Unified'[Branch]),          turnover_data[Branch]),
+			    TREATAS(VALUES('Turnover Unified'[Service Line]),    turnover_data[Service Line]),
+			    TREATAS(VALUES('Turnover Unified'[Industry]),        turnover_data[Industry]),
+			    TREATAS(VALUES('Turnover Unified'[Divisions]),       turnover_data[Division])
+			)
+		formatString: 0
+		lineageTag: 466c3ec4-87e8-4d8b-be72-272ceeb8523f
+
+	measure 'test bench' = [Bench Involuntary Terminations (Dynamic)] + [Bench Voluntary Terminations (Dynamic)]
+		formatString: 0
+		lineageTag: 773c911a-75dc-4452-be4b-5137a04eef99
+
+	measure 'Prev Bench Turnover' = ```
+			
+			VAR PrevTurn = 
+			    CALCULATE(
+			    SUM('Turnover Unified'[Bench Count]),
+			    PREVIOUSMONTH(Dim_Calendar_Ops[Date])
+			    )
+			VAR PrevHC =
+			    CALCULATE(
+			    SUM('Turnover Unified'[Total HC]),
+			    PREVIOUSMONTH(Dim_Calendar_Ops[Date])
+			    )
+			
+			RETURN
+			
+			 COALESCE(PrevTurn / PrevHC,0)
+			```
+		lineageTag: cbfd84b7-f7fc-4a8a-9bd1-fb1f13383990
+
+	measure '% Involuntary Turnover Unified (Bench)' =
+			
+			DIVIDE([Bench Involuntary Terminations (Dynamic)], [Avg Headcount Unified])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: ee8f357b-1753-4d58-a5ae-c3572bbea321
+
+	measure '% Voluntary Turnover Unified (Bench)' = ```
+			
+			VAR total_TurnoverBench = [Bench Voluntary Terminations (Dynamic)]
+			VAR avg_hc     = [Avg Headcount Unified]
+			VAR raw_turnover  = DIVIDE(total_TurnoverBench, avg_hc, 0)
+			 
+			RETURN
+			IF (raw_turnover > 1, 1, raw_turnover)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: d0d7c4dd-286a-49a8-8048-b43f99e849de
+
+	measure 'Avg Bench Turnover' = DIVIDE(SUM('Turnover Unified'[Bench Count]), DISTINCTCOUNT(Dim_Calendar_Finance[YearMonth]))
+		formatString: 0
+		lineageTag: be6a5c28-d861-4903-a069-3a890b530ae7
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Avg Involuntary Terminations' = DIVIDE([Bench Involuntary Terminations (Dynamic)], DISTINCTCOUNT(Dim_Calendar_Finance[YearMonth]))
+		formatString: 0
+		lineageTag: 2c17b463-6774-4904-9677-c1974bb2d8df
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Avg Voluntary Terminations' = DIVIDE([Bench Voluntary Terminations (Dynamic)], DISTINCTCOUNT(Dim_Calendar_Finance[YearMonth]))
+		formatString: 0
+		lineageTag: 40312ddf-9323-4443-89ff-0e07e7c3186f
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Avg Turnover' = DIVIDE([Filtered Termination],DISTINCTCOUNT(Dim_Calendar_Ops[YearMonth]))
+		lineageTag: 33792bd8-1ddb-4918-9654-37a9536ee9f7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Previous Month AVG' = ```
+			
+			    COALESCE(
+			        CALCULATE(
+			        [Avg Turnover],
+			        PREVIOUSMONTH(Dim_Calendar_Ops[Date])
+			),0)
+			```
+		formatString: 0
+		lineageTag: a036a277-fe4e-4783-917c-f53fbb4df192
+
+	measure 'Previous Month AVG (Bench)' = ```
+			
+			    COALESCE(
+			        CALCULATE(
+			        [Avg Bench Turnover],
+			        PREVIOUSMONTH(Dim_Calendar_Ops[Date])
+			),0)
+			```
+		formatString: 0
+		lineageTag: 86e79560-5b74-43aa-9616-6a78816c4cd5
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Delta Turnover Formatted (Bench)' = ```
+			
+			VAR Diferencia = DIVIDE([Avg Bench Turnover] - [Previous Month AVG (Bench)], [Previous Month AVG (Bench)], BLANK())
+			RETURN
+			    IF( NOT ISBLANK(Diferencia), 
+			        IF(Diferencia > 0, 
+			            "▲ " & FORMAT(Diferencia, "0.0%") , 
+			            "▼ " & FORMAT(Diferencia, "0.0%")
+			        ),
+			        BLANK())
+			
+			```
+		lineageTag: c49ff713-0b22-4870-926e-e275d5fa532c
+
+	measure 'KPI Colour' =
+			VAR _var = DIVIDE([Avg Turnover]- [Previous Month AVG], [Previous Month AVG])
+			RETURN
+			SWITCH(
+			    TRUE()
+			    ,_var > 0, "#821E1E"
+			    ,_var < 0, "#157924"
+			    ," Black")
+		lineageTag: dad20875-99aa-4eca-9747-c0560e366acb
+
+	measure 'KPI Colour (Bench)' =
+			VAR _var = DIVIDE([Avg Bench Turnover]- [Previous Month AVG (Bench)], [Previous Month AVG (Bench)])
+			RETURN
+			SWITCH(
+			    TRUE()
+			    ,_var > 0, "#821E1E"
+			    ,_var < 0, "#157924"
+			    ," Black")
+		lineageTag: 79dc1fa5-cef4-450c-a6d4-b44561e0cb55
+
+	measure 'Previous Month AVG Involuntary (Bench)' = ```
+			
+			    COALESCE(
+			        CALCULATE(
+			        [Avg Involuntary Terminations],
+			        PREVIOUSMONTH(Dim_Calendar_Ops[Date])
+			),0)
+			```
+		formatString: 0
+		lineageTag: 3857a991-465a-4039-a917-2093fb6d8d54
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Previous Month AVG Voluntary (Bench)' = ```
+			
+			    COALESCE(
+			        CALCULATE(
+			        [Avg Voluntary Terminations],
+			        PREVIOUSMONTH(Dim_Calendar_Ops[Date])
+			),0)
+			```
+		formatString: 0
+		lineageTag: 6450d6a6-6ddf-4b00-9618-0aad648a0955
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Delta Involuntary Turnover Formatted (Bench)' = ```
+			
+			VAR Diferencia = DIVIDE([Avg Involuntary Terminations] - [Previous Month AVG Involuntary (Bench)], [Previous Month AVG Involuntary (Bench)], BLANK())
+			RETURN
+			    IF( NOT ISBLANK(Diferencia), 
+			        IF(Diferencia > 0, 
+			            "▲ " & FORMAT(Diferencia, "0.0%") , 
+			            "▼ " & FORMAT(Diferencia, "0.0%")
+			        ),
+			        BLANK())
+			```
+		lineageTag: 382f4b0a-d967-4fe4-afad-e6de245d69d4
+
+	measure 'KPI Colour Involuntary (Bench)' =
+			VAR _var = DIVIDE([Avg Involuntary Terminations]- [Previous Month AVG Involuntary (Bench)], [Previous Month AVG Involuntary (Bench)])
+			RETURN
+			SWITCH(
+			    TRUE()
+			    ,_var > 0, "#821E1E"
+			    ,_var < 0, "#157924"
+			    ," Black")
+		lineageTag: 54b3dc9e-e089-4bf3-a536-8c67aca0167c
+
+	measure 'Delta Voluntary Turnover Formatted (Bench)' = ```
+			
+			VAR Diferencia = DIVIDE([Avg Voluntary Terminations] - [Previous Month AVG Voluntary (Bench)], [Previous Month AVG Voluntary (Bench)], BLANK())
+			RETURN
+			    IF( NOT ISBLANK(Diferencia), 
+			        IF(Diferencia > 0, 
+			            "▲ " & FORMAT(Diferencia, "0.0%") , 
+			            "▼ " & FORMAT(Diferencia, "0.0%")
+			        ),
+			        BLANK())
+			```
+		lineageTag: 24baec24-1b0f-4c7b-ab70-49e7b88a4baf
+
+	measure 'Previous Month % Turnover (Bench)' = ```
+			
+			    COALESCE(
+			        CALCULATE(
+			        [% Turnover Unified (Bench)],
+			        PREVIOUSMONTH(Dim_Calendar_Ops[Date])
+			),0)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 504e6b77-5bc7-4359-8825-c5a7e05769ef
+
+	measure 'Delta % Turnover Formatted (Bench)' = ```
+			
+			VAR Diferencia = DIVIDE([% Turnover Unified (Bench)] - [Previous Month % Turnover (Bench)], [Previous Month % Turnover (Bench)], BLANK())
+			RETURN
+			    IF( NOT ISBLANK(Diferencia), 
+			        IF(Diferencia > 0, 
+			            "▲ " & FORMAT(Diferencia, "0.0%") , 
+			            "▼ " & FORMAT(Diferencia, "0.0%")
+			        ),
+			        BLANK())
+			```
+		lineageTag: a5fb1221-c3b1-4724-bba2-39465934bf90
+
+	measure 'KPI Colour % (Bench)' =
+			VAR _var = DIVIDE([% Turnover Unified (Bench)]- [Previous Month % Turnover (Bench)], [Previous Month % Turnover (Bench)])
+			RETURN
+			SWITCH(
+			    TRUE()
+			    ,_var > 0, "#821E1E"
+			    ,_var < 0, "#157924"
+			    ," Black")
+		lineageTag: 51c25559-9944-4e28-a469-d70c99cb1b5c
+
+	measure 'KPI Colour Voluntary (Bench)' =
+			VAR _var = DIVIDE([Avg Voluntary Terminations]- [Previous Month AVG Voluntary (Bench)], [Previous Month AVG Voluntary (Bench)])
+			RETURN
+			SWITCH(
+			    TRUE()
+			    ,_var > 0, "#821E1E"
+			    ,_var < 0, "#157924"
+			    ," Black")
+		lineageTag: 40bc5b57-3bb1-4dc3-a622-ed4f05300dbf
+
+	measure 'Delta % Turnover Formatted' = ```
+			
+			VAR Diferencia = DIVIDE([% Turnover Unified] - [Previous Month % Turnover], [Previous Month % Turnover], BLANK())
+			RETURN
+			    IF( NOT ISBLANK(Diferencia), 
+			        IF(Diferencia > 0, 
+			            "▲ " & FORMAT(Diferencia, "0.0%") , 
+			            "▼ " & FORMAT(Diferencia, "0.0%")
+			        ),
+			        BLANK())
+			```
+		lineageTag: b84408d1-9e51-44ef-879c-1e402c5518dd
+
+	measure 'KPI Colour %' =
+			VAR _var = DIVIDE([% Turnover Unified]- [Previous Month % Turnover], [Previous Month % Turnover])
+			RETURN
+			SWITCH(
+			    TRUE()
+			    ,_var > 0, "#821E1E"
+			    ,_var < 0, "#157924"
+			    ," Black")
+		lineageTag: ae4c1c62-0e4b-4a66-a744-25370e9fc91e
+
+	partition Dax_Measures = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+

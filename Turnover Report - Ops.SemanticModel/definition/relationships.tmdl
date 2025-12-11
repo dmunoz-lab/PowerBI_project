@@ -1,0 +1,463 @@
+relationship AutoDetected_bf0b02ea-74f1-46a3-9477-697c78a808ba
+	fromColumn: branch_country.country
+	toColumn: country.country
+
+relationship AutoDetected_6c8d7c83-04f1-4d63-a88d-16b421b2c66f
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: branch.branch
+	toColumn: branch_country.branch
+
+relationship AutoDetected_78b3ad30-6c5c-4cbc-8ee0-de8e48895178
+	fromColumn: removals.Branch
+	toColumn: branch_country.branch
+
+relationship AutoDetected_0256ca3f-14f2-438d-aa7d-5cd5b62d92fa
+	fromColumn: removals.Workplace
+	toColumn: workplace.workplace
+
+relationship AutoDetected_acd8b265-b64f-4c68-a984-e09856d81b36
+	fromColumn: 'roster historical'.Branch
+	toColumn: branch_country.branch
+
+relationship 7989ab7d-5221-4c00-8e45-1d7674cb6bbf
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'roster historical'.'Last Status Date'
+	toColumn: LocalDateTable_94646429-c63b-42fb-883a-9ea6ddf0dd7e.Date
+
+relationship e6a651d0-b79a-4bcf-a762-028bd8851579
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'roster historical'.'Active Date'
+	toColumn: LocalDateTable_45d7f522-0827-406a-8f23-3ef00bbe6ad0.Date
+
+relationship 66be468a-9def-4636-851e-c6e25722b82d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'roster historical'.'Last Status Date2'
+	toColumn: LocalDateTable_4c906aed-f4a4-469e-8698-ef5521aa7e18.Date
+
+relationship 4668bd01-10b2-4af3-89ca-41b846490f95
+	joinOnDateBehavior: datePartOnly
+	fromColumn: removals.'Finance report'
+	toColumn: LocalDateTable_5a634f81-7ae2-41a2-b8bb-f18678008085.Date
+
+relationship b3073e6b-4d74-a638-4fd1-9bcf5da553b0
+	fromColumn: 'roster historical'.'Service Line'
+	toColumn: service_line.service_line
+
+relationship a8ef37f9-6d99-3370-927b-91e9483ba33a
+	fromColumn: removals.'Business Unit'
+	toColumn: business_unit.business_unit
+
+relationship 1810b304-f5fd-d2d8-0190-78438faf4e72
+	fromColumn: 'roster historical'.'Business Unit'
+	toColumn: business_unit.business_unit
+
+relationship 6a3880bb-3d98-4a39-bd50-bd42b6dea28a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: main_accounts.aniversary_date
+	toColumn: LocalDateTable_035d96b5-a5bf-4a54-8321-1176922fdda7.Date
+
+relationship 1726cf58-3f49-4b0f-b012-47373a62ba21
+	joinOnDateBehavior: datePartOnly
+	fromColumn: main_accounts.'Enterprise date'
+	toColumn: LocalDateTable_09d350a0-5ee0-4c83-867a-e0453675d735.Date
+
+relationship 8541b0a2-36d3-4fdb-92b2-4d639eb11bf7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: main_accounts.churn_finance
+	toColumn: LocalDateTable_5f264127-ab1c-49ea-9673-0745079f2d61.Date
+
+relationship AutoDetected_264897d5-38d7-4e97-8607-14daa02c5029
+	fromColumn: 'roster historical'.Segmentation_ID
+	toColumn: main_accounts.segmentation_ID
+
+relationship 96224830-a386-4a49-835d-5acf53613eb7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: roster_and_nnb.active_date
+	toColumn: LocalDateTable_844827f9-4291-4a83-8b6b-fa1b0e362b28.Date
+
+relationship 65908b13-6ba4-4ff1-b1ca-32241e231bea
+	joinOnDateBehavior: datePartOnly
+	fromColumn: roster_and_nnb.assigned_date
+	toColumn: LocalDateTable_89dd81d5-86b9-4fb5-a300-444c908a3d2d.Date
+
+relationship 5f28d751-c14b-4f7b-98f2-b8c3ec3fdd3b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: roster_and_nnb.deactivated_date
+	toColumn: LocalDateTable_c6738ace-0943-4793-be60-81fad02c5b2e.Date
+
+relationship 7e3f40be-cfc5-4f24-b01b-a3ac920aa0d5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: roster_and_nnb.birthday
+	toColumn: LocalDateTable_320ece10-75a8-47fe-af51-c787b661cb4f.Date
+
+relationship 570c693d-8a53-499c-9f1e-4f3acbab3b30
+	joinOnDateBehavior: datePartOnly
+	fromColumn: roster_and_nnb.contract_date
+	toColumn: LocalDateTable_c3673ad8-a718-445f-8860-0a2de914ca6d.Date
+
+relationship 1359d235-7f57-4c74-b079-4dc8c9605d8b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: roster_and_nnb.end_of_6_month
+	toColumn: LocalDateTable_a3a46a06-040b-4c63-9f50-c29be4902d30.Date
+
+relationship 1990272a-5db0-4ec9-bf36-523fb45f7e9a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: roster_and_nnb.end_of_1_year
+	toColumn: LocalDateTable_191da6c2-ac13-4100-a867-d4839cc34747.Date
+
+relationship AutoDetected_35eaf96e-5296-479c-9f18-ec7b2a6fd48d
+	fromColumn: roster_and_nnb.Country
+	toColumn: country.country
+
+relationship AutoDetected_e594b8ca-36e1-4bec-bd97-0c13ebe39c92
+	isActive: false
+	fromColumn: roster_and_nnb.branch
+	toColumn: branch_country.branch
+
+relationship AutoDetected_32d5e0a5-c298-458a-8ee0-8b088a8a6b51
+	isActive: false
+	fromColumn: 'roster historical'.'Employee Name'
+	toColumn: roster_and_nnb.employee
+
+relationship AutoDetected_3dacfa05-e51e-4aae-9250-37c92930942d
+	fromColumn: roster_and_nnb.'Service Line'
+	toColumn: service_line.service_line
+
+relationship a3a5758f-24d7-80e9-c425-c77dcaa28ba4
+	fromColumn: roster_and_nnb.Segmentation_ID
+	toColumn: main_accounts.segmentation_ID
+
+relationship 9b27a9a3-79d0-dbb0-70ba-7f7b6401927c
+	fromColumn: removals.segmentation_ID
+	toColumn: main_accounts.segmentation_ID
+
+relationship 4150b16c-e8fd-4648-afb5-9fa1c18c1eaa
+	joinOnDateBehavior: datePartOnly
+	fromColumn: upsells.'Effective Date'
+	toColumn: LocalDateTable_d3d5520a-f9a3-4fb3-b295-9dc75db3d2d0.Date
+
+relationship AutoDetected_fc32dbf8-6c8c-4a1e-b41f-d78654b77db7
+	fromColumn: upsells.Country
+	toColumn: country.country
+
+relationship AutoDetected_07a80d9b-0443-417a-a855-7f3c5eeef211
+	fromColumn: upsells.segmentation_ID
+	toColumn: main_accounts.segmentation_ID
+
+relationship AutoDetected_6f991863-17b4-44e1-add6-026b111678ab
+	fromColumn: upsells.'Billing Cycle'
+	toColumn: billing_cycle.billing_cycle
+
+relationship AutoDetected_9246e1a6-86bc-4e60-bf21-77695645c781
+	fromColumn: upsells.Workplace
+	toColumn: workplace.workplace
+
+relationship ee5a4e98-d130-0ce4-5209-9e7ebac5a7da
+	fromColumn: SCR_finance.roster_vs_invoice_ID
+	toColumn: customer_segmentation.roster_vs_invoice_ID
+
+	annotation PBI_IsFromSource = FS
+
+relationship 394fda1b-f0d3-0ee8-7a04-485ea50ea456
+	fromColumn: SCR_finance.segmentation_ID
+	toColumn: main_accounts.segmentation_ID
+
+relationship 0971f7a0-c14e-4ce1-9433-7beac9078a09
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Dim_Calendar_Finance.Date
+	toColumn: LocalDateTable_5b8cfd87-3fe9-4b09-90af-91dc9fb09715.Date
+
+relationship a8991484-a988-7119-b762-15853b281b81
+	fromColumn: SCR_finance.Date
+	toColumn: Dim_Calendar_Finance.Date
+
+relationship 100b89af-401b-0f33-bc6f-bab6ec87705a
+	fromColumn: removals.roster_vs_invoice_ID
+	toColumn: customer_segmentation.roster_vs_invoice_ID
+
+relationship a29a392a-dfad-4c84-8952-6eb08ff23384
+	joinOnDateBehavior: datePartOnly
+	fromColumn: customer_segmentation.Transition_ops
+	toColumn: LocalDateTable_f21c51e5-9610-4a23-b0dc-b38b3eb74288.Date
+
+relationship 88778279-ca1f-421f-91bb-8bca98b93965
+	joinOnDateBehavior: datePartOnly
+	fromColumn: customer_segmentation.'deal closing date'
+	toColumn: LocalDateTable_f71fe091-aa54-4892-9e6c-01e24d4e9d2a.Date
+
+relationship 241a1be0-1c19-47dc-ac9d-cd54a3cf11d5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Attrition 2'.'Deal Closing'
+	toColumn: LocalDateTable_45454bd4-078a-44d5-9c92-fef6429636fa.Date
+
+relationship cdfca09e-f2f3-46ae-9441-16ea0c7c3341
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Attrition 2'.'Transition Date'
+	toColumn: LocalDateTable_3eb1aff9-676e-4bf2-87fe-89207c82f257.Date
+
+relationship e0e695dc-f079-6456-5e3d-ce3113f853bf
+	fromColumn: Implementation_table.segmentation_ID
+	toColumn: main_accounts.segmentation_ID
+
+relationship f634799e-57ae-4995-b094-fef7f8dfda89
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Activations_Employee_Impl.'Effective Date'
+	toColumn: LocalDateTable_2a4fc933-4760-4099-8fb9-36417ce1542e.Date
+
+relationship 56e5dd7d-9e02-4b87-80ca-db94d69224b4
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Activations_Employee_Impl.'Finance Report'
+	toColumn: LocalDateTable_4a56a3f5-f90b-4073-933d-f9d95aa896b7.Date
+
+relationship 1230e1d2-d9e1-4a22-b5e8-29a00360f663
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Activations_Employee_Impl.'Deal Closing'
+	toColumn: LocalDateTable_757908f3-2463-435c-b04c-d79b7b510bea.Date
+
+relationship 8462e07e-7dd9-40bc-a464-d911c8057a68
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Activations_Employee_Impl.'Transition Date'
+	toColumn: LocalDateTable_f5cb7560-7896-4128-bf2c-bc369a01ee39.Date
+
+relationship 32410740-1ad8-9cae-a73d-cbec5015ebd2
+	fromColumn: Activations_Employee_Impl.segmentation_ID
+	toColumn: main_accounts.segmentation_ID
+
+relationship 0d06b81c-269d-f6ed-bb25-346d6da694b4
+	fromColumn: Implementation_Months.Segmentation_ID
+	toColumn: main_accounts.segmentation_ID
+
+relationship e97d107a-b832-6d98-00b6-7340ed7abf44
+	fromColumn: Implementation_Months.Date
+	toColumn: Dim_Calendar_Finance.Date
+
+relationship e25ba848-180e-ffc9-ed12-c158fa8361e4
+	fromColumn: Post90_Attrition_Months.Segmentation_ID
+	toColumn: main_accounts.segmentation_ID
+
+relationship 53f2e8a9-1250-75cd-d8a2-6a509c9dcf9b
+	fromColumn: Post90_Attrition_Months.Date
+	toColumn: Dim_Calendar_Finance.Date
+
+relationship 6f74c809-a285-42c0-b440-205d144a1cbe
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Attrit_Employee_Impl.'Finance report'
+	toColumn: LocalDateTable_fed8bcbe-732c-4dc4-b425-088117131d61.Date
+
+relationship 10e7cf91-f132-3317-5513-11adceb3ff11
+	fromColumn: Attrit_Employee_Impl.segmentation_ID
+	toColumn: main_accounts.segmentation_ID
+
+relationship 361cb6ec-ed72-4ed5-976c-40a827d165ef
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Attrit_Employee_Impl.'Deal Closing'
+	toColumn: LocalDateTable_be2068b4-b272-42c7-8610-17b3898e1b6c.Date
+
+relationship c4092ec9-b6a7-4065-a8fc-833d0dd38c61
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Attrit_Employee_Impl.'Transition Date'
+	toColumn: LocalDateTable_9b487f5f-5fde-47e0-8167-2c6af44c842a.Date
+
+relationship 30dae85e-aa15-deb4-08c4-647a3319463a
+	fromColumn: internal_external_impl.'ID Number'
+	toColumn: Attrit_Employee_Impl.'ID Number'
+
+relationship a8822631-f328-466c-926f-9534839b18ff
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Implementation_table.'Deal Closing'
+	toColumn: LocalDateTable_7f5f42ec-85dc-4281-b49f-13b86ee3bfdf.Date
+
+relationship 01d73b71-e76f-777c-2124-5cbc7925ac83
+	fromColumn: Implementation_table.'Transition Date'
+	toColumn: Dim_Calendar_Finance.Date
+
+relationship 2f52f87a-6852-0998-65c6-e84ee16d0496
+	fromColumn: Attrit_Employee_Impl.'Effective Date'
+	toColumn: Dim_Calendar_Finance.Date
+
+relationship 26ba5daf-1eb5-5fc5-6b35-e1f30c379609
+	fromColumn: Attrit_Employee_Impl.Branch
+	toColumn: branch_country.branch
+
+relationship 84ff067f-9478-f98e-3b09-974e376c7720
+	fromColumn: Implementation_table.Branch
+	toColumn: branch_country.branch
+
+relationship 26713391-7c8e-861d-b8e9-c64b3a10e9dd
+	fromColumn: removals.'Service Line'
+	toColumn: service_line.service_line
+
+relationship b4069552-2af8-4947-9a29-a411730de2c2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Dim_Calendar_Ops.Date
+	toColumn: LocalDateTable_81738fc8-8a5c-45e7-8afd-d0cf32e940c6.Date
+
+relationship b5aa4673-983d-354b-e571-c46f75e46d6f
+	fromColumn: 'roster historical'.'Roster date'
+	toColumn: Dim_Calendar_Ops.Date
+
+relationship 260b7186-c95f-5fd9-822f-189bbdc78488
+	fromColumn: removals.'Effective Date'
+	toColumn: Dim_Calendar_Ops.Date
+
+relationship 43188eba-b6e3-9f41-4b9c-f1c0c48f4f87
+	fromColumn: upsells.'Finance Report'
+	toColumn: Dim_Calendar_Ops.Date
+
+relationship 22faaf18-c4fc-4c53-a272-1d59f7c65469
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Dim_Calendar_Ops.YearMonth
+	toColumn: LocalDateTable_a8334cf5-5807-4a34-acc8-2fc2e625892a.Date
+
+relationship 369d2fad-602a-4197-9b41-e3e3f7bef277
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'roster historical'.'Fecha Entrada'
+	toColumn: LocalDateTable_229aadaf-2abd-464f-8b6f-99b0cc511e7e.Date
+
+relationship e6eb51c1-1182-4de2-ad87-753350daab36
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'roster historical'.Birthday
+	toColumn: LocalDateTable_51d0921a-656e-4565-a163-6aa487a3efce.Date
+
+relationship 87c369b6-3d5f-4985-bb5f-3b0da43db511
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'roster historical'.'Temporal Entry Date'
+	toColumn: LocalDateTable_d50f28ec-42d7-4c14-b1c7-112fd5c329a8.Date
+
+relationship e943a649-cf33-434d-b71a-449f54dc9411
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'roster historical'.'Entry Date'
+	toColumn: LocalDateTable_3277e0ef-26c3-4e03-8632-a82f1173300a.Date
+
+relationship acd77c09-a4bc-47a1-ac38-1805822e46e6
+	joinOnDateBehavior: datePartOnly
+	fromColumn: removals.'Active Date (Last)'
+	toColumn: LocalDateTable_46f7c4a2-1f72-46da-ad27-9426bd2bc4ce.Date
+
+relationship 46c1ca1e-de3e-43f0-b51b-a6e0247bbaef
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Attrit_Employee_Impl.'Active Date (Last)'
+	toColumn: LocalDateTable_cb40ae2f-91d5-4c99-af3b-00d6889b4cca.Date
+
+relationship bac508ee-74a8-4663-bdb8-59ca1952670e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: removals.'Fecha Entrada (Last)'
+	toColumn: LocalDateTable_cb91d973-d454-49ee-b984-8fcb9e6508af.Date
+
+relationship 8db224fa-ded2-45d8-9d69-5687c6f7d5e7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Attrit_Employee_Impl.'Fecha Entrada (Last)'
+	toColumn: LocalDateTable_7a247054-a62e-4b84-b119-2e4447de2eb3.Date
+
+relationship 2dde9b01-bd30-43bc-a087-8d18e9eaab31
+	joinOnDateBehavior: datePartOnly
+	fromColumn: turnover_data.'Last Status Date'
+	toColumn: LocalDateTable_d52e6bb4-6e8c-427f-96dd-c365d0a426f0.Date
+
+relationship 598e0ba3-95de-4969-89ed-83e59fb12a5c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: turnover_data.YearMonth
+	toColumn: LocalDateTable_2b2385b6-beec-4247-8b10-b040f17cd8d1.Date
+
+relationship 684f79b8-3231-439e-ad24-583a041e4a44
+	joinOnDateBehavior: datePartOnly
+	fromColumn: service_line_historical.Date
+	toColumn: LocalDateTable_2ef3488a-e681-4b60-8d9e-f6f416fdcc2d.Date
+
+relationship a22c0ad8-7325-d657-bb90-5d699aba7252
+	fromColumn: turnover_data.Branch
+	toColumn: branch_country.branch
+
+relationship 81ab3c8c-853b-4d64-b1fb-1f6c71476e45
+	joinOnDateBehavior: datePartOnly
+	fromColumn: customer_accounts_segmentation.churn_finance
+	toColumn: LocalDateTable_52aca192-fab8-4ef9-949f-4311577c6251.Date
+
+relationship dac1e786-2604-4c58-8527-63f41d50b2bd
+	joinOnDateBehavior: datePartOnly
+	fromColumn: customer_accounts_segmentation.Transition_ops
+	toColumn: LocalDateTable_dc3112cf-bcde-46cb-9c37-b320d7b3865a.Date
+
+relationship 0070df87-65be-4d13-aa4b-103f702bde98
+	joinOnDateBehavior: datePartOnly
+	fromColumn: customer_accounts_segmentation.'deal closing date'
+	toColumn: LocalDateTable_c626dbfd-cece-4300-8256-197071813696.Date
+
+relationship ccb4cfca-e5c5-cabd-1bd9-0005eacb5154
+	fromColumn: 'Turnover Live'.Segmentation_ID
+	toColumn: main_accounts.segmentation_ID
+
+relationship 42622c98-9680-8d75-98ed-e85b86b94046
+	fromColumn: 'Turnover Live'.'Business Unit'
+	toColumn: business_unit.business_unit
+
+relationship 780e0b05-2673-1119-897d-a2f624eb5178
+	fromColumn: 'Turnover Live'.Branch
+	toColumn: branch_country.branch
+
+relationship 4eb0c490-cfcd-7b81-4156-e67d8b81e818
+	fromColumn: 'Turnover Live'.'Service Line'
+	toColumn: service_line.service_line
+
+relationship 9533fb74-ff34-a1d6-8e67-76654d760cee
+	fromColumn: 'Turnover Live'.Date
+	toColumn: Dim_Calendar_Ops.Date
+
+relationship 998289ec-d46d-0e61-54bb-bd5a83c4bc44
+	crossFilteringBehavior: bothDirections
+	fromColumn: turnover_data.'Final Date'
+	toColumn: Dim_Calendar_Finance.Date
+
+relationship 9ab26ebd-f39e-b43e-dceb-59eeba15d422
+	fromColumn: 'Turnover Unified'.Segmentation_ID
+	toColumn: main_accounts.segmentation_ID
+
+relationship 5bb2b557-6e40-0cb5-eb05-e36b6d9d26af
+	fromColumn: 'Turnover Unified'.Branch
+	toColumn: branch_country.branch
+
+relationship ee06c680-d009-78d2-4d59-7a5da4680ab3
+	fromColumn: 'Turnover Unified'.'Service Line'
+	toColumn: service_line.service_line
+
+relationship 0eb9937c-310c-6da9-0b63-bf7db0f6d4cc
+	fromColumn: 'Turnover Unified'.Industry
+	toColumn: industry.industry
+
+relationship f1a8cecb-0b72-f489-a61a-03e5ba29c51a
+	fromColumn: 'Turnover Unified'.MonthStart
+	toColumn: Dim_Calendar_Ops.Date
+
+relationship ee9999a4-8c3e-789e-d096-3843b3a6a711
+	fromColumn: turnover_data.'Final Date'
+	toColumn: Dim_Calendar_Ops.Date
+
+relationship 6f1dc29b-db1a-1261-66cd-aaaf447bf694
+	fromColumn: turnover_data.Division
+	toColumn: divisions.Divisions
+
+relationship 9dde242e-6239-7509-72a2-4b6303bdff49
+	fromColumn: 'Turnover Unified'.Divisions
+	toColumn: divisions.Divisions
+
+relationship 75048602-b976-50fa-eed3-f68f8aa47232
+	fromColumn: roster_and_nnb.Division
+	toColumn: divisions.Divisions
+
+relationship 8865d4df-d1c1-af9e-41e9-989095bd6055
+	fromColumn: 'roster historical'.Division
+	toColumn: divisions.Divisions
+
+relationship acd7edf2-729b-0b54-8f86-46350dc1e7a8
+	fromColumn: turnover_data.Industry
+	toColumn: industry.industry
+
+relationship 57c1fdf6-d878-6e8b-a76f-70642ee5abf7
+	fromColumn: turnover_data.'Service Line'
+	toColumn: service_line.service_line
+
+relationship fb75464b-4121-2806-a686-b500bdfe2da1
+	fromColumn: 'Bench Terminations Summary'.'Final Date'
+	toColumn: Dim_Calendar_Ops.Date
+

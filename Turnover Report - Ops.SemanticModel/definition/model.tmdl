@@ -1,0 +1,131 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup Databases
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Accounts Info'
+
+	annotation PBI_QueryGroupOrder = 1
+
+queryGroup Roster_live
+
+	annotation PBI_QueryGroupOrder = 2
+
+queryGroup Measures
+
+	annotation PBI_QueryGroupOrder = 4
+
+queryGroup SCR
+
+	annotation PBI_QueryGroupOrder = 3
+
+queryGroup Turnover
+
+	annotation PBI_QueryGroupOrder = 5
+
+/// Errors in queries that were loaded on 11/11/2025 10:55:12 AM.
+queryGroup 'Query Errors - 11/11/2025 10:55:12 AM'
+
+	annotation PBI_QueryGroupOrder = 6
+
+annotation PBI_QueryOrder = ["business_unit","country","industry","branch_country","branch","service_line","portal _accounts_name","finance_accounts_name","customer_accounts_segmentation","workplace","billing_cycle","removals","upsells","roster historical","Definitions","view_nnb","removals2025","roster_historical2025","activations2025","main_accounts","customer_segmentation","live_roster_view","roster_and_nnb","measures_live","PHL_invoice","COL_invoice","GUA_invoice","MEX_invoice","PHL_invoice2025","GUA_invoice2025","COL_invoice2025","MEX_invoice2025","SCR_finance","internal_external_impl","divisions","turnover_data2024","turnover_data2025","turnover_data","Errors in turnover_data2025","service_line_historical","Dax_Measures"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation __TEdtr = 1
+
+annotation PBI_ProTooling = ["DaxQueryView_Desktop","DevMode"]
+
+ref table business_unit
+ref table DateTableTemplate_637a420f-ec68-4aec-adce-f96c4ee60325
+ref table country
+ref table industry
+ref table branch_country
+ref table branch
+ref table service_line
+ref table workplace
+ref table Dim_Calendar_Ops
+ref table billing_cycle
+ref table removals
+ref table 'roster historical'
+ref table LocalDateTable_94646429-c63b-42fb-883a-9ea6ddf0dd7e
+ref table LocalDateTable_45d7f522-0827-406a-8f23-3ef00bbe6ad0
+ref table LocalDateTable_4c906aed-f4a4-469e-8698-ef5521aa7e18
+ref table Definitions
+ref table LocalDateTable_5a634f81-7ae2-41a2-b8bb-f18678008085
+ref table main_accounts
+ref table LocalDateTable_035d96b5-a5bf-4a54-8321-1176922fdda7
+ref table LocalDateTable_09d350a0-5ee0-4c83-867a-e0453675d735
+ref table LocalDateTable_5f264127-ab1c-49ea-9673-0745079f2d61
+ref table roster_and_nnb
+ref table LocalDateTable_844827f9-4291-4a83-8b6b-fa1b0e362b28
+ref table LocalDateTable_89dd81d5-86b9-4fb5-a300-444c908a3d2d
+ref table LocalDateTable_c6738ace-0943-4793-be60-81fad02c5b2e
+ref table LocalDateTable_320ece10-75a8-47fe-af51-c787b661cb4f
+ref table LocalDateTable_c3673ad8-a718-445f-8860-0a2de914ca6d
+ref table LocalDateTable_a3a46a06-040b-4c63-9f50-c29be4902d30
+ref table LocalDateTable_191da6c2-ac13-4100-a867-d4839cc34747
+ref table measures_live
+ref table 'Turnover Live'
+ref table upsells
+ref table LocalDateTable_d3d5520a-f9a3-4fb3-b295-9dc75db3d2d0
+ref table SCR_finance
+ref table customer_segmentation
+ref table Dim_Calendar_Finance
+ref table LocalDateTable_5b8cfd87-3fe9-4b09-90af-91dc9fb09715
+ref table LocalDateTable_f21c51e5-9610-4a23-b0dc-b38b3eb74288
+ref table LocalDateTable_f71fe091-aa54-4892-9e6c-01e24d4e9d2a
+ref table Implementation_table
+ref table 'Attrition 2'
+ref table LocalDateTable_45454bd4-078a-44d5-9c92-fef6429636fa
+ref table LocalDateTable_3eb1aff9-676e-4bf2-87fe-89207c82f257
+ref table Attrit_Employee_Impl
+ref table Activations_Employee_Impl
+ref table LocalDateTable_2a4fc933-4760-4099-8fb9-36417ce1542e
+ref table LocalDateTable_4a56a3f5-f90b-4073-933d-f9d95aa896b7
+ref table LocalDateTable_757908f3-2463-435c-b04c-d79b7b510bea
+ref table LocalDateTable_f5cb7560-7896-4128-bf2c-bc369a01ee39
+ref table Implementation_Months
+ref table Post90_Attrition_Months
+ref table LocalDateTable_fed8bcbe-732c-4dc4-b425-088117131d61
+ref table LocalDateTable_be2068b4-b272-42c7-8610-17b3898e1b6c
+ref table LocalDateTable_9b487f5f-5fde-47e0-8167-2c6af44c842a
+ref table internal_external_impl
+ref table LocalDateTable_7f5f42ec-85dc-4281-b49f-13b86ee3bfdf
+ref table 'Turnover Unified'
+ref table 'Mesuares New Turnover'
+ref table LocalDateTable_81738fc8-8a5c-45e7-8afd-d0cf32e940c6
+ref table LocalDateTable_a8334cf5-5807-4a34-acc8-2fc2e625892a
+ref table LocalDateTable_229aadaf-2abd-464f-8b6f-99b0cc511e7e
+ref table LocalDateTable_51d0921a-656e-4565-a163-6aa487a3efce
+ref table LocalDateTable_d50f28ec-42d7-4c14-b1c7-112fd5c329a8
+ref table LocalDateTable_3277e0ef-26c3-4e03-8632-a82f1173300a
+ref table LocalDateTable_46f7c4a2-1f72-46da-ad27-9426bd2bc4ce
+ref table LocalDateTable_cb40ae2f-91d5-4c99-af3b-00d6889b4cca
+ref table LocalDateTable_cb91d973-d454-49ee-b984-8fcb9e6508af
+ref table LocalDateTable_7a247054-a62e-4b84-b119-2e4447de2eb3
+ref table divisions
+ref table 'Termination Type'
+ref table turnover_data
+ref table LocalDateTable_d52e6bb4-6e8c-427f-96dd-c365d0a426f0
+ref table LocalDateTable_2b2385b6-beec-4247-8b10-b040f17cd8d1
+ref table service_line_historical
+ref table LocalDateTable_2ef3488a-e681-4b60-8d9e-f6f416fdcc2d
+ref table 'portal _accounts_name'
+ref table finance_accounts_name
+ref table customer_accounts_segmentation
+ref table LocalDateTable_52aca192-fab8-4ef9-949f-4311577c6251
+ref table LocalDateTable_dc3112cf-bcde-46cb-9c37-b320d7b3865a
+ref table LocalDateTable_c626dbfd-cece-4300-8256-197071813696
+ref table Dax_Measures
+ref table 'Bench Terminations Summary'
+
+ref cultureInfo en-US
+

@@ -1,0 +1,294 @@
+table upsells
+	isHidden
+	lineageTag: 0aa5bbba-cf52-45ce-a09b-6a92b7dfab06
+
+	measure 'Total Activations' = COUNTROWS(upsells)
+		formatString: 0
+		isHidden
+		lineageTag: eee2cb57-5b0e-4df5-a70d-ccca79970191
+
+		changedProperty = IsHidden
+
+	column upsell_id
+		dataType: string
+		isHidden
+		lineageTag: 0e0af6f3-e60b-484f-a51c-fb544bed496f
+		summarizeBy: none
+		sourceColumn: upsell_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employee Name'
+		dataType: string
+		isHidden
+		lineageTag: 6019edb8-f0c2-44ec-b173-60e825a5e83e
+		summarizeBy: none
+		sourceColumn: Employee Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ID Number'
+		dataType: string
+		isHidden
+		lineageTag: b72d89dc-e2e8-4ef3-8c32-efc39ddbabe0
+		summarizeBy: none
+		sourceColumn: ID Number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Workplace
+		dataType: string
+		isHidden
+		lineageTag: 6186e8fe-daa7-432e-8ca6-b06da03bb70c
+		summarizeBy: none
+		sourceColumn: Workplace
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Branch
+		dataType: string
+		isHidden
+		lineageTag: 7581edfe-8e89-4f4a-912c-6e42efcd6aca
+		summarizeBy: none
+		sourceColumn: Branch
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Business Unit'
+		dataType: string
+		isHidden
+		lineageTag: 9e327692-e62c-41b3-b0be-ae9cde183243
+		summarizeBy: none
+		sourceColumn: Business Unit
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Industry
+		dataType: string
+		isHidden
+		lineageTag: f2ae1140-30f5-407e-a549-5bef8ba500c1
+		summarizeBy: none
+		sourceColumn: Industry
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Next Customer'
+		dataType: string
+		isHidden
+		lineageTag: db9c47a7-d46f-4f59-a1ca-93c04936cf71
+		summarizeBy: none
+		sourceColumn: Next Customer
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Previous Position'
+		dataType: string
+		isHidden
+		lineageTag: 6b79a5d0-6b88-48a9-8549-08ee4155d6a2
+		summarizeBy: none
+		sourceColumn: Previous Position
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Next Position'
+		dataType: string
+		isHidden
+		lineageTag: 0ea7ac1c-dc22-424a-9fbe-6aff3aac5e0b
+		summarizeBy: none
+		sourceColumn: Next Position
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Previous Status'
+		dataType: string
+		isHidden
+		lineageTag: 11e2d2cc-d850-43c8-a318-0ef22a0417b1
+		summarizeBy: none
+		sourceColumn: Previous Status
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Next Status'
+		dataType: string
+		isHidden
+		lineageTag: f5277ff5-717f-4227-b113-ac699fbef7f7
+		summarizeBy: none
+		sourceColumn: Next Status
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Active Condition'
+		dataType: string
+		isHidden
+		lineageTag: b2d940dd-3c10-4c1d-a905-13b909d085b7
+		summarizeBy: none
+		sourceColumn: Active Condition
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Effective Date'
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: d5eac946-dec1-44ea-9fce-0359d7a2941b
+		summarizeBy: none
+		sourceColumn: Effective Date
+
+		variation Variation
+			isDefault
+			relationship: 4150b16c-e8fd-4648-afb5-9fa1c18c1eaa
+			defaultHierarchy: LocalDateTable_d3d5520a-f9a3-4fb3-b295-9dc75db3d2d0.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Finance Report'
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: fd05dd37-3465-4891-aa87-82bc9bfc3c75
+		summarizeBy: none
+		sourceColumn: Finance Report
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Billing Cycle'
+		dataType: string
+		isHidden
+		lineageTag: 3c28b2ed-3c61-4087-823b-ff2548c84178
+		summarizeBy: none
+		sourceColumn: Billing Cycle
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column roster_vs_invoice_ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ef8abec3-ef42-44a6-a5d1-171d4bedc3c2
+		summarizeBy: count
+		sourceColumn: roster_vs_invoice_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column roster_ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 264e15a1-9810-4280-8e2e-892363551a80
+		summarizeBy: count
+		sourceColumn: roster_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column segmentation_ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c39efd68-49f4-4594-92aa-eef8842e1697
+		summarizeBy: none
+		sourceColumn: segmentation_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Main Account Name'
+		dataType: string
+		isHidden
+		lineageTag: 849af0b6-8367-48c0-9d77-bf9023931d0e
+		summarizeBy: none
+		sourceColumn: Main Account Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Service Line'
+		dataType: string
+		isHidden
+		lineageTag: 5eca55d6-b8f7-47de-9188-0d5fef99444e
+		summarizeBy: none
+		sourceColumn: Service Line
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		isHidden
+		lineageTag: 0672e933-a1ae-472e-b40e-b325af3f2a89
+		summarizeBy: none
+		sourceColumn: Country
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition upsells = m
+		mode: import
+		queryGroup: Databases
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://perfilesysoluciones.sharepoint.com/sites/CROSSFUNCTIONALREPORTINGTEAM/Shared%20Documents/Seat%20Count%20Report/Activations%20vs%20Removals/Downsell%20vs%20Upsell%202024.xlsx"), null, true),
+				    upsells_Table = Source{[Item="upsells",Kind="Table"]}[Data],
+				    #"Appended Query" = Table.Combine({upsells_Table, activations2025}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Appended Query",{{"upsell_id", type text}, {"Employee Name", type text}, {"ID Number", type any}, {"Workplace", type text}, {"Branch", type text}, {"Previous Business Unit", type text}, {"Previous Service Line", type text}, {"Next Business Unit", type text}, {"Next Service Line", type text}, {"Next Customer", type text}, {"Next Sub Account", type text}, {"Previous Position", type text}, {"Next Position", type text}, {"Previous Status", type text}, {"Next Status", type text}, {"Active Condition", type text}, {"Approved", type text}, {"Effective Date", type date}, {"Finance Report", type date}, {"ID Replaced", type any}, {"downsell_id", type text}, {"Downsell Date", type date}, {"Days to be replaced", Int64.Type}, {"Pending", type text}, {"Billing Cycle", type text}, {"Notes", type text}, {"roster_vs_invoice_ID", Int64.Type}, {"roster_ID", Int64.Type}, {"segmentation_ID", Int64.Type}}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Changed Type", "Country", each if [Branch] = "bogota" then "Colombia" else if [Branch] = "medellin" then "Colombia" else if [Branch] = "bucaramanga" then "Colombia" else if [Branch] = "cartagena" then "Colombia" else if [Branch] = "barranquilla" then "Colombia" else if [Branch] = "cali" then "Colombia" else if [Branch] = "manila" then "Philippines" else if [Branch] = "ciudad de guatemala" then "Guatemala" else if [Branch] = "ciudad de mexico" then "Mexico" else null),
+				    #"Capitalized Each Word" = Table.TransformColumns(#"Added Conditional Column",{{"Active Condition", Text.Proper, type text}, {"Next Service Line", Text.Proper, type text}, {"Branch", Text.Proper, type text}, {"Next Business Unit", Text.Proper, type text}, {"Workplace", Text.Proper, type text}, {"Employee Name", Text.Proper, type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Capitalized Each Word","Lean Bpo","Lean Operations",Replacer.ReplaceText,{"Next Business Unit"}),
+				    #"Filtered Rows2" = Table.SelectRows(#"Replaced Value", each ([Active Condition] = "Contractors" or [Active Condition] = "Implementation" or [Active Condition] = "Organic" or [Active Condition] = "Replacement" or [Active Condition] = "Seasonal")),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Filtered Rows2","cancelled ","Canceled",Replacer.ReplaceText,{"Billing Cycle"}),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","new to be billed","New to be billed",Replacer.ReplaceText,{"Billing Cycle"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Replaced Value2",{"Created by", "Previous Business Unit", "Previous Service Line", "Customer", "Sub Account", "Previous Department - Area", "Next Sub Account", "Next Department - Area", "Date Created", "Created Time", "Approved", "Reason", "Approved Date", "Approved Time", "Effective Time", "Internal/External", "ID Replaced", "Downsell Date", "Days to be replaced", "Pending", "Column1", "Text Date2", "Finance Report Cleaned", "Month", "Text Date", "downsell_id", "Notes", "Req_ID"}),
+				    #"Replaced Value4" = Table.ReplaceValue(#"Removed Columns","Carrier Sales","Domestic",Replacer.ReplaceText,{"Next Service Line"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Replaced Value4",{{"Next Service Line", "Industry"}, {"Service Line2", "Service Line"}, {"Next Business Unit", "Business Unit"}})
+				in
+				    #"Renamed Columns"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

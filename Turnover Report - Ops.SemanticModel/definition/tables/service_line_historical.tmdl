@@ -1,0 +1,61 @@
+table service_line_historical
+	lineageTag: 0e55b4a2-d669-460c-9f29-2a6ee2b9e4c2
+
+	column 'Acccount Name'
+		dataType: string
+		lineageTag: 400682aa-0b34-49db-bdf2-48827e8e03f4
+		summarizeBy: none
+		sourceColumn: Acccount Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Segmentation_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: f52a1e14-a5ba-4fad-a71a-de8bbd39a7ed
+		summarizeBy: count
+		sourceColumn: Segmentation_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 6494cf7b-70f1-4e9b-9a8d-b245e2a6c358
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 684f79b8-3231-439e-ad24-583a041e4a44
+			defaultHierarchy: LocalDateTable_2ef3488a-e681-4b60-8d9e-f6f416fdcc2d.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Service Line'
+		dataType: string
+		lineageTag: 38a4e903-670c-49cf-8a71-2524fa800f2f
+		summarizeBy: none
+		sourceColumn: Service Line
+
+		annotation SummarizationSetBy = Automatic
+
+	partition service_line_historical = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://perfilesysoluciones.sharepoint.com/sites/PerformanceManagement83/Shared%20Documents/Corporate%20BI/Accounts/Account%20Names%20and%20Finance%20Distribution.xlsx"), null, true),
+				    service_line_historical_Table = Source{[Item="service_line_historical",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(service_line_historical_Table,{{"Acccount Name", type text}, {"Segmentation_ID", Int64.Type}, {"1/1/2024", type text}, {"2/1/2024", type text}, {"3/1/2024", type text}, {"4/1/2024", type text}, {"5/1/2024", type text}, {"6/1/2024", type text}, {"7/1/2024", type text}, {"8/1/2024", type text}, {"9/1/2024", type text}, {"10/1/2024", type text}, {"11/1/2024", type text}, {"12/1/2024", type text}, {"1/1/2025", type text}, {"2/1/2025", type text}}),
+				    #"Unpivoted Other Columns" = Table.UnpivotOtherColumns(#"Changed Type", {"Acccount Name", "Segmentation_ID"}, "Attribute", "Value"),
+				    #"Renamed Columns" = Table.RenameColumns(#"Unpivoted Other Columns",{{"Attribute", "Date"}, {"Value", "Service Line"}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Renamed Columns",{{"Date", type date}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

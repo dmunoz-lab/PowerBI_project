@@ -1,0 +1,30 @@
+table billing_cycle
+	isHidden
+	lineageTag: 93600180-8ed1-4cc7-a2ae-c97dfee3d565
+
+	column billing_cycle
+		dataType: string
+		isHidden
+		lineageTag: 759b328a-09a5-43f5-9da2-3754acb2554e
+		summarizeBy: none
+		sourceColumn: billing_cycle
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition billing_cycle = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMiwuUYrVAdKmJRlghnNiXnJqTk5qCpjnl1quUJKvkJSqkJQJEYwFAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [billing_cycle = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"billing_cycle", type text}})
+				in
+				    #"Changed Type"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

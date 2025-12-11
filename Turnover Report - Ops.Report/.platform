@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Turnover Report - Ops"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "13d8df58-50eb-4637-b4a8-2cf78d8cd75d"
+  }
+}

@@ -1,0 +1,253 @@
+table customer_segmentation
+	isHidden
+	lineageTag: ba0fc498-7f3a-4f0e-a11c-428446e9446d
+
+	measure 'Medida prueba' = ```
+			
+			CALCULATE(
+			    COUNTROWS(removals),
+			    FILTER(
+			        ADDCOLUMNS(
+			            removals,
+			            "DealDate", LOOKUPVALUE(
+			                customer_segmentation[deal closing date],
+			                customer_segmentation[Account Name],
+			                removals[Main Account Name]
+			            )
+			        ),
+			        NOT ISBLANK([DealDate])
+			            &&
+			        VALUE(removals[Effective Date]) >= VALUE([DealDate])
+			            &&
+			        VALUE(removals[Effective Date]) <= VALUE([DealDate]) + 90
+			    )
+			)
+			
+			```
+		formatString: 0
+		isHidden
+		lineageTag: d36ae024-d6d1-4518-8f45-3a4b24953264
+
+		changedProperty = IsHidden
+
+	column roster_vs_invoice_ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3e4161cc-f421-4d0e-b33a-732459330f19
+		summarizeBy: none
+		sourceColumn: roster_vs_invoice_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Account Name'
+		dataType: string
+		isHidden
+		lineageTag: b42b0d0a-003b-4cb8-a19e-ef2e0f3035e5
+		summarizeBy: none
+		sourceColumn: Account Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column headcount
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d19a5ce4-9f66-4144-9baa-0711a995e427
+		summarizeBy: sum
+		sourceColumn: headcount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column hubspot_ID
+		dataType: string
+		isHidden
+		lineageTag: ea618904-ed2b-434e-8459-974b8a46b60a
+		summarizeBy: none
+		sourceColumn: hubspot_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Branch
+		dataType: string
+		isHidden
+		lineageTag: 90b87dcf-1222-49a5-9899-f17d8bc8970e
+		summarizeBy: none
+		sourceColumn: Branch
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column segmentation_ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 855cd567-8adb-4bcc-a503-1936c2f004b1
+		summarizeBy: count
+		sourceColumn: segmentation_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_segmentation
+		dataType: string
+		isHidden
+		lineageTag: dee7fd6f-fe14-45a4-a748-150510a23d89
+		summarizeBy: none
+		sourceColumn: customer_segmentation
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Service Line'
+		dataType: string
+		isHidden
+		lineageTag: f2bc674c-a03d-4d3c-8205-54bce104a71c
+		summarizeBy: none
+		sourceColumn: Service Line
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Industry
+		dataType: string
+		isHidden
+		lineageTag: 83f81761-1fab-4f10-9251-e71d65c3529e
+		summarizeBy: none
+		sourceColumn: Industry
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column aniversary_date
+		dataType: string
+		isHidden
+		lineageTag: 7fdbef23-2f11-4460-a76f-30d256fa1bb1
+		summarizeBy: none
+		sourceColumn: aniversary_date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Enterprise date'
+		dataType: string
+		isHidden
+		lineageTag: 14aa5008-d4f4-4343-9886-ea44eb689536
+		summarizeBy: none
+		sourceColumn: Enterprise date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column churn_finance
+		dataType: string
+		isHidden
+		lineageTag: 474d532b-c017-49f0-91a5-60fedb79f7b7
+		summarizeBy: none
+		sourceColumn: churn_finance
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Transition_ops
+		dataType: dateTime
+		isHidden
+		formatString: dd/mm/yyyy
+		lineageTag: 4e083c6f-a330-4d97-9533-f742978ba702
+		summarizeBy: none
+		sourceColumn: Transition_ops
+
+		variation Variation
+			isDefault
+			relationship: a29a392a-dfad-4c84-8952-6eb08ff23384
+			defaultHierarchy: LocalDateTable_f21c51e5-9610-4a23-b0dc-b38b3eb74288.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'deal closing date'
+		dataType: dateTime
+		isHidden
+		formatString: dd/mm/yyyy
+		lineageTag: c837cc5d-93b0-471c-ae7c-29d1ac6b1210
+		summarizeBy: none
+		sourceColumn: deal closing date
+
+		variation Variation
+			isDefault
+			relationship: 88778279-ca1f-421f-91bb-8bca98b93965
+			defaultHierarchy: LocalDateTable_f71fe091-aa54-4892-9e6c-01e24d4e9d2a.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column Cycle
+		dataType: string
+		isHidden
+		lineageTag: 2379846b-0ea2-4953-8165-e5217d36f1ae
+		summarizeBy: none
+		sourceColumn: Cycle
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Implementation
+		dataType: string
+		isHidden
+		lineageTag: dc9f6b70-5933-47ac-8383-f9760461190d
+		summarizeBy: none
+		sourceColumn: Implementation
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition customer_segmentation = m
+		mode: import
+		queryGroup: 'Accounts Info'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://perfilesysoluciones.sharepoint.com/sites/PerformanceManagement83/Shared%20Documents/Corporate%20BI/Accounts/Account%20Names%20and%20Finance%20Distribution.xlsx"), null, true),
+				    customer_segmentation_Table = Source{[Item="customer_segmentation",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(customer_segmentation_Table,{{"roster_vs_invoice_ID", Int64.Type}, {"Account Name", type text}, {"headcount", Int64.Type}, {"segmentation_ID", Int64.Type}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Changed Type", {"roster_vs_invoice_ID"})
+				in
+				    #"Removed Duplicates"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

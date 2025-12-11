@@ -1,0 +1,380 @@
+table Attrit_Employee_Impl
+	isHidden
+	lineageTag: 2de321a4-f4d4-4204-afe3-cba6c2854093
+
+	measure 'Total Att impl' = COUNTROWS(Attrit_Employee_Impl)
+		formatString: 0
+		isHidden
+		lineageTag: 1d6afb12-2105-4890-81a0-f8aa51637454
+
+	column downsell_id
+		isHidden
+		lineageTag: 5996aa3f-1380-4da9-ba27-e8049e2343aa
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[downsell_id]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employee Name'
+		isHidden
+		lineageTag: cdf1ea33-6e9b-467c-9399-58e261ed14ad
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Employee Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ID Number'
+		isHidden
+		lineageTag: a11f8557-0087-4bc5-aba2-bd28746cf342
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[ID Number]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Workplace
+		isHidden
+		lineageTag: 4e0bb5ba-4c29-49da-bfa2-8c6cd904d36c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Workplace]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Branch
+		isHidden
+		lineageTag: 38549e40-791b-4c01-8b81-3ecd1be58689
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Branch]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Business Unit'
+		isHidden
+		lineageTag: db9def7f-b014-461e-a665-e229a52299ae
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Business Unit]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Industry
+		isHidden
+		lineageTag: e88f2d10-c87e-4b79-b9bd-ab5dda2cf1a6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Industry]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Customer
+		isHidden
+		lineageTag: 88e0b01c-4c6c-4026-b0eb-1e26223694ae
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Customer]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Previous Position'
+		isHidden
+		lineageTag: 7edc4b36-d897-4a17-8b37-7c653ee05601
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Previous Position]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Previous Status'
+		isHidden
+		lineageTag: 84d48c8f-e11b-4615-9741-21fc5180e816
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Previous Status]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Next Status'
+		isHidden
+		lineageTag: f0ca72e7-31a6-4221-b656-329cc5d972c4
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Next Status]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Reason
+		isHidden
+		lineageTag: 50fbd522-985c-44a5-bb82-9cf36b66ca4a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Reason]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Downsell
+		isHidden
+		lineageTag: 2ede0a7b-a4f4-4564-935a-3f4fe6771ac1
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Downsell]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Finance report'
+		isHidden
+		formatString: General Date
+		lineageTag: f3988a70-85a3-4f69-9ae4-c45c73b605de
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Finance report]
+
+		variation Variation
+			isDefault
+			relationship: 6f74c809-a285-42c0-b440-205d144a1cbe
+			defaultHierarchy: LocalDateTable_fed8bcbe-732c-4dc4-b425-088117131d61.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column roster_vs_invoice_ID
+		isHidden
+		formatString: 0
+		lineageTag: ed91f95a-3fb0-4fdf-8160-a93ee4746b64
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: removals[roster_vs_invoice_ID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column roster_ID
+		isHidden
+		formatString: 0
+		lineageTag: c26e5090-b093-4115-8a57-c205d05ee961
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: removals[roster_ID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column portal_id
+		isHidden
+		formatString: 0
+		lineageTag: 76e07c69-982e-4955-a71a-544f7e949344
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: removals[portal_id]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Effective Date'
+		isHidden
+		formatString: General Date
+		lineageTag: 22f3708e-f739-4265-b540-fc5b1af2ada2
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Effective Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		isHidden
+		lineageTag: 49e49cde-30c0-4142-9a31-fcb38078b9ca
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Country]
+
+		annotation SummarizationSetBy = Automatic
+
+	column segmentation_ID
+		isHidden
+		formatString: 0
+		lineageTag: bf1fd258-cfcb-442b-b451-7741d4046092
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[segmentation_ID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Main Account Name'
+		isHidden
+		lineageTag: 7902ab48-7d90-4f4c-9208-93a26c1bfd77
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Main Account Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Service Line'
+		isHidden
+		lineageTag: db9dbc69-126a-4c42-9415-7ecc9330a239
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Service Line]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Substatus
+		isHidden
+		lineageTag: 61b70bf0-473b-4613-8100-1dd4a28cb091
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Substatus]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Deal Closing'
+		isHidden
+		formatString: General Date
+		lineageTag: 6581719d-671f-4984-924b-bcc5abac2dac
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Deal Closing]
+
+		variation Variation
+			isDefault
+			relationship: 361cb6ec-ed72-4ed5-976c-40a827d165ef
+			defaultHierarchy: LocalDateTable_be2068b4-b272-42c7-8610-17b3898e1b6c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Transition Date'
+		isHidden
+		formatString: General Date
+		lineageTag: 7206ed9a-0f24-4dd0-9c0a-5b527f988282
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Transition Date]
+
+		variation Variation
+			isDefault
+			relationship: c4092ec9-b6a7-4065-a8fc-833d0dd38c61
+			defaultHierarchy: LocalDateTable_9b487f5f-5fde-47e0-8167-2c6af44c842a.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Main Account Name Impl'
+		isHidden
+		lineageTag: 723d6485-8683-435e-b1c1-180649a38e7f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Main Account Name Impl]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Type Requisitions' = ```
+			
+			LOOKUPVALUE(
+			    internal_external_impl[Type Requisitions],
+			    internal_external_impl[ID Number], Attrit_Employee_Impl[ID Number]
+			)
+			
+			```
+		isHidden
+		lineageTag: f399a8b8-6dee-4f45-be0b-a23946a0adaa
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Active Date (Last)'
+		formatString: General Date
+		lineageTag: ee5b2b34-efa8-4be5-b1b2-6176457c412e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Active Date (Last)]
+
+		variation Variation
+			isDefault
+			relationship: 46c1ca1e-de3e-43f0-b51b-a6e0247bbaef
+			defaultHierarchy: LocalDateTable_cb40ae2f-91d5-4c99-af3b-00d6889b4cca.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fecha Entrada (Last)'
+		formatString: General Date
+		lineageTag: c0bf4b20-d898-40e5-b624-a9402bf49021
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Fecha Entrada (Last)]
+
+		variation Variation
+			isDefault
+			relationship: 8db224fa-ded2-45d8-9d69-5687c6f7d5e7
+			defaultHierarchy: LocalDateTable_7a247054-a62e-4b84-b119-2e4447de2eb3.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Días Entrada → Downsell'
+		formatString: 0
+		lineageTag: 9b2f76a2-2c08-4d24-9505-2312a9a0d94e
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: removals[Días Entrada → Downsell]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Días Active → Downsell'
+		formatString: 0
+		lineageTag: 55dc7539-4b72-4996-9b81-f25740f3488d
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: removals[Días Active → Downsell]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column
+		lineageTag: f233c44b-9294-4fd3-980c-2a096cca4c6d
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: removals[Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Termination Type'
+		lineageTag: 80d5a64f-f2ba-4326-8975-b5d6fdf80817
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: removals[Termination Type]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Attrit_Employee_Impl = calculated
+		mode: import
+		source = ```
+				
+				FILTER (
+				    ADDCOLUMNS (
+				        removals,
+				        "Deal Closing", LOOKUPVALUE(
+				            Implementation_table[Deal Closing],
+				            Implementation_table[Segmentation_ID],
+				            removals[Segmentation_ID]
+				        ),
+				        "Transition Date", LOOKUPVALUE(
+				            Implementation_table[Transition Date],
+				            Implementation_table[Segmentation_ID],
+				            removals[Segmentation_ID]
+				        ),
+				        "Main Account Name Impl", LOOKUPVALUE(
+				            Implementation_table[Main Account Name],
+				            Implementation_table[Segmentation_ID],
+				            removals[Segmentation_ID]
+				        )
+				    ),
+				    NOT ISBLANK([Deal Closing])
+				    &&
+				    NOT ISBLANK([Transition Date])
+				    &&
+				    (YEAR(removals[Finance Report]) * 100 + MONTH(removals[Finance Report]))
+				        >= (YEAR([Deal Closing]) * 100 + MONTH([Deal Closing]))
+				    &&
+				    (YEAR(removals[Finance Report]) * 100 + MONTH(removals[Finance Report]))
+				        <= (YEAR([Transition Date]) * 100 + MONTH([Transition Date]))
+				)
+				
+				```
+
+	annotation PBI_Id = 24fb9f730fd440efbfcf80d5a964e4be
+

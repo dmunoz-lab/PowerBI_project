@@ -1,0 +1,275 @@
+table Activations_Employee_Impl
+	isHidden
+	lineageTag: 7845d5c5-2bcf-441e-b1fc-3c56263a4df2
+
+	measure 'Total Act impl' = COUNTROWS(Activations_Employee_Impl)
+		formatString: 0
+		isHidden
+		lineageTag: 7a0cdf89-d682-476b-86a2-1a14adcaf317
+
+	column upsell_id
+		isHidden
+		lineageTag: 1bb9f9c3-7735-45ed-9353-937529dcaff0
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[upsell_id]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employee Name'
+		isHidden
+		lineageTag: e2f98098-2e38-4f7d-848e-eb193ea6c71e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[Employee Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ID Number'
+		isHidden
+		lineageTag: 1c9b1ea8-7848-44d8-acc7-d6b6ef7883ad
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[ID Number]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Workplace
+		isHidden
+		lineageTag: 5ee58b75-1b4c-4fef-bbbd-7bbc7eb126dd
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[Workplace]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Branch
+		isHidden
+		lineageTag: e3612ce6-8dd0-4558-8890-ac5100e5f633
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[Branch]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Business Unit'
+		isHidden
+		lineageTag: 8b112bca-fc58-4c29-9205-c47e04f5ea92
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[Business Unit]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Industry
+		isHidden
+		lineageTag: 3ac31342-35be-4430-b929-7cbb7bc6280c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[Industry]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Next Customer'
+		isHidden
+		lineageTag: 189b9e39-8106-4c41-9008-f7c0e4106a1f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[Next Customer]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Previous Position'
+		isHidden
+		lineageTag: 75371ba7-9e94-4376-ab30-5e4964d38f22
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[Previous Position]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Next Position'
+		isHidden
+		lineageTag: 6157c666-def6-4fd0-887a-4625300e58d1
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[Next Position]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Previous Status'
+		isHidden
+		lineageTag: 4a16418b-67af-4748-a345-cf0a6ced12d4
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[Previous Status]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Next Status'
+		isHidden
+		lineageTag: 97f2c77b-715c-4842-965c-fde6eca24621
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[Next Status]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Active Condition'
+		isHidden
+		lineageTag: 6b30290b-c3e4-4395-a366-50978d5104da
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[Active Condition]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Effective Date'
+		isHidden
+		formatString: General Date
+		lineageTag: 595a4183-d769-4873-bb96-8a6edfa7a8f0
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[Effective Date]
+
+		variation Variation
+			isDefault
+			relationship: f634799e-57ae-4995-b094-fef7f8dfda89
+			defaultHierarchy: LocalDateTable_2a4fc933-4760-4099-8fb9-36417ce1542e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Finance Report'
+		isHidden
+		formatString: General Date
+		lineageTag: 71bed366-ad03-4bd0-9733-f43f64f7aa76
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[Finance Report]
+
+		variation Variation
+			isDefault
+			relationship: 56e5dd7d-9e02-4b87-80ca-db94d69224b4
+			defaultHierarchy: LocalDateTable_4a56a3f5-f90b-4073-933d-f9d95aa896b7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Billing Cycle'
+		isHidden
+		lineageTag: b8f7eea8-f692-491a-8520-2ee9b3088dfb
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[Billing Cycle]
+
+		annotation SummarizationSetBy = Automatic
+
+	column roster_vs_invoice_ID
+		isHidden
+		formatString: 0
+		lineageTag: 92443340-2279-437c-9864-48ceda433af4
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: upsells[roster_vs_invoice_ID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column roster_ID
+		isHidden
+		formatString: 0
+		lineageTag: feb7f92b-c938-46d7-8825-6d2ce0ee1439
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: upsells[roster_ID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column segmentation_ID
+		isHidden
+		formatString: 0
+		lineageTag: 13eb0e8b-8ae5-4852-9734-20c3f537701a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[segmentation_ID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Main Account Name'
+		isHidden
+		lineageTag: 1994517b-8cc4-4edb-8d04-fa4913fa4946
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[Main Account Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Service Line'
+		isHidden
+		lineageTag: bed5638c-4403-45a7-8ce9-5eb34eab7c94
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[Service Line]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		isHidden
+		lineageTag: aa11e737-d051-42b9-88dd-f8426e9397bd
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: upsells[Country]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Deal Closing'
+		isHidden
+		formatString: General Date
+		lineageTag: f05a17c5-e480-4e53-bb5e-bb102aef3ebb
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Deal Closing]
+
+		variation Variation
+			isDefault
+			relationship: 1230e1d2-d9e1-4a22-b5e8-29a00360f663
+			defaultHierarchy: LocalDateTable_757908f3-2463-435c-b04c-d79b7b510bea.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Transition Date'
+		isHidden
+		formatString: General Date
+		lineageTag: 7719e5dc-f11b-4eec-80c1-05e9494fdcac
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Transition Date]
+
+		variation Variation
+			isDefault
+			relationship: 8462e07e-7dd9-40bc-a464-d911c8057a68
+			defaultHierarchy: LocalDateTable_f5cb7560-7896-4128-bf2c-bc369a01ee39.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Activations_Employee_Impl = calculated
+		mode: import
+		source = ```
+				
+				FILTER (
+				    ADDCOLUMNS (
+				        upsells,
+				        "Deal Closing", LOOKUPVALUE(Implementation_table[Deal Closing], Implementation_table[Main Account Name], upsells[Main Account Name]),
+				        "Transition Date", LOOKUPVALUE(Implementation_table[Transition Date], Implementation_table[Main Account Name], upsells[Main Account Name])
+				    ),
+				    NOT ISBLANK([Deal Closing])
+				    &&
+				    NOT ISBLANK([Transition Date])
+				    &&
+				    upsells[Finance report] >= [Deal Closing]
+				    &&
+				    upsells[Finance report] <= [Transition Date]
+				)
+				
+				```
+
+	annotation PBI_Id = 84feb47480cc4bee86b9a18234f90047
+

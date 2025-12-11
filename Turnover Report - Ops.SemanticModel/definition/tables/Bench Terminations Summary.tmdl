@@ -1,0 +1,86 @@
+table 'Bench Terminations Summary'
+	isHidden
+	lineageTag: 0cf8e340-44b5-448f-bf22-ac71afbcdea5
+
+	column Year
+		isHidden
+		formatString: 0
+		lineageTag: 73721a0e-00b3-47f6-8cda-b3b0ff8ac68f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: turnover_data[Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Type of termination'
+		isHidden
+		lineageTag: 414360bc-6241-485f-939e-9f8f1047015e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: turnover_data[Type of termination]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Termination Count'
+		isHidden
+		formatString: 0
+		lineageTag: 83ce2ae8-346e-41b2-90da-e129026d8d71
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Termination Count]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Final Date'
+		isHidden
+		formatString: General Date
+		lineageTag: a9ff698f-5234-4f24-97a3-392007e2b3d5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: turnover_data[Final Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Bench Terminations Summary' = calculated
+		mode: import
+		source = ```
+				
+				VAR BaseData =
+				    FILTER(
+				        'turnover_data',
+				        'turnover_data'[Bench] = "Yes"
+				            && NOT ISBLANK('turnover_data'[Type of termination])
+				    )
+				RETURN
+				ADDCOLUMNS(
+				    SUMMARIZE(
+				        BaseData,
+				        YEAR('turnover_data'[Final Date]),        -- Year
+				        MONTH('turnover_data'[Final Date]),       -- Month
+				        'turnover_data'[Type of termination]      -- Termination type
+				    ),
+				    "Termination Count",
+				        VAR _Year  = [YEAR('turnover_data'[Final Date])]
+				        VAR _Month = [MONTH('turnover_data'[Final Date])]
+				        VAR _Type  = 'turnover_data'[Type of termination]
+				        RETURN
+				            CALCULATE(
+				                COUNTROWS('turnover_data'),
+				                'turnover_data'[Bench] = "Yes",
+				                YEAR('turnover_data'[Final Date]) = _Year,
+				                MONTH('turnover_data'[Final Date]) = _Month,
+				                'turnover_data'[Type of termination] = _Type
+				            )
+				)
+				
+				
+				
+				
+				
+				
+				
+				
+				```
+
+	annotation PBI_Id = 44a48d2fcd6541628e7b9f548f809d12
+

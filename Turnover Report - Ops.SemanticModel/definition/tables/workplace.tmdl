@@ -1,0 +1,30 @@
+table workplace
+	isHidden
+	lineageTag: 17a17b99-98d7-4eb5-a84c-3a77201f1cd5
+
+	column workplace
+		dataType: string
+		isHidden
+		lineageTag: 44f696e4-8ad3-4945-b0c0-1f78e74baa9d
+		summarizeBy: none
+		sourceColumn: workplace
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition workplace = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("Xco7CsAgEIThq4h1TpEEUnmCYDHoIgublYhCjp+HVunm+5l9tzNKgZ6NRWD99IScch2zBRQc0NS9oFQk0iFuEdGsZLaGSgfk3x1dHPIXHUUSYe2A8nv2Nw==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [workplace = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"workplace", type text}})
+				in
+				    #"Changed Type"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,410 @@
+table turnover_data
+	lineageTag: 8b1bc52d-01a9-492d-83df-9d3f5dff554f
+
+	column Branch
+		dataType: string
+		lineageTag: 9294dcdc-c14b-464d-abe2-d1bc6a39b214
+		summarizeBy: none
+		sourceColumn: Branch
+
+		annotation SummarizationSetBy = Automatic
+
+	column Office
+		dataType: string
+		lineageTag: 96dc13ed-c1a3-4e81-b42a-392aee4fb33d
+		summarizeBy: none
+		sourceColumn: Office
+
+		annotation SummarizationSetBy = Automatic
+
+	column Industry
+		dataType: string
+		lineageTag: 1e8f84b2-2c34-4134-925c-962d44588a93
+		summarizeBy: none
+		sourceColumn: Industry
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Business Unit'
+		dataType: string
+		lineageTag: 86661d6e-24c1-4ced-88c4-486bd89a8c26
+		summarizeBy: none
+		sourceColumn: Business Unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column company_id
+		dataType: string
+		lineageTag: f686ed16-10b2-4da7-85a5-a699da540862
+		summarizeBy: none
+		sourceColumn: company_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Account
+		dataType: string
+		lineageTag: 2428bc74-41c9-430a-aafd-1b86aa57f84f
+		summarizeBy: none
+		sourceColumn: Account
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employee Name'
+		dataType: string
+		lineageTag: 25a86de5-4f09-41fe-bbc4-5cc12e93c3cc
+		summarizeBy: none
+		sourceColumn: Employee Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ID Number'
+		dataType: string
+		lineageTag: 6ccfeec7-43cb-4fe1-ab5c-d230ffcae69d
+		summarizeBy: none
+		sourceColumn: ID Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ID Type'
+		dataType: string
+		lineageTag: a8458818-bdca-4f66-bd79-62448029f224
+		summarizeBy: none
+		sourceColumn: ID Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 97296049-9e89-45d6-a08d-9aa087add0e9
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Substatus
+		dataType: string
+		lineageTag: 9fdd2212-15be-4fdc-a2a7-c39172f9432c
+		summarizeBy: none
+		sourceColumn: Substatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Last Status Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: ebcc77ea-653c-47a1-a3c1-5fe61d26fd11
+		summarizeBy: none
+		sourceColumn: Last Status Date
+
+		variation Variation
+			isDefault
+			relationship: 2dde9b01-bd30-43bc-a087-8d18e9eaab31
+			defaultHierarchy: LocalDateTable_d52e6bb4-6e8c-427f-96dd-c365d0a426f0.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Availability
+		dataType: string
+		lineageTag: 77cbdbbc-97a1-4fe6-b862-cc35a886be5a
+		summarizeBy: none
+		sourceColumn: Availability
+
+		annotation SummarizationSetBy = Automatic
+
+	column Department
+		dataType: string
+		lineageTag: 32148e84-a6f7-41e7-a0d8-22f9d13aa444
+		summarizeBy: none
+		sourceColumn: Department
+
+		annotation SummarizationSetBy = Automatic
+
+	column Area
+		dataType: string
+		lineageTag: c068c744-4419-429f-a3e5-6ab7231251ea
+		summarizeBy: none
+		sourceColumn: Area
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Final Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 886def67-c501-4b8c-bc08-a804b0aca624
+		summarizeBy: none
+		sourceColumn: Final Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Direct
+		dataType: string
+		lineageTag: 3e38896f-de1f-4d6f-84e6-36d3fb2822d4
+		summarizeBy: none
+		sourceColumn: Direct
+
+		annotation SummarizationSetBy = Automatic
+
+	column downsell_id
+		dataType: string
+		lineageTag: 1b74e4d8-15d3-49de-88c2-af2b973fea90
+		summarizeBy: none
+		sourceColumn: downsell_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Downsell
+		dataType: string
+		lineageTag: ebdb95b2-c727-4dcc-aa72-e6c9c7eee5d9
+		summarizeBy: none
+		sourceColumn: Downsell
+
+		annotation SummarizationSetBy = Automatic
+
+	column Reason
+		dataType: string
+		lineageTag: 30ba4479-c4a7-498e-b31c-f8b4fdce22a8
+		summarizeBy: none
+		sourceColumn: Reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column Customer
+		dataType: string
+		lineageTag: 2fe0001d-fd15-4154-809e-c15a1cc6d883
+		summarizeBy: none
+		sourceColumn: Customer
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Age in the bench'
+		dataType: int64
+		formatString: 0
+		lineageTag: 7b27b493-bb49-4e8d-996e-97b7ee552008
+		summarizeBy: sum
+		sourceColumn: Age in the bench
+
+		annotation SummarizationSetBy = Automatic
+
+	column roster_vs_invoice_ID
+		dataType: string
+		lineageTag: c23de44c-8fb2-4ef8-9883-b1b7b9b74ce7
+		summarizeBy: none
+		sourceColumn: roster_vs_invoice_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column roster_ID
+		dataType: string
+		lineageTag: 144c0ec0-4a4e-469c-acb1-cbaebb890ccc
+		summarizeBy: none
+		sourceColumn: roster_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column segmentation_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: a618ddfa-8fa7-407d-a9d1-085f2f5269ff
+		summarizeBy: count
+		sourceColumn: segmentation_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Main Account Name'
+		dataType: string
+		lineageTag: 8900b5a4-4b76-46c2-a4b6-a266f0b3c86e
+		summarizeBy: none
+		sourceColumn: Main Account Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Type of termination'
+		dataType: string
+		lineageTag: 38c73a50-8eb0-4366-88f7-9808eb0524e0
+		summarizeBy: none
+		sourceColumn: Type of termination
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Main reason for withdrawal'
+		dataType: string
+		lineageTag: 847107a7-c862-44ee-8a2b-701f32cc96f1
+		summarizeBy: none
+		sourceColumn: Main reason for withdrawal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Bench
+		dataType: string
+		lineageTag: ea7d883b-736a-47e8-b6ec-2c0d380c5977
+		summarizeBy: none
+		sourceColumn: Bench
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bench Processing?'
+		dataType: string
+		lineageTag: 20a9754f-3fc3-4d44-b843-5f61c5a8aaf4
+		summarizeBy: none
+		sourceColumn: Bench Processing?
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 8f255f5d-2089-4cde-9f7e-ac23b6c6af49
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Backfill or no Backfill'
+		dataType: string
+		lineageTag: 9d579c4c-4f2d-4066-9b3a-700de86075fc
+		summarizeBy: none
+		sourceColumn: Backfill or no Backfill
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: int64
+		formatString: 0
+		lineageTag: 7fd96eb4-e9f5-4a92-84c7-77b887e6b4e8
+		summarizeBy: sum
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonth
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 87ea43cf-9b3e-430f-aba5-3aacc8df0b8a
+		summarizeBy: none
+		sourceColumn: YearMonth
+
+		variation Variation
+			isDefault
+			relationship: 598e0ba3-95de-4969-89ed-83e59fb12a5c
+			defaultHierarchy: LocalDateTable_2b2385b6-beec-4247-8b10-b040f17cd8d1.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Service Line' = ```
+			
+			VAR CurrentSegmentation = turnover_data[segmentation_ID]
+			VAR CurrentDate = turnover_data[Final Date]
+			VAR BusinessUnit = turnover_data[Business Unit]
+			
+			-- Condición para asignar valores fijos según Business Unit
+			VAR BusinessUnitServiceLine = 
+			    SWITCH(
+			        TRUE(), 
+			        BusinessUnit = "Lean Tech", "Tech",
+			        BusinessUnit = "Lean Marketing", "Marketing",
+			        BLANK()
+			    )
+			
+			-- Buscar la fecha más reciente sin sobrepasar en service_line_historical
+			VAR ClosestDate = 
+			    MAXX(
+			        FILTER(
+			            service_line_historical, 
+			            service_line_historical[Segmentation_ID] = CurrentSegmentation &&
+			            service_line_historical[Date] <= CurrentDate
+			        ), 
+			        service_line_historical[Date]
+			    )
+			
+			-- Obtener el Service Line correspondiente a la fecha más cercana
+			VAR HistoricalServiceLine = 
+			    LOOKUPVALUE(
+			        service_line_historical[Service Line], 
+			        service_line_historical[Segmentation_ID], CurrentSegmentation, 
+			        service_line_historical[Date], ClosestDate
+			    )
+			
+			-- Retornar el resultado final con prioridad en BusinessUnit
+			RETURN 
+			    IF(
+			        NOT(ISBLANK(BusinessUnitServiceLine)), 
+			        BusinessUnitServiceLine, 
+			        HistoricalServiceLine
+			    )
+			```
+		lineageTag: 15b01a35-fe4f-4346-bda1-e2b8da68b089
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Termination Type' =
+			
+			IF (
+			    CONTAINSSTRING ( turnover_data[Reason], "Resignation" ),
+			    "Voluntary",
+			    "Involuntary"
+			)
+		lineageTag: 1e5fb9a8-a1b9-40fb-a421-b57d453b12d2
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Division = ```
+			
+			    IF(turnover_data[Service Line] = "Enterprise","Enterprise",
+			    IF(turnover_data[Service Line] = "SMB","SMB",
+			    IF(turnover_data[Service Line] = "Marketing","Marketing",
+			    IF(turnover_data[Service Line] = "Tech","Tech",
+			    IF(turnover_data [Industry] = "Gf","Gf",
+			    IF(turnover_data [Industry] = "Bpo","Bpo",
+			    IF(turnover_data [Industry] = "Domestic","Core Account",
+			    "NA"
+			    )))))))
+			```
+		lineageTag: b4c70c38-a97e-4524-b99c-32f51677c30e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition turnover_data = m
+		mode: import
+		queryGroup: Turnover
+		source =
+				let
+				    Source = Table.Combine({turnover_data2024, turnover_data2025}),
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Branch", "Office", "Industry", "Business Unit", "company_id", "Account", "Employee Name", "ID Number", "ID Type", "Status", "Substatus", "Last Status Date", "Availability", "Department", "Area", "Final Date", "Direct", "downsell_id", "Downsell", "Reason", "Customer", "Age in the bench", "roster_vs_invoice_ID", "roster_ID", "Service Line", "segmentation_ID","Main Account Name", "Type of termination", "Main reason for withdrawal", "Bench", "Bench Processing?"}),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Removed Other Columns", {{"Main reason for withdrawal", "NA"}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Replaced Errors","","pool",Replacer.ReplaceValue,{"Customer"}),
+				    #"Inserted Year" = Table.AddColumn(#"Replaced Value", "Year", each Date.Year([Final Date]), Int64.Type),
+				    #"Capitalized Each Word" = Table.TransformColumns(#"Inserted Year",{{"Customer", Text.Proper, type text}}),
+				    #"Added Conditional Column1" = Table.AddColumn(#"Capitalized Each Word", "Backfill or no Backfill", each if Text.Contains([downsell_id], "bench") then "Bench" else if [Downsell] = "Lost Positions" then "No Backfill" else if [Downsell] = "Lost Positions Implementation" then "No Backfill" else if [Downsell] = "Replacement" then "Backfill" else if [Downsell] = "Replacement Implementation" then "Backfill" else "Pendings"),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Added Conditional Column1","",null,Replacer.ReplaceValue,{"Service Line"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value2","Carrier Sales","Domestic",Replacer.ReplaceText,{"Industry"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Replaced Value1", each ([Year] <> 2023)),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Filtered Rows",{{"Age in the bench", Int64.Type}}),
+				    #"Replaced Value3" = Table.ReplaceValue(#"Changed Type","",null,Replacer.ReplaceValue,{"Industry"}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Replaced Value3", each ([Business Unit] <> "lean marketing" and [Business Unit] <> "Lean Marketing" and [Business Unit] <> "Marketing")),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows1",{"Service Line"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Columns",{{"segmentation_ID", Int64.Type}}),
+				    #"Replaced Errors1" = Table.ReplaceErrorValues(#"Changed Type1", {{"Backfill or no Backfill", null}}),
+				    #"Replaced Errors2" = Table.ReplaceErrorValues(#"Replaced Errors1", {{"Bench", null}}),
+				    #"Replaced Errors3" = Table.ReplaceErrorValues(#"Replaced Errors2", {{"downsell_id", null}, {"Downsell", null}, {"Reason", null}, {"Customer", null}, {"Age in the bench", null}, {"roster_vs_invoice_ID", null}, {"roster_ID", null}, {"segmentation_ID", null}}),
+				    #"Inserted Month" = Table.AddColumn(#"Replaced Errors3", "Month", each Date.Month([Final Date]), Int64.Type),
+				    #"Added Custom" = Table.AddColumn(#"Inserted Month", "YearMonth", each Text.From([Year]) & "-" & Text.PadStart(Text.From([Month]), 2, "0")),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Added Custom",{{"YearMonth", type date}}),
+				    #"Replaced Value4" = Table.ReplaceValue(#"Changed Type2","bpo","Bpo",Replacer.ReplaceText,{"Industry"}),
+				    #"Replaced Value5" = Table.ReplaceValue(#"Replaced Value4","domestic","Domestic",Replacer.ReplaceText,{"Industry"}),
+				    #"Replaced Value6" = Table.ReplaceValue(#"Replaced Value5","gf","Gf",Replacer.ReplaceText,{"Industry"}),
+				    #"Replaced Value7" = Table.ReplaceValue(#"Replaced Value6","marketing","Marketing",Replacer.ReplaceText,{"Industry"}),
+				    #"Replaced Value8" = Table.ReplaceValue(#"Replaced Value7","core","Core Account",Replacer.ReplaceText,{"Industry"})
+				in
+				    #"Replaced Value8"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

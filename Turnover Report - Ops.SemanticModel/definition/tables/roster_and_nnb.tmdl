@@ -1,0 +1,499 @@
+table roster_and_nnb
+	isHidden
+	lineageTag: d2919b95-38f9-4cc9-b5e0-cf72f54f7bf0
+
+	column customer_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 08c5f824-4048-4b82-9399-e579ff876d2f
+		summarizeBy: sum
+		sourceColumn: customer_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column company
+		dataType: string
+		isHidden
+		lineageTag: b6ee7b66-a3e9-48d2-9190-0a9e56bf71e7
+		summarizeBy: none
+		sourceColumn: company
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column position
+		dataType: string
+		isHidden
+		lineageTag: 81beb3af-f26a-47df-b287-3545020e221f
+		summarizeBy: none
+		sourceColumn: position
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee
+		dataType: string
+		isHidden
+		lineageTag: 1b53d934-b377-4906-b88e-904c71b0eefe
+		summarizeBy: none
+		sourceColumn: employee
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column gender
+		dataType: string
+		isHidden
+		lineageTag: 8a03da9d-7cc6-4c59-a27d-d7b76e15a485
+		summarizeBy: none
+		sourceColumn: gender
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column mobile_phone
+		dataType: string
+		isHidden
+		lineageTag: 6778d0b2-5685-40d9-8dfa-240437ba492d
+		summarizeBy: none
+		sourceColumn: mobile_phone
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column personal_email
+		dataType: string
+		isHidden
+		lineageTag: ac122ec2-3bb1-409c-91c7-d853cddba43a
+		summarizeBy: none
+		sourceColumn: personal_email
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		isHidden
+		lineageTag: a41f5fd8-3371-47c6-9670-082e37cdc990
+		summarizeBy: none
+		sourceColumn: status
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		isHidden
+		lineageTag: e5697bc0-ce4e-40d3-986e-954a856afa18
+		summarizeBy: none
+		sourceColumn: category
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column identification
+		dataType: string
+		isHidden
+		lineageTag: ae15756f-029f-41a9-95b1-ae53e2b3ad75
+		summarizeBy: none
+		sourceColumn: identification
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column direct
+		dataType: string
+		isHidden
+		lineageTag: 1b686123-5817-45d3-ad6e-7a3cdfe00ad6
+		summarizeBy: none
+		sourceColumn: direct
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column temporal_agency
+		dataType: string
+		isHidden
+		lineageTag: d0e93aa8-1d73-4fdc-a25a-f745d4eeb99a
+		summarizeBy: none
+		sourceColumn: temporal_agency
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column branch
+		dataType: string
+		isHidden
+		lineageTag: fde839c2-8385-4233-97e7-228ef6b8af1d
+		summarizeBy: none
+		sourceColumn: branch
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column active_date
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 12ef941f-af41-43f6-adf0-99e1c1b5f6c6
+		summarizeBy: none
+		sourceColumn: active_date
+
+		variation Variation
+			isDefault
+			relationship: 96224830-a386-4a49-835d-5acf53613eb7
+			defaultHierarchy: LocalDateTable_844827f9-4291-4a83-8b6b-fa1b0e362b28.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column assigned_date
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 8de8051f-0b71-49e5-92dc-bd69e1d3ecfc
+		summarizeBy: none
+		sourceColumn: assigned_date
+
+		variation Variation
+			isDefault
+			relationship: 65908b13-6ba4-4ff1-b1ca-32241e231bea
+			defaultHierarchy: LocalDateTable_89dd81d5-86b9-4fb5-a300-444c908a3d2d.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column deactivated_date
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: d4e8dc90-def8-4d96-aea5-2b954adc02a4
+		summarizeBy: none
+		sourceColumn: deactivated_date
+
+		variation Variation
+			isDefault
+			relationship: 5f28d751-c14b-4f7b-98f2-b8c3ec3fdd3b
+			defaultHierarchy: LocalDateTable_c6738ace-0943-4793-be60-81fad02c5b2e.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column birthday
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 2d437142-0908-43be-a56a-d4cfdf915e66
+		summarizeBy: none
+		sourceColumn: birthday
+
+		variation Variation
+			isDefault
+			relationship: 7e3f40be-cfc5-4f24-b01b-a3ac920aa0d5
+			defaultHierarchy: LocalDateTable_320ece10-75a8-47fe-af51-c787b661cb4f.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column contract_date
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: c527cc5c-e908-462d-a4ab-6f51167253d2
+		summarizeBy: none
+		sourceColumn: contract_date
+
+		variation Variation
+			isDefault
+			relationship: 570c693d-8a53-499c-9f1e-4f3acbab3b30
+			defaultHierarchy: LocalDateTable_c3673ad8-a718-445f-8860-0a2de914ca6d.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column end_of_6_month
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 02f0d940-093f-4808-b940-d208a02598ed
+		summarizeBy: none
+		sourceColumn: end_of_6_month
+
+		variation Variation
+			isDefault
+			relationship: 1359d235-7f57-4c74-b079-4dc8c9605d8b
+			defaultHierarchy: LocalDateTable_a3a46a06-040b-4c63-9f50-c29be4902d30.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column end_of_1_year
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 5b657c3a-4d92-45f6-85f0-8f48fc0642a6
+		summarizeBy: none
+		sourceColumn: end_of_1_year
+
+		variation Variation
+			isDefault
+			relationship: 1990272a-5db0-4ec9-bf36-523fb45f7e9a
+			defaultHierarchy: LocalDateTable_191da6c2-ac13-4100-a867-d4839cc34747.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column address
+		dataType: string
+		isHidden
+		lineageTag: 3aa40531-2e55-4e78-9c37-46b48209827f
+		summarizeBy: none
+		sourceColumn: address
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column neighborhood
+		dataType: string
+		isHidden
+		lineageTag: 6dd9c301-3145-4199-a8a2-ee21000bdbdc
+		summarizeBy: none
+		sourceColumn: neighborhood
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column sales
+		dataType: string
+		isHidden
+		lineageTag: 32db79e2-7185-4b0c-b4c8-6f5ad0e3fa62
+		summarizeBy: none
+		sourceColumn: sales
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ops_manager_assistant
+		dataType: string
+		isHidden
+		lineageTag: 320715e3-1789-4a5d-9170-1d10fea0039b
+		summarizeBy: none
+		sourceColumn: ops_manager_assistant
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column senior_ops
+		dataType: string
+		isHidden
+		lineageTag: 4fc73dc6-504f-41b0-9bf2-51c225a049c5
+		summarizeBy: none
+		sourceColumn: senior_ops
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column rate
+		dataType: double
+		isHidden
+		lineageTag: fef298fc-9e70-44da-baaf-34024e511df2
+		summarizeBy: sum
+		sourceColumn: rate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'billing position'
+		dataType: string
+		isHidden
+		lineageTag: 39aadd0e-9136-45e2-b32b-7de963867fb1
+		summarizeBy: none
+		sourceColumn: billing position
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column industry
+		dataType: string
+		isHidden
+		lineageTag: 5338a476-a663-4f02-ac11-3f226d760063
+		summarizeBy: none
+		sourceColumn: industry
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column business_unit
+		dataType: string
+		isHidden
+		lineageTag: 294f8185-662c-4c7e-a132-140d5b513a63
+		summarizeBy: none
+		sourceColumn: business_unit
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 38264421-b104-4ca0-b3af-b380c973445c
+		summarizeBy: sum
+		sourceColumn: employee_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column aging
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3e9aaf29-172e-4eff-bb16-ab0840c0fad1
+		summarizeBy: sum
+		sourceColumn: aging
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column roster_vs_invoice_ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7aa39dde-0ffa-49c0-8d26-84e862dc5a32
+		summarizeBy: count
+		sourceColumn: roster_vs_invoice_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		isHidden
+		lineageTag: 9ef8217a-5a81-4211-a902-a7bc5f561b3f
+		summarizeBy: none
+		sourceColumn: Country
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Segmentation_ID = LOOKUPVALUE(customer_accounts_segmentation[segmentation_ID],customer_accounts_segmentation[roster_vs_invoice_ID],roster_and_nnb[roster_vs_invoice_ID])
+		isHidden
+		formatString: 0
+		lineageTag: ff74e324-9abb-47ab-b27b-22bcdca65e5f
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Service Line'
+		dataType: string
+		isHidden
+		lineageTag: 95ac57ce-546f-478a-b2d4-64571870eeef
+		summarizeBy: none
+		sourceColumn: Service Line
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Division = ```
+			
+			    IF('roster_and_nnb'[Service Line] = "Enterprise","Enterprise",
+			    IF('roster_and_nnb'[Service Line] = "SMB","SMB",
+			    IF('roster_and_nnb'[Service Line] = "Marketing","Marketing",
+			    IF('roster_and_nnb'[Service Line] = "Tech","Tech",
+			    IF('roster_and_nnb'[Industry] = "Gf","Gf",
+			    IF('roster_and_nnb'[Industry] = "Bpo","Bpo",
+			    IF('roster_and_nnb'[Industry] = "Domestic","Core Account",
+			    "NA"
+			    )))))))
+			```
+		isHidden
+		lineageTag: d39249b5-33f7-46f3-87b7-29d09727ea07
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition roster_and_nnb = m
+		mode: import
+		queryGroup: Roster_live
+		source =
+				let
+				    Source = Table.Combine({live_roster_view, view_nnb}),
+				    #"Replaced Value" = Table.ReplaceValue(Source,"Lean Bpo","Lean Operations",Replacer.ReplaceText,{"business_unit"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Replaced Value",{{"customer_id", Int64.Type}}),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Changed Type","Carrier Sales","Domestic",Replacer.ReplaceText,{"service_line"}),
+				    #"Merged Queries" = Table.NestedJoin(#"Replaced Value2", {"customer_id"}, #"portal _accounts_name", {"portal_ID"}, "roster_account_name", JoinKind.LeftOuter),
+				    #"Expanded roster_account_name" = Table.ExpandTableColumn(#"Merged Queries", "roster_account_name", {"roster_vs_invoice_ID"}, {"roster_account_name.roster_vs_invoice_ID"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Expanded roster_account_name", {"employee"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Duplicates",{{"roster_account_name.roster_vs_invoice_ID", "roster_vs_invoice_ID"}}),
+				    #"Added Conditional Column1" = Table.AddColumn(#"Renamed Columns", "Country", each if [branch] = "Bogota" then "Colombia" else if [branch] = "Medellin" then "Colombia" else if [branch] = "Bucaramanga" then "Colombia" else if [branch] = "Cartagena" then "Colombia" else if [branch] = "Barranquilla" then "Colombia" else if [branch] = "Cali" then "Colombia" else if [branch] = "Manila" then "Philippines" else if [branch] = "Ciudad De Guatemala" then "Guatemala" else if [branch] = "Ciudad De Mexico" then "Mexico" else null),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Added Conditional Column1",{{"service_line", "industry"}}),
+				    #"Capitalized Each Word" = Table.TransformColumns(#"Renamed Columns1",{{"employee", Text.Proper, type text}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Capitalized Each Word", each ([status] = "Active")),
+				    #"Merged Queries1" = Table.NestedJoin(#"Filtered Rows", {"roster_vs_invoice_ID"}, customer_accounts_segmentation, {"roster_vs_invoice_ID"}, "customer_accounts_segmentation", JoinKind.LeftOuter),
+				    #"Expanded customer_accounts_segmentation" = Table.ExpandTableColumn(#"Merged Queries1", "customer_accounts_segmentation", {"Service Line"}, {"customer_accounts_segmentation.Service Line"}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Expanded customer_accounts_segmentation",{{"customer_accounts_segmentation.Service Line", "Service Line"}})
+				in
+				    #"Renamed Columns2"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
